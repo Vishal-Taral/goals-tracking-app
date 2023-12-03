@@ -1,0 +1,29 @@
+{
+  "name": "goals-on-track-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/goals-on-track-e2e/src",
+  "targets": {
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/goals-on-track-e2e/cypress.config.ts",
+        "testingType": "e2e",
+        "devServerTarget": "goals-on-track:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "goals-on-track:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/goals-on-track-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["goals-on-track"]
+}
