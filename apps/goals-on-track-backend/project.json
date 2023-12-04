@@ -1,0 +1,57 @@
+{
+  "name": "goals-on-track-backend",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/goals-on-track-backend/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/goals-on-track-backend",
+        "main": "apps/goals-on-track-backend/src/main.ts",
+        "tsConfig": "apps/goals-on-track-backend/tsconfig.app.json",
+        "assets": ["apps/goals-on-track-backend/src/assets"],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/goals-on-track-backend/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "goals-on-track-backend:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "goals-on-track-backend:build:development"
+        },
+        "production": {
+          "buildTarget": "goals-on-track-backend:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/goals-on-track-backend/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/goals-on-track-backend/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
