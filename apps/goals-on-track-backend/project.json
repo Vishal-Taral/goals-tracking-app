@@ -12,7 +12,7 @@
         "target": "node",
         "compiler": "tsc",
         "outputPath": "dist/apps/goals-on-track-backend",
-        "main": "apps/goals-on-track-backend/src/main.ts",
+        "main": "apps/goals-on-track-backend/src/server.ts",
         "tsConfig": "apps/goals-on-track-backend/tsconfig.app.json",
         "assets": ["apps/goals-on-track-backend/src/assets"],
         "isolatedConfig": true,
