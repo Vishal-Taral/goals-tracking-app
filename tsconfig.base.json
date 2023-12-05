@@ -14,7 +14,14 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@goal-tracker/data-access": ["libs/shared/data-access/src/index.ts"],
+      "@goal-tracker/data-access/server": [
+        "libs/shared/data-access/src/server.ts"
+      ],
+      "@goal-tracker/ui": ["libs/shared/ui/src/index.ts"],
+      "@goal-tracker/ui/server": ["libs/shared/ui/src/server.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
