@@ -4,7 +4,7 @@ export function Index() {
 
   return (
     <div className={styles.page}>
-      Vishal
+      xxx
     </div>
   );
 }
