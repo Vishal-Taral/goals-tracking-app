@@ -1,5 +1,6 @@
 import styles from './layout.module.scss';
-import {Header} from '../../../../../libs/shared/ui/src/lib/components/header/header';
+import Header from '../../../../../libs/shared/ui/src/lib/components/header/header';
+// import { Header } from '@goal-tracker/ui'
 
 /* eslint-disable-next-line */
 export interface LayoutProps {

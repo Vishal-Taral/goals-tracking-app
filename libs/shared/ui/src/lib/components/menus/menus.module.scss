@@ -1,0 +1,100 @@
+// .container{
+//     .menus_container{
+//         width: 15rem;
+//         height: 100vh;
+//         border-right: 1px solid rgb(216, 214, 214);
+//     }
+// }
+
+
+.container {
+    .menus_container {
+        width: 15rem;
+        height: 100vh;
+        border-right: 1px solid rgb(216, 214, 214);
+        padding: 1rem;
+        box-shadow: 0 0 20px #0000001a;
+
+        .heading_reset_all {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+
+            .heading {
+                font-size: 20px;
+                font-weight: 500;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: .3px;
+                color: rgba(0, 0, 0, .87);
+            }
+        }
+
+        .types {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+
+            .icon_and_type{
+                display: flex;
+                gap: 0.5rem;
+                align-items: center;
+
+                .menus_icons{
+                    color: rgb(180, 180, 231);
+                }
+
+                .menus_type {
+                    font-size: 16px;
+                    font-weight: 500;
+                    font-style: normal;
+                    font-stretch: normal;
+                    line-height: 1.5;
+                    letter-spacing: .2px;
+                    color: rgb(180, 180, 231);
+                }
+            }
+
+            .arrows {
+                display: flex;
+                align-items: center;
+                gap: 0.4rem;
+
+                .keyboard_icon {
+                    font-size: 20px;
+                    letter-spacing: .4px;
+                    text-align: right;
+                    display: inline-block;
+                    cursor: pointer;
+                    color:rgb(180, 180, 231);
+                }
+            }
+        }
+
+        .menus_title_container {
+            margin-bottom: 1rem;
+
+            .check_and_name {
+                height: 0;
+                overflow: hidden;
+                transition: height 1ms ease;
+                margin-left: 2rem;
+                font-weight: 700;
+                font-size: 16px;
+
+                &.open {
+                    height: 25px;
+                    overflow: hidden;
+                    transition: height 50ms ease;
+                }
+
+                .titles{
+                    color:rgb(157, 157, 180);
+                }
+            }
+        }
+    }
+}

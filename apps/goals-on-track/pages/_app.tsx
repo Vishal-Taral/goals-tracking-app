@@ -5,12 +5,12 @@ import './styles.css';
 function CustomApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <Head>
-        <title>Welcome to goals-on-track!</title>
-      </Head>
-      <main className="app">
-        <Component {...pageProps} />
-      </main>
+        <Head>
+          <title>Welcome to goals-on-track!</title>
+        </Head>
+        <main className="app">
+          <Component {...pageProps} />
+        </main>
     </>
   );
 }
