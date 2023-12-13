@@ -9,11 +9,13 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import ContextProvider from 'libs/shared/ui/src/lib/contexts/ContextProvider';
 
 function CustomApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient()
   return (
     <>
+    <ContextProvider>
       <QueryClientProvider client={queryClient}>
         <Head>
           <title>Welcome to goals-on-track!</title>
@@ -23,6 +25,7 @@ function CustomApp({ Component, pageProps }: AppProps) {
         </main>
         <ReactQueryDevtools initialIsOpen={false} buttonPosition={'bottom-left'}/>
       </QueryClientProvider>
+      </ContextProvider>
     </>
   );
 }

@@ -1,7 +1,52 @@
-/*
- * Replace this with your own classes
- *
- * e.g.
- * .container {
- * }
-*/
+.footer {
+  background-color: rgb(46, 46, 90);
+  color: white;
+  width: 100%;
+  bottom: 0;
+  padding: 1rem;
+  display: flex;
+  flex-direction: row;
+  .footer_left {
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    .heading {
+      font-size: 5rem;
+      font-weight: 600;
+      color: white;
+    }
+    .subHeading {
+      font-size: 1rem;
+      color: white;
+    }
+  }
+  .footer_right {
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+    .footer_right_links {
+      width: 50%;
+      padding-right: 2rem;
+      .links_heading {
+        border-bottom: 1px solid gray;
+        padding-bottom: 0.3rem;
+      }
+      .links {
+        padding: 0.5rem 0;
+      }
+    }
+      .footer_right_contactUs {
+        width: 50%;
+        padding-right: 2rem;
+        .contactUs_heading {
+          border-bottom: 1px solid gray;
+          padding-bottom: 0.3rem;
+        }
+        .contactUs {
+          padding: 0.5rem 0;
+        }
+      }
+  }
+}

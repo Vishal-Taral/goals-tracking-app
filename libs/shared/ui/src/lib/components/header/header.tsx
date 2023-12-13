@@ -26,10 +26,11 @@ export function Header(props: HeaderProps) {
       {
         isLandingPage ? (
           <div className={styles.header_container}>
-            <Image src={logo} alt='logo' width={100} height={50} />
+            {/* <Image src={logo} alt='logo' width={100} height={50} /> */}
+            GoalsOnTrack
             <div>
             {/* <button onClick={openLoginPage} className={styles.login_btn}>login</button> */}
-              <Button variant="outlined" onClick={openLoginPage}>Login</Button>
+              <Button variant="outlined" onClick={openLoginPage} style={{color: 'white',borderColor: 'white'}}>Login</Button>
             </div>
           </div>
         ) : (
