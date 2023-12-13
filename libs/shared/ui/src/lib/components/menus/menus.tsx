@@ -4,6 +4,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import WalletIcon from '@mui/icons-material/Wallet';
 import SettingsIcon from '@mui/icons-material/Settings';
+import SportsScoreIcon from '@mui/icons-material/SportsScore';
 
 
 /* eslint-disable-next-line */
@@ -24,19 +25,20 @@ export function Menus(props: MenusProps) {
 
   const menusData = [
     {
-      type: 'Fees manager',
+      type: 'Manage masters',
       icon: <WalletIcon />,
       titleArray: [
         {
-          title: 'Fee Items',
+          title: 'Roles',
         },
         {
-          title: 'Fee addons',
-        },
-        {
-          title: 'Class fees',
+          title: 'Categories',
         }
       ],
+    },
+    {
+      type: 'Your goals',
+      icon : <SportsScoreIcon />
     },
     {
       type: 'Setting',
@@ -70,8 +72,9 @@ export function Menus(props: MenusProps) {
                     <h1 className={styles.menus_type}>{data.type}</h1>
                   </div>
         
-                  <div className={styles.arrows}>
-                    <label>
+                  {data?.titleArray && data?.titleArray?.length > 0 && (
+                    <div className={styles.arrows}>
+                    <div>
                       <div onClick={() => toggleIconClick(index)}>
                         {!isClickedIcon ? (
                           <KeyboardArrowUpIcon className={styles.keyboard_icon} />
@@ -81,11 +84,13 @@ export function Menus(props: MenusProps) {
                           />
                         )}
                       </div>
-                    </label>
+                    </div>
                   </div>
+                  )}
+                  
                 </div>
                 <div className={styles.menus_title_container}>
-                  {data.titleArray.map((titles: any, index: number) => {
+                  {data?.titleArray?.map((titles: any, index: number) => {
                     return (
                       <div className={`${styles.check_and_name} ${isClickedIcon ? styles.open : ''}`}
                         key={index}>
