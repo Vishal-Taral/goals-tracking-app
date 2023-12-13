@@ -70,7 +70,7 @@ export function UserDetailSection({ tableData }) {
         <table className={styles.table}>
           <thead className={styles.table_headings_section}>
             <tr>
-              {tableData?.headings.map((data: any, index: number) => (
+              {tableData?.headings?.map((data: any, index: number) => (
                 <th className={styles.headings} key={index}>
                   {data}
                 </th>
@@ -78,7 +78,7 @@ export function UserDetailSection({ tableData }) {
             </tr>
           </thead>
           <tbody>
-            {tableData.rows.map((data: any, index: number) => (
+            {tableData?.rows?.map((data: any, index: number) => (
               <tr key={index} className={styles.table_row}>
                 {Object.entries(data).map((val, index) => (
                   <td className={styles.table_data}>{val[1]}</td>

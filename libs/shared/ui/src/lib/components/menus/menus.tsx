@@ -1,5 +1,5 @@
 import styles from './menus.module.scss';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import WalletIcon from '@mui/icons-material/Wallet';
@@ -7,11 +7,14 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import SportsScoreIcon from '@mui/icons-material/SportsScore';
 
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+import AppContext from '../../contexts/AppContext';
 
 /* eslint-disable-next-line */
 export interface MenusProps { }
 
 export function Menus(props: MenusProps) {
+
+  const context = useContext(AppContext)
 
   const [clickedIcons, setClickedIcons] = useState<{ [key: number]: boolean }>(
     {}
@@ -70,6 +73,12 @@ export function Menus(props: MenusProps) {
     }
   ];
 
+  const manageClickHandler = (titleObj) => {
+    console.log(titleObj.title)
+    context.setManage(titleObj?.title)
+    
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.menus_container}>
@@ -107,7 +116,7 @@ export function Menus(props: MenusProps) {
                     return (
                       <div className={`${styles.check_and_name} ${isClickedIcon ? styles.open : ''}`}
                         key={index}>
-                        <h1 className={styles.titles}>{titles.title}</h1>
+                        <h1 onClick={()=>manageClickHandler(titles)} className={styles.titles}>{titles.title}</h1>
                       </div>
                     );
                   })}
