@@ -1,20 +1,25 @@
 .container{
     width: 100%;
-    background-color: #ffffff;
+    background-color: rgb(46, 46, 90);
+    box-shadow: 1px 1px 1px gray;
     .header_container{
         padding: 1rem 9rem;
         display: flex;
         width: auto;
+        align-items: center;
         justify-content: space-between;
+        font-size: 2rem;
+        font-weight: 600;
+        color: white;
 
         .login_btn{
             cursor: pointer;
-            border: 1px solid rgb(163, 163, 235);
+            border: 1px solid rgb(255, 255, 255);
             border-radius: 0.9rem;
             width: 4rem;
             height: 2rem;
             background-color: rgb(250, 247, 244);
-            color: rgb(163, 163, 235);
+            color: rgb(255, 255, 255);
             font-size: 16px;
         }
     }

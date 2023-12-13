@@ -1,0 +1,19 @@
+.dashboard{
+    height: 600px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    .goal_button{
+        width: 47%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid lightgray;
+        margin: 1rem;
+        border-radius: 1rem;
+        font-size: 2rem;
+    }
+    .goal_button:hover{
+        cursor: pointer;
+    }
+}

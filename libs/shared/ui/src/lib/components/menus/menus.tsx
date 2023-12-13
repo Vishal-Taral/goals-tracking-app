@@ -6,6 +6,7 @@ import WalletIcon from '@mui/icons-material/Wallet';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SportsScoreIcon from '@mui/icons-material/SportsScore';
 
+import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 
 /* eslint-disable-next-line */
 export interface MenusProps { }
@@ -52,6 +53,18 @@ export function Menus(props: MenusProps) {
         },
         {
           title: 'App language',
+        }
+      ],
+    },
+    {
+      type: 'Manage',
+      icon : <ManageSearchIcon />,
+      titleArray: [
+        {
+          title: 'Manage Users',
+        },
+        {
+          title: 'Manage Roles',
         }
       ],
     }

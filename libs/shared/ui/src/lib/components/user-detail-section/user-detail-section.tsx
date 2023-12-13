@@ -10,35 +10,11 @@ import DeleteComponent from '../delete/delete';
 
 /* eslint-disable-next-line */
 
-const tableData = {
-  headings: ['Name', 'Goal', 'Duration', 'Email', 'Update', 'Delete'],
-  rows: [
-    {
-      userName: 'Vishal Taral',
-      goal: '2 Kg waight gain',
-      duration: '1 Month',
-      email: 'taral@gmail.com',
-    },
-    {
-      userName: 'Hrishikesh Gore',
-      goal: '2 Kg waight loss',
-      duration: '1 Month',
-      email: 'gore@gmail.com',
-    },
-    {
-      userName: 'Atharv Bhuse',
-      goal: '10 Kg waight loss',
-      duration: '10 Days',
-      email: 'bhuse@gmail.com',
-    },
-  ],
-}
+const options = ['story', 'upskill', 'task completing ', 'achievable'];
 
-const options = ['story', 'upskill', 'task completing ', 'achievable']
+export interface UserDetailSectionProps {}
 
-export interface UserDetailSectionProps { }
-
-export function UserDetailSection(props: UserDetailSectionProps) {
+export function UserDetailSection({ tableData }) {
   const [openUpdate, setOpenUpdate] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const handleOpen = () => setOpenUpdate(true);
@@ -70,21 +46,21 @@ export function UserDetailSection(props: UserDetailSectionProps) {
               padding: 0,
             },
           }}
-          renderInput={(params: any) =>
+          renderInput={(params: any) => (
             <TextField
               {...params}
               id="filled-number"
-              label='categories'
+              label="categories"
               sx={{
                 backgroundColor: 'white',
                 width: 150,
               }}
               InputLabelProps={{
                 shrink: true,
-                backgroundColor : 'white',
+                backgroundColor: 'white',
               }}
             />
-          }
+          )}
         />
 
         <Button variant="outlined">Add User</Button>
@@ -94,7 +70,7 @@ export function UserDetailSection(props: UserDetailSectionProps) {
         <table className={styles.table}>
           <thead className={styles.table_headings_section}>
             <tr>
-              {tableData.headings.map((data: any, index: number) => (
+              {tableData?.headings.map((data: any, index: number) => (
                 <th className={styles.headings} key={index}>
                   {data}
                 </th>
@@ -102,19 +78,24 @@ export function UserDetailSection(props: UserDetailSectionProps) {
             </tr>
           </thead>
           <tbody>
-            {tableData.rows.map((data, index) => (
+            {tableData.rows.map((data: any, index: number) => (
               <tr key={index} className={styles.table_row}>
-                <td className={styles.table_data}>{data.userName}</td>
-                <td className={styles.table_data}>{data.goal}</td>
-                <td className={styles.table_data}>{data.duration}</td>
-                <td className={styles.table_data}>{data.email}</td>
+                {Object.entries(data).map((val, index) => (
+                  <td className={styles.table_data}>{val[1]}</td>
+                ))}
                 <td className={styles.table_data}>
-                  <span className={styles.icons} onClick={() => handleOpenUpdate(index)}>
+                  <span
+                    className={styles.icons}
+                    onClick={() => handleOpenUpdate(index)}
+                  >
                     <EditIcon />
                   </span>
                 </td>
                 <td className={styles.table_data}>
-                  <span className={styles.icons} onClick={() => handleOpenDelate(index)}>
+                  <span
+                    className={styles.icons}
+                    onClick={() => handleOpenDelate(index)}
+                  >
                     <DeleteIcon />
                   </span>
                 </td>
@@ -143,4 +124,3 @@ export function UserDetailSection(props: UserDetailSectionProps) {
 }
 
 export default UserDetailSection;
-
