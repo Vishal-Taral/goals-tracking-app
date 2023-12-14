@@ -1,9 +1,10 @@
 import styles from './index.module.scss';
 import Menus from '../../../../libs/shared/ui/src/lib/components/menus/menus';
-import UserDetailSection from '../../../../libs/shared/ui/src/lib/components/user-detail-section/user-detail-section';
+import { UserDetailSection } from '@goal-tracker/ui';
 import Header from '../../../../libs/shared/ui/src/lib/components/header/header';
 import { useContext, useEffect, useState } from 'react';
 import AppContext from 'libs/shared/ui/src/lib/contexts/AppContext';
+import HOCAuth from 'libs/shared/ui/src/lib/components/HOCAuth/HOCAuth';
 
 /* eslint-disable-next-line */
 export interface TrackerProps {}
@@ -67,7 +68,7 @@ export function Tracker(props: TrackerProps) {
         </div>
         <div className={styles.header_and_user_detail_section}>
           <Header />
-          <UserDetailSection tableData={tableData} />
+          <HOCAuth Component={UserDetailSection} tableData={tableData}  />
         </div>
       </div>
     </div>
