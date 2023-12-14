@@ -1,6 +1,5 @@
 import styles from './layout.module.scss';
-import Header from '../../../../../libs/shared/ui/src/lib/components/header/header';
-import { Footer } from '@goal-tracker/ui';
+import { Header , Footer } from '@goal-tracker/ui';
 // import { Header } from '@goal-tracker/ui'
 
 /* eslint-disable-next-line */
