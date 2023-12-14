@@ -19,10 +19,8 @@ const HOCAuth = ({ Component, ...props }: any) => {
   }, [])
 
   if (authenticated) {
-    console.log('x',authenticated)
     return <Component {...props}/>;
   } else {
-    console.log('xx',authenticated)
     return null;
   }
 };

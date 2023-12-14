@@ -7,8 +7,6 @@ import Button from '@mui/material/Button';
 import { useState } from 'react';
 import Update from '../update/update';
 import DeleteComponent from '../delete/delete';
-import Counter from '../Counter/Counter';
-import HOCAuth from '../HOCAuth/HOCAuth';
 
 /* eslint-disable-next-line */
 
@@ -37,7 +35,6 @@ export function UserDetailSection({ tableData }) {
 
   return (
     <div className={styles.container}>
-      {/* <HOCAuth Component={Counter} /> */}
       <div className={styles.categories}>
         <Autocomplete
           disablePortal
