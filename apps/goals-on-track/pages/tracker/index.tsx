@@ -3,6 +3,7 @@ import { Menus , UserDetailSection , Header } from '@goal-tracker/ui';
 import { useContext, useEffect, useState } from 'react';
 import AppContext from 'libs/shared/ui/src/lib/contexts/AppContext';
 import { apiUrlObject } from '@goal-tracker/data-access';
+import HOCAuth from 'libs/shared/ui/src/lib/components/HOCAuth/HOCAuth';
 
 /* eslint-disable-next-line */
 export interface TrackerProps {}
@@ -10,13 +11,9 @@ export interface TrackerProps {}
 export function Tracker(props: TrackerProps) {
   const context = useContext(AppContext);
 
-  const categoriesData = context.categories?.data?.data;
-  // console.log(context.categories?.data?.data);   
-  
-
   const users = {
     headings: ['Id', 'Goal Name','Update', 'Delete'],
-    rows: categoriesData
+    rows: context.categories?.data?.data
   };
   const roles = {
     headings: ['Name', 'Email', 'Update', 'Delete'],
@@ -51,7 +48,7 @@ export function Tracker(props: TrackerProps) {
         </div>
         <div className={styles.header_and_user_detail_section}>
           <Header />
-          <UserDetailSection tableData={tableData} />
+          <HOCAuth Component={UserDetailSection} tableData={tableData}  />
         </div>
       </div>
     </div>
