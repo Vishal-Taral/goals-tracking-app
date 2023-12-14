@@ -12,9 +12,11 @@ import DeleteComponent from '../delete/delete';
 
 const options = ['story', 'upskill', 'task completing ', 'achievable'];
 
-export interface UserDetailSectionProps {}
+export interface UserDetailSectionProps {
+  tableData : any;
+}
 
-export function UserDetailSection({ tableData }) {
+export function UserDetailSection({ tableData } : UserDetailSectionProps) {
   const [openUpdate, setOpenUpdate] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const handleOpen = () => setOpenUpdate(true);
@@ -81,7 +83,11 @@ export function UserDetailSection({ tableData }) {
             {tableData?.rows?.map((data: any, index: number) => (
               <tr key={index} className={styles.table_row}>
                 {Object.entries(data).map((val, index) => (
+                  <>
                   <td className={styles.table_data}>{val[1]}</td>
+                  {console.log("data",data)}
+                  {console.log("val",val)}
+                  </>
                 ))}
                 <td className={styles.table_data}>
                   <span

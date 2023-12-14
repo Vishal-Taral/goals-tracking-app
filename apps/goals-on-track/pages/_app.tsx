@@ -15,17 +15,17 @@ function CustomApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient()
   return (
     <>
-    <ContextProvider>
       <QueryClientProvider client={queryClient}>
-        <Head>
-          <title>Welcome to goals-on-track!</title>
-        </Head>
-        <main className="app">
-          <Component {...pageProps} />
-        </main>
-        <ReactQueryDevtools initialIsOpen={false} buttonPosition={'bottom-left'}/>
+        <ContextProvider>
+          <Head>
+            <title>Welcome to goals-on-track!</title>
+          </Head>
+          <main className="app">
+            <Component {...pageProps} />
+          </main>
+          <ReactQueryDevtools initialIsOpen={false} buttonPosition={'bottom-left'} />
+        </ContextProvider>
       </QueryClientProvider>
-      </ContextProvider>
     </>
   );
 }

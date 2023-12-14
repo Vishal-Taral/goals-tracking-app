@@ -1,9 +1,8 @@
 import styles from './index.module.scss';
-import Menus from '../../../../libs/shared/ui/src/lib/components/menus/menus';
-import UserDetailSection from '../../../../libs/shared/ui/src/lib/components/user-detail-section/user-detail-section';
-import Header from '../../../../libs/shared/ui/src/lib/components/header/header';
+import { Menus , UserDetailSection , Header } from '@goal-tracker/ui';
 import { useContext, useEffect, useState } from 'react';
 import AppContext from 'libs/shared/ui/src/lib/contexts/AppContext';
+import { apiUrlObject } from '@goal-tracker/data-access';
 
 /* eslint-disable-next-line */
 export interface TrackerProps {}
@@ -11,28 +10,13 @@ export interface TrackerProps {}
 export function Tracker(props: TrackerProps) {
   const context = useContext(AppContext);
 
+  const categoriesData = context.categories?.data?.data;
+  // console.log(context.categories?.data?.data);   
+  
+
   const users = {
-    headings: ['Name', 'Goal', 'Duration', 'Email', 'Update', 'Delete'],
-    rows: [
-      {
-        Name: 'Vishal Taral',
-        Goal: '2 Kg weight loss',
-        Duration: '10 Days',
-        Email: 'taral@gmail.com',
-      },
-      {
-        Name: 'Hrishikesh Gore',
-        Goal: '2 Kg weight loss',
-        Duration: '10 Days',
-        Email: 'gore@gmail.com',
-      },
-      {
-        Name: 'Atharv Bhuse',
-        Goal: '10 Kg weight loss',
-        Duration: '10 Days',
-        Email: 'bhuse@gmail.com',
-      },
-    ],
+    headings: ['Id', 'Goal Name','Update', 'Delete'],
+    rows: categoriesData
   };
   const roles = {
     headings: ['Name', 'Email', 'Update', 'Delete'],
@@ -52,7 +36,7 @@ export function Tracker(props: TrackerProps) {
   useEffect(() => {
     if(context.manage == 'Manage Roles'){
     setTableData(roles);
-    } else if(context.manage == 'Manage Users'){
+    } else if(context.manage == 'Manage Categories'){
       setTableData(users)
     }else {
       setTableData('')

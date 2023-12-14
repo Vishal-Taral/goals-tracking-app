@@ -64,7 +64,7 @@ export function Menus(props: MenusProps) {
       icon : <ManageSearchIcon />,
       titleArray: [
         {
-          title: 'Manage Users',
+          title: 'Manage Categories',
         },
         {
           title: 'Manage Roles',

@@ -20,7 +20,7 @@ app.use('/api', RoleRouter);
 
 const appDataSource = new DataSource({
   type: 'mysql',
-  host: 'localhost',
+  host: '192.161.1.107:3333',
   username: 'root',
   password: 'admin@123',
   database: 'testing',
