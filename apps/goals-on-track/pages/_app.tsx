@@ -10,9 +10,15 @@ import {
 } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import ContextProvider from 'libs/shared/ui/src/lib/contexts/ContextProvider';
+import { useEffect } from 'react';
 
 function CustomApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient()
+  useEffect(()=> {
+    // localStorage.setItem('token','tokenIsPresent')
+    localStorage.removeItem('token')
+
+  },[])
   return (
     <>
     <ContextProvider>

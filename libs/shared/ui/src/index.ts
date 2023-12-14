@@ -8,3 +8,5 @@ export * from './lib/components/Dashboard/Dashboard'
 export * from './lib/components/user-detail-section/user-detail-section';
 export * from './lib/contexts/AppContext'
 export * from './lib/contexts/ContextProvider'
+export * from './lib/components/HOCAuth/HOCAuth'
+export * from './lib/components/Counter/Counter'
