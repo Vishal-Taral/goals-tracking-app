@@ -6,5 +6,5 @@ const getAllRoles = ():Promise<any> =>{
 }
 
 export const useGetRoles = ()=>{
-    return useQuery({queryKey:['categories'],queryFn:getAllRoles});
+    return useQuery({queryKey:['roles'],queryFn:getAllRoles});
 }   

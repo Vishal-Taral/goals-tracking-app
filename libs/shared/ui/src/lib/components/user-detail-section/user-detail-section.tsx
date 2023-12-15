@@ -83,11 +83,7 @@ export function UserDetailSection({ tableData } : UserDetailSectionProps) {
             {tableData?.rows?.map((data: any, index: number) => (
               <tr key={index} className={styles.table_row}>
                 {Object.entries(data).map((val, index) => (
-                  <>
-                  <td className={styles.table_data}>{val[1]}</td>
-                  {console.log("data",data)}
-                  {console.log("val",val)}
-                  </>
+                  <td className={styles.table_data} key={index}>{val[1]}</td>
                 ))}
                 <td className={styles.table_data}>
                   <span

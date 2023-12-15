@@ -11,22 +11,18 @@ export interface TrackerProps {}
 export function Tracker(props: TrackerProps) {
   const context = useContext(AppContext);
 
+  console.log("roals",context.roles);
+  console.log("categories",context?.categories?.data?.data);
+  
+  
+
   const users = {
-    headings: ['Id', 'Goal Name','Update', 'Delete'],
+    headings: ['Category Id', 'Goal Name','Update', 'Delete'],
     rows: context.categories?.data?.data
   };
   const roles = {
-    headings: ['Name', 'Email', 'Update', 'Delete'],
-    rows: [
-      {
-        Name: 'Admin',
-        Email: 'admin@gmail.com',
-      },
-      {
-        Name: 'Employee',
-        Email: 'employee@gmail.com',
-      },
-    ],
+    headings: ['Roll Id', 'Roll Name', 'Description' , 'Update', 'Delete'],
+    rows: context.roles?.data?.data
   };
 
   const [tableData, setTableData] = useState('');
