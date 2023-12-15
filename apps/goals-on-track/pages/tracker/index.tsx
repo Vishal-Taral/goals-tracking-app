@@ -21,8 +21,8 @@ export function Tracker(props: TrackerProps) {
     rows: context.categories?.data?.data
   };
   const roles = {
-    headings: ['Roll Id', 'Roll Name', 'Description' , 'Update', 'Delete'],
-    rows: context.roles?.data?.data
+    headings: ['Name', 'Email', 'Update', 'Delete'],
+    rows: context?.roles?.data?.data,
   };
 
   const [tableData, setTableData] = useState('');
