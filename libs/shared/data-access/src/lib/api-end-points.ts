@@ -5,5 +5,8 @@ export const apiUrlObject = {
     getAllRoles : `${serverUrl}/roles`,
     updateCategory : `${serverUrl}/updateCategory`,
 
-    // allCategoriesApi : 'http://localhost:3001', 
+    // allCategoriesApiUrl : 'http://localhost:3001/data',
+    // getAllRoles : 'http://localhost:3002/data',
+    // updateCategory : 'http://localhost:3003/data',
 }
+
