@@ -1,12 +1,8 @@
 {
     "data": [
         {
-            "id": "c313db86-98cf-11ee-8263-04e56e7607c1",
-            "name": "Employees"
-        },
-        {
-            "id": "c313db86-98cf-11ee-8263-04e56e7607c2",
-            "name": "Employees"
+            "categoryId": "c313db86-98cf-11ee-8263-04e56e7607c1",
+            "name": "1234fitness"
         }
     ]
 }
