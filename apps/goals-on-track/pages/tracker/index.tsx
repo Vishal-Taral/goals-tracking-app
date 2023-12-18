@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import AppContext from 'libs/shared/ui/src/lib/contexts/AppContext';
 import { apiUrlObject, useGetCategories, useGetRoles } from '@goal-tracker/data-access';
 import HOCAuth from 'libs/shared/ui/src/lib/components/HOCAuth/HOCAuth';
+import PrivateLayout from 'apps/goals-on-track/component/common/privateLayout/private-layout';
 
 /* eslint-disable-next-line */
 export interface TrackerProps {}
@@ -17,7 +18,7 @@ export function Tracker(props: TrackerProps) {
   console.log('roles', 'categories',rolesList, categoriesList)
 
   const categories = {
-    headings: ['Category Id', 'Goal Name','Update', 'Delete'],
+    headings: ['Category Id', 'Name','Update', 'Delete'],
     rows: categoriesList
   };
   const roles = {
@@ -39,12 +40,9 @@ export function Tracker(props: TrackerProps) {
 
   return (
     <div className={styles.container}>
+      <PrivateLayout>
       <div className={styles.dashboard_page_container}>
-        <div>
-          <Menus />
-        </div>
         <div className={styles.header_and_user_detail_section}>
-          <Header />
           {
             context.manage == 'Manage Roles' && <HOCAuth Component={ManageRoles} tableData={tableData}  />
           }
@@ -53,6 +51,7 @@ export function Tracker(props: TrackerProps) {
           }
         </div>
       </div>
+      </PrivateLayout>
     </div>
   );
 }
