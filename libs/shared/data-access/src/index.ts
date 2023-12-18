@@ -5,4 +5,6 @@ export * from './lib/api-client';
 export * from './lib/api-end-points';
 export * from '../src/lib/queries/getAllRoles'
 export * from '../src/lib/queries/getAllCategories'
+export * from '../src/lib/queries/useDeleteRoles'
+
 
