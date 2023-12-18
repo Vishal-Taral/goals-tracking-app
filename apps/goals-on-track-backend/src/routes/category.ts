@@ -4,11 +4,14 @@ import {
   deleteCategory,
   getAllCategories,
   updateCategory,
+  getCategoryById,
 } from '../controllers/categoryController';
 
 const router = express.Router();
 
 router.get('/categories', getAllCategories);
+
+router.get('/category/:id', getCategoryById);
 
 router.post('/addCategory', addCategory);
 

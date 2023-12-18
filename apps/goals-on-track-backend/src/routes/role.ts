@@ -4,11 +4,17 @@ import {
   deleteRole,
   getAllRoles,
   updateRole,
+  getRoleById,
+  // userLogin,
 } from '../controllers/roleController';
 
 const router = express.Router();
 
 router.get('/roles', getAllRoles);
+
+router.get('/role/:id', getRoleById);
+
+// router.post('/login', userLogin);
 
 router.post('/addRole', addRole);
 

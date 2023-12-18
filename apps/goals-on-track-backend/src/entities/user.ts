@@ -5,8 +5,10 @@ import {
   Column,
   JoinColumn,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import { Role } from './role';
+import { OrgTree } from './orgTree';
 
 @Entity()
 export class User extends BaseEntity {
@@ -31,9 +33,13 @@ export class User extends BaseEntity {
   @Column()
   gender: 'Male' | 'Female';
 
-  @ManyToOne(() => Role)
+  @ManyToOne(() => Role, { eager: true })
   @JoinColumn({ name: 'role_id' })
   role: Role;
+
+  // @OneToMany(() => OrgTree, (OrgTree) => OrgTree.user, { eager: true })
+  // @JoinColumn({ name: 'user_id' })
+  // reportee: OrgTree;
 
   @Column('timestamp', {
     name: 'created_at',
