@@ -41,7 +41,7 @@ export function Update({ open, handleClose }: UpdateProps) {
               <form>
                 <div className={styles.label_and_inputs}>
                   <div className={styles.field_name}>
-                    <label htmlFor="name">User Name</label>
+                    <label htmlFor="name">Roll Name</label>
                   </div>
                   <div >
                     <input type="text" placeholder='Enter The Name' className={styles.input_fields} />
@@ -50,14 +50,14 @@ export function Update({ open, handleClose }: UpdateProps) {
 
                 <div className={styles.label_and_inputs}>
                   <div className={styles.field_name}>
-                    <label htmlFor="name">Goal</label>
+                    <label htmlFor="name">Roll description</label>
                   </div>
                   <div >
                     <input type="text" placeholder='Enter the goal' className={styles.input_fields} />
                   </div>
                 </div>
 
-                <div className={styles.duration}>
+                {/* <div className={styles.duration}>
                   <div className={styles.label_and_inputs}>
                     <div className={styles.field_name}>
                       <label htmlFor="name">Duration from</label>
@@ -84,7 +84,7 @@ export function Update({ open, handleClose }: UpdateProps) {
                   <div >
                     <input type="email" placeholder='Enter the email' className={styles.input_fields} />
                   </div>
-                </div>
+                </div> */}
 
                 <div className={styles.update_btn}>
                   <Button variant="contained" onClick={handleClose} className={styles.cancel_button}>Cancel</Button>

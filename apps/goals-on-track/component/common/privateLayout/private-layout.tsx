@@ -1,5 +1,5 @@
 import styles from './private-layout.module.scss';
-import { Header , Footer } from '@goal-tracker/ui';
+import { Header , Footer , Menus } from '@goal-tracker/ui';
 
 /* eslint-disable-next-line */
 export interface PrivateLayoutProps {
@@ -9,8 +9,16 @@ export interface PrivateLayoutProps {
 export function PrivateLayout(props: PrivateLayoutProps) {
   return (
     <div className={styles['container']}>
-      <Header />
-      <div>{props.children}</div>
+      <div style={{display: 'flex' , width:'100%'}}>
+        <div >
+          <Menus />
+        </div>
+
+        <div style={{width :'100%'}}>
+          <Header />
+          {props.children}
+        </div>
+      </div>
       <Footer />
     </div>
   );
