@@ -65,7 +65,7 @@ export function ManageRoles({ tableData } : ManageRoles) {
           )}
         />
 
-        <Button variant="outlined">Add User</Button>
+        <Button variant="outlined">Add Role</Button>
       </div>
 
       <div className={styles.user_detail_container}>
