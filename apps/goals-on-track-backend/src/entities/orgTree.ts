@@ -24,7 +24,6 @@ export class OrgTree extends BaseEntity {
   @Column('timestamp', {
     name: 'created_at',
     nullable: true,
-    // default: () => 'CURRENT_TIMESTAMP',
   })
   createdAt: Date;
 
@@ -34,8 +33,6 @@ export class OrgTree extends BaseEntity {
   @Column('timestamp', {
     name: 'updated_at',
     nullable: true,
-
-    // default: () => 'CURRENT_TIMESTAMP',
   })
   updatedAt: Date;
 

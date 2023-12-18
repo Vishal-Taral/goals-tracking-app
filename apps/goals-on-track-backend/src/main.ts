@@ -10,13 +10,16 @@ import { SeedData1701843207086 } from './migrations/1701843207086-seedData';
 import { UserRouter } from './routes/user';
 import { CategoryRouter } from './routes/category';
 import { RoleRouter } from './routes/role';
+import cors from 'cors';
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use('/api', UserRouter);
 app.use('/api', CategoryRouter);
 app.use('/api', RoleRouter);
+
 
 const appDataSource = new DataSource({
   type: 'mysql',

@@ -1,13 +1,21 @@
-import { User } from '../entities/user';
+import { UserDetailsDto } from '../dto/userDto';
+import {
+  addUserService,
+  getUserByIdService,
+  listOfUserService,
+  removeUserService,
+  updateUserService,
+} from '../services/userService';
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await listOfUserService();
+    const userDto = UserDetailsDto.toDto(users);
     return res.json({
       statusCode: 200,
       status: 'success',
       message: 'users fetched successfully.',
-      data: users,
+      data: userDto,
     });
   } catch (error) {
     throw new error();
@@ -16,26 +24,31 @@ const getAllUsers = async (req, res) => {
 
 const addUser = async (req, res) => {
   try {
-    const { firstName, lastName, gender, mobile_number, email, password } =
-      req.body;
-    const newUser = User.create({
-      firstName,
-      lastName,
-      gender,
-      mobile_number,
-      email,
-      password,
-      createdAt: new Date(),
-      createdBy: 'admin',
-      updatedBy: 'admin',
-      updatedAt: new Date(),
-    });
-    const addedUser = await User.save(newUser);
+    const addedUser = await addUserService(req.body);
     return res.json({
       statusCode: 200,
       status: 'success',
       message: 'user added successfully.',
-      data: addedUser,
+      data: new UserDetailsDto(addedUser),
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+const getUserById = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const existingUser = getUserByIdService(userId);
+    if (!existingUser) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    return res.json({
+      statusCode: 200,
+      status: 'success',
+      message: 'User found successfully.',
+      data: new UserDetailsDto(existingUser),
     });
   } catch (error) {
     console.log(error);
@@ -46,29 +59,17 @@ const addUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const userId = req.params.id;
-    const { firstName, lastName, gender, mobile_number, email, password } =
-      req.body;
-    const existingUser = await User.findOne({ where: { userId } });
+    const existingUser = await updateUserService(userId, req?.body);
     if (!existingUser) {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    existingUser.firstName = firstName;
-    existingUser.lastName = lastName;
-    existingUser.gender = gender;
-    existingUser.mobile_number = mobile_number;
-    existingUser.email = email;
-    existingUser.password = password;
-    existingUser.createdAt = new Date();
-    existingUser.updatedAt = new Date();
-
     // Save the updated user
-    const updatedUser = await User.save(existingUser);
     return res.json({
       statusCode: 200,
       status: 'success',
       message: 'user updated successfully.',
-      data: updatedUser,
+      data: new UserDetailsDto(existingUser),
     });
   } catch (error) {
     console.log(error);
@@ -79,21 +80,22 @@ const updateUser = async (req, res) => {
 const deleteUser = async (req, res) => {
   try {
     const userId = req.params.id;
-    const user = await User.findOne({ where: { userId } });
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+    const user = await removeUserService(userId);
+    if (user.affected !== 0) {
+      return res.json({
+        statusCode: 200,
+        status: 'success',
+        message: 'user deleted successfully.',
+      });
+    } else {
+      return res.status(404).json({ error: 'Failed to delete user' });
     }
-    const deleteUser = await User.delete(userId);
-    return res.json({
-      statusCode: 200,
-      status: 'success',
-      message: 'user deleted successfully.',
-      data: user,
-    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
-export { getAllUsers, updateUser, addUser, deleteUser };
+// const userLogin = async();
+
+export { getAllUsers, updateUser, addUser, deleteUser, getUserById };
