@@ -18,7 +18,7 @@ export function Tracker(props: TrackerProps) {
   console.log('roles', 'categories',rolesList, categoriesList)
 
   const categories = {
-    headings: ['Category Id', 'Goal Name','Update', 'Delete'],
+    headings: ['Category Id', 'Name','Update', 'Delete'],
     rows: categoriesList
   };
   const roles = {

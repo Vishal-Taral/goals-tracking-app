@@ -5,7 +5,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
-import Update from '../update/update';
+// import Update from '../update/update';
+import UpdateCategory from '../updateCategory/update-category';
 import DeleteComponent from '../delete/delete';
 
 /* eslint-disable-next-line */
@@ -24,6 +25,8 @@ export function ManageCategories({ tableData } : ManageCategories) {
   const handleClose = () => setOpenUpdate(false);
   const handleCloseDelete = () => setOpenDelete(false);
   const [selectedRowIndex, setSelectedRowIndex] = useState<number | null>(null);
+
+  console.log("id" , selectedRowIndex);
 
   const handleOpenUpdate = (index: number) => {
     setSelectedRowIndex(index);
@@ -82,9 +85,13 @@ export function ManageCategories({ tableData } : ManageCategories) {
           <tbody>
             {tableData?.rows?.map((data: any, index: number) => (
               <tr key={index} className={styles.table_row}>
-                {Object.entries(data).map((val, index) => (
+                {/* {Object.entries(data).map((val, index) => (
                   <td className={styles.table_data} key={index}>{val[1]}</td>
-                ))}
+                ))} */}
+                <td className={styles.table_data}>{index+1}</td>
+
+                <td className={styles.table_data}>{data?.name}</td>
+                
                 <td className={styles.table_data}>
                   <span
                     className={styles.icons}
@@ -107,10 +114,17 @@ export function ManageCategories({ tableData } : ManageCategories) {
         </table>
       </div>
       {openUpdate && selectedRowIndex !== null && (
-        <Update
-          // data={tableData.rows[selectedRowIndex]}
+        // <Update
+        //   // data={tableData.rows[selectedRowIndex]}
+        //   open={handleOpen}
+        //   handleClose={handleClose}
+        // />
+
+        <UpdateCategory
           open={handleOpen}
-          handleClose={handleClose}
+          handleClose={handleClose} 
+          selctedId={selectedRowIndex}
+          preFilledCategoryName = {tableData.roles}
         />
       )}
 

@@ -35,13 +35,13 @@ export function Update({ open, handleClose }: UpdateProps) {
         >
           <Box sx={styleObj}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              <h1 className={styles.heading}>Update User</h1>
+              <h1 className={styles.heading}>Update Role</h1>
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
               <form>
                 <div className={styles.label_and_inputs}>
                   <div className={styles.field_name}>
-                    <label htmlFor="name">Roll Name</label>
+                    <label htmlFor="name">Role Name</label>
                   </div>
                   <div >
                     <input type="text" placeholder='Enter The Name' className={styles.input_fields} />
@@ -50,7 +50,7 @@ export function Update({ open, handleClose }: UpdateProps) {
 
                 <div className={styles.label_and_inputs}>
                   <div className={styles.field_name}>
-                    <label htmlFor="name">Roll description</label>
+                    <label htmlFor="name">Role description</label>
                   </div>
                   <div >
                     <input type="text" placeholder='Enter the goal' className={styles.input_fields} />
