@@ -1,4 +1,4 @@
-import styles from './user-detail-section.module.scss';
+import styles from './ManageRoles.module.scss';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -12,11 +12,11 @@ import DeleteComponent from '../delete/delete';
 
 const options = ['story', 'upskill', 'task completing ', 'achievable'];
 
-export interface UserDetailSectionProps {
+export interface ManageRoles {
   tableData : any;
 }
 
-export function UserDetailSection({ tableData } : UserDetailSectionProps) {
+export function ManageRoles({ tableData } : ManageRoles) {
   const [openUpdate, setOpenUpdate] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const handleOpen = () => setOpenUpdate(true);
@@ -125,4 +125,4 @@ export function UserDetailSection({ tableData } : UserDetailSectionProps) {
   );
 }
 
-export default UserDetailSection;
+export default ManageRoles;

@@ -93,7 +93,6 @@ export function Menus(props: MenusProps) {
                     <div className={styles.menus_icons}>{data.icon}</div>
                     <h1 className={styles.menus_type}>{data.type}</h1>
                   </div>
-        
                   {data?.titleArray && data?.titleArray?.length > 0 && (
                     <div className={styles.arrows}>
                     <div>

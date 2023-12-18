@@ -1,0 +1,48 @@
+.container {
+    padding: 2rem 4rem 2rem 2rem;
+    height: 87.5vh;
+    background-color: rgb(229 229 229);
+
+    .categories{
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .user_detail_container {
+        .table_headings_section{
+            background-color: #f5f5f5;
+            text-align: left;
+        }
+
+        .table_row {
+            text-align: left;
+
+            &:nth-child(even) {
+                background-color: #f5f5f5;
+            }
+
+            &:nth-child(odd) {
+                background-color: white;
+            }
+
+            .icons{
+                color: rgb(180, 180, 231);
+                cursor: pointer;
+            }
+        }
+
+        .table{
+            box-shadow: 1px 1px 13px 0px rgba(206, 204, 204, 0.75);
+            width: 100%;
+        }
+
+        .table,
+        .headings,
+        .table_data{
+            border-collapse: collapse;
+            padding: .5rem;
+        }
+    }
+}
