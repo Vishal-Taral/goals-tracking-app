@@ -27,6 +27,14 @@ export function Delete({open , handleClose}: DeleteProps) {
     color : 'black',
   };
 
+  // const handleClose = (data) => {
+  //   if(data=='cancel'){
+  //     setRolesDelete
+  //   }else if(data=='delete'){
+
+  //   }
+  // }
+
   return (
     <div>
       <div>
@@ -54,8 +62,8 @@ export function Delete({open , handleClose}: DeleteProps) {
             </div>
 
             <div className={styles.delete_btn}>
-              <Button variant="contained" onClick={handleClose} className={styles.cancel_button}>Cancel</Button>
-              <Button variant="contained" onClick={handleClose} className={styles.delete}>Delete</Button>
+              <Button variant="contained" onClick={()=>handleClose('cancel')} className={styles.cancel_button}>Cancel</Button>
+              <Button variant="contained" onClick={()=>handleClose('delete')} className={styles.delete}>Delete</Button>
             </div>
 
           </Typography>

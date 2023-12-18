@@ -4,25 +4,39 @@ import Autocomplete from '@mui/material/Autocomplete';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Update from '../update/update';
 import DeleteComponent from '../delete/delete';
+import { useDeleteRoles } from '@goal-tracker/data-access';
 
 /* eslint-disable-next-line */
 
 const options = ['story', 'upskill', 'task completing ', 'achievable'];
 
 export interface ManageRoles {
-  tableData : any;
+  tableData: any;
 }
 
-export function ManageRoles({ tableData } : ManageRoles) {
+export function ManageRoles({ tableData }: ManageRoles) {
   const [openUpdate, setOpenUpdate] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const handleOpen = () => setOpenUpdate(true);
-  const handleOpenDelete = () => setOpenDelete(true);
-  const handleClose = () => setOpenUpdate(false);
-  const handleCloseDelete = () => setOpenDelete(false);
+  const handleClose = () => {
+    setOpenUpdate(false);
+  };
+
+  const [deleteChecked, setDeleteChecked] = useState('')
+  const handleCloseDelete = (data) => {
+    setOpenDelete(false);
+    console.log('data', data)
+    if(data == 'cancel'){
+      setDeleteChecked(false)
+    }else if(data == 'delete'){
+      setDeleteChecked(true)
+    }else {
+      setDeleteChecked(false)
+    }
+  };
   const [selectedRowIndex, setSelectedRowIndex] = useState<number | null>(null);
 
   const handleOpenUpdate = (index: number) => {
@@ -30,10 +44,26 @@ export function ManageRoles({ tableData } : ManageRoles) {
     setOpenUpdate(true);
   };
 
-  const handleOpenDelate = (index: number) => {
+  const [deleteIndex, setDeleteIndex] = useState(null);
+  const [deleteRoleId, setDeleteRoleId] = useState(null)
+  const deletePopupOpenHandler = (index: number, data: any) => {
     setSelectedRowIndex(index);
     setOpenDelete(true);
+    setDeleteIndex(index)
+    setDeleteRoleId(data.id)
   };
+
+  console.log('deleteRoleId', deleteRoleId)
+
+  const xx = useDeleteRoles(deleteRoleId)
+
+  useEffect(()=>{
+    if(deleteChecked == true && deleteIndex>=0){
+      console.log('xxx')
+      const api = xx.mutateAsync()
+      console.log(api)
+    }
+  },[deleteChecked, deleteIndex])
 
   return (
     <div className={styles.container}>
@@ -83,7 +113,9 @@ export function ManageRoles({ tableData } : ManageRoles) {
             {tableData?.rows?.map((data: any, index: number) => (
               <tr key={index} className={styles.table_row}>
                 {Object.entries(data).map((val, index) => (
-                  <td className={styles.table_data} key={index}>{val[1]}</td>
+                  <td className={styles.table_data} key={index}>
+                    {val[1]}
+                  </td>
                 ))}
                 <td className={styles.table_data}>
                   <span
@@ -96,7 +128,7 @@ export function ManageRoles({ tableData } : ManageRoles) {
                 <td className={styles.table_data}>
                   <span
                     className={styles.icons}
-                    onClick={() => handleOpenDelate(index)}
+                    onClick={() => deletePopupOpenHandler(index, data)}
                   >
                     <DeleteIcon />
                   </span>
@@ -107,20 +139,10 @@ export function ManageRoles({ tableData } : ManageRoles) {
         </table>
       </div>
       {openUpdate && selectedRowIndex !== null && (
-        <Update
-          // data={tableData.rows[selectedRowIndex]}
-          open={handleOpen}
-          handleClose={handleClose}
-        />
+        <Update open={handleOpen} handleClose={handleClose} />
       )}
 
-      {openDelete && selectedRowIndex !== null && (
-        <DeleteComponent
-          // data={tableData.rows[selectedRowIndex]}
-          open={handleOpenDelete}
-          handleClose={handleCloseDelete}
-        />
-      )}
+      <DeleteComponent open={openDelete} handleClose={handleCloseDelete} />
     </div>
   );
 }
