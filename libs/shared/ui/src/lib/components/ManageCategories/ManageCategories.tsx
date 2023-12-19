@@ -8,6 +8,7 @@ import { useState } from 'react';
 // import Update from '../update/update';
 import UpdateCategory from '../updateCategory/update-category';
 import DeleteComponent from '../delete/delete';
+import CreateCategory from '../createCategory/create-category';
 
 /* eslint-disable-next-line */
 
@@ -26,6 +27,11 @@ export function ManageCategories({ tableData } : ManageCategories) {
   const handleCloseDelete = () => setOpenDelete(false);
   const [selectedRowIndex, setSelectedRowIndex] = useState<number | null>(null);
 
+  
+  const [openCreatePopup, setOpenCreatePopup] = useState(false);
+  const handleCloseCreatePopup = () => setOpenCreatePopup(false)
+  const handleOpenCreatePopup = () => setOpenCreatePopup(true);
+
   console.log("id" , selectedRowIndex);
 
   const handleOpenUpdate = (index: number) => {
@@ -36,6 +42,11 @@ export function ManageCategories({ tableData } : ManageCategories) {
   const handleOpenDelate = (index: number) => {
     setSelectedRowIndex(index);
     setOpenDelete(true);
+  };
+
+  const handleCreateCategory = () => {
+    // setSelectedRowIndex(index);
+    setOpenCreatePopup(true);
   };
 
   return (
@@ -57,18 +68,18 @@ export function ManageCategories({ tableData } : ManageCategories) {
               id="filled-number"
               label="categories"
               sx={{
-                backgroundColor: 'white',
+                backgroundcolor: 'white',
                 width: 150,
               }}
               InputLabelProps={{
                 shrink: true,
-                backgroundColor: 'white',
+                backgroundcolor: 'white',
               }}
             />
           )}
         />
 
-        <Button variant="outlined">Add User</Button>
+        <Button variant="outlined" onClick={() => handleCreateCategory()}>Add Category</Button>
       </div>
 
       <div className={styles.user_detail_container}>
@@ -88,14 +99,14 @@ export function ManageCategories({ tableData } : ManageCategories) {
                 {/* {Object.entries(data).map((val, index) => (
                   <td className={styles.table_data} key={index}>{val[1]}</td>
                 ))} */}
-                <td className={styles.table_data}>{index+1}</td>
+                <td className={styles.table_data}>{data.id}</td>
 
                 <td className={styles.table_data}>{data?.name}</td>
                 
                 <td className={styles.table_data}>
                   <span
                     className={styles.icons}
-                    onClick={() => handleOpenUpdate(index)}
+                    onClick={() => handleOpenUpdate(data.id)}
                   >
                     <EditIcon />
                   </span>
@@ -103,7 +114,7 @@ export function ManageCategories({ tableData } : ManageCategories) {
                 <td className={styles.table_data}>
                   <span
                     className={styles.icons}
-                    onClick={() => handleOpenDelate(index)}
+                    onClick={() => handleOpenDelate(data.id)}
                   >
                     <DeleteIcon />
                   </span>
@@ -114,25 +125,25 @@ export function ManageCategories({ tableData } : ManageCategories) {
         </table>
       </div>
       {openUpdate && selectedRowIndex !== null && (
-        // <Update
-        //   // data={tableData.rows[selectedRowIndex]}
-        //   open={handleOpen}
-        //   handleClose={handleClose}
-        // />
-
         <UpdateCategory
           open={handleOpen}
           handleClose={handleClose} 
           selctedId={selectedRowIndex}
-          preFilledCategoryName = {tableData.roles}
         />
       )}
 
       {openDelete && selectedRowIndex !== null && (
         <DeleteComponent
-          // data={tableData.rows[selectedRowIndex]}
           open={handleOpenDelete}
           handleClose={handleCloseDelete}
+          categoryId={selectedRowIndex}
+        />
+      )}
+
+      {openCreatePopup && (
+        <CreateCategory 
+          open={handleOpenCreatePopup}
+          handleClose={handleCloseCreatePopup}
         />
       )}
     </div>
