@@ -3,13 +3,15 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import {useState,useEffect} from 'react'
 /* eslint-disable-next-line */
 export interface UpdateProps {
   open: any;
   handleClose: (action: any) => void;
+  updatePopupDataCallback: () => void;
 }
 
-export function Update({ open, handleClose }: UpdateProps) {
+export function Update({ open, handleClose, updatePopupDataCallback }: UpdateProps) {
   const styleObj = {
     position: 'absolute' as 'absolute',
     top: '50%',
@@ -23,6 +25,14 @@ export function Update({ open, handleClose }: UpdateProps) {
     p: 2,
     color: 'black',
   };
+
+  const [updatePopupData, setUpdatePopupData] = useState({
+    name: '',description: ''
+  })
+  const changeHandler = (e, heading) => {
+    setUpdatePopupData({...updatePopupData, [heading]: e.target.value})
+    updatePopupDataCallback({...updatePopupData, [heading]: e.target.value})
+  }
 
   return (
     <div>
@@ -44,7 +54,7 @@ export function Update({ open, handleClose }: UpdateProps) {
                     <label htmlFor="name">Role Name</label>
                   </div>
                   <div >
-                    <input type="text" placeholder='Enter The Name' className={styles.input_fields} />
+                    <input onChange={(e)=>changeHandler(e,'name')} type="text" placeholder='Enter The Name' className={styles.input_fields} />
                   </div>
                 </div>
 
@@ -53,7 +63,7 @@ export function Update({ open, handleClose }: UpdateProps) {
                     <label htmlFor="name">Role description</label>
                   </div>
                   <div >
-                    <input type="text" placeholder='Enter the goal' className={styles.input_fields} />
+                    <input onChange={(e)=>changeHandler(e,'description')} type="text" placeholder='Enter the goal' className={styles.input_fields} />
                   </div>
                 </div>
 
@@ -87,8 +97,8 @@ export function Update({ open, handleClose }: UpdateProps) {
                 </div> */}
 
                 <div className={styles.update_btn}>
-                  <Button variant="contained" onClick={handleClose} className={styles.cancel_button}>Cancel</Button>
-                  <Button variant="contained" onClick={handleClose}>Update</Button>
+                  <Button variant="contained" onClick={()=>handleClose('cancel')} className={styles.cancel_button}>Cancel</Button>
+                  <Button variant="contained" onClick={()=>handleClose('update')}>Update</Button>
                 </div>
               </form>
             </Typography>

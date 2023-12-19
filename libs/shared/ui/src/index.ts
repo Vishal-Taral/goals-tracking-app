@@ -10,4 +10,5 @@ export * from './lib/contexts/ContextProvider';
 export * from './lib/components/HOCAuth/HOCAuth';
 export * from './lib/components/ManageRoles/ManageRoles';
 export * from './lib/components/ManageCategories/ManageCategories';
+export * from './lib/components/AddRole/AddRole';
 

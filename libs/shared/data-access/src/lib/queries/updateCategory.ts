@@ -8,7 +8,6 @@ const updateCategory: any = async (params: any): Promise<any> => {
   // Assuming the API expects data in the format { name: updatedName }
   const updatedValue = await apiClient.put(url, { name: params.name });
   console.log('Updated Value:', updatedValue);
-
   return updatedValue;
 };
 
