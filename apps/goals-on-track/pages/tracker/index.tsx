@@ -1,5 +1,5 @@
 import styles from './index.module.scss';
-import { Menus , UserDetailSection , Header, ManageRoles, ManageCategories } from '@goal-tracker/ui';
+import { ManageRoles, ManageCategories } from '@goal-tracker/ui';
 import { useContext, useEffect, useState } from 'react';
 import AppContext from 'libs/shared/ui/src/lib/contexts/AppContext';
 import { apiUrlObject, useGetCategories, useGetRoles } from '@goal-tracker/data-access';
@@ -11,23 +11,7 @@ export interface TrackerProps {}
 
 export function Tracker(props: TrackerProps) {
   const context = useContext(AppContext);
-  
-  const {data: rolesList} = useGetRoles()
-  const {data: categoriesList} = useGetCategories()
 
-  console.log('roles', 'categories',rolesList, categoriesList)
-
-  const categories = {
-    headings: ['Category Id', 'Name','Update', 'Delete'],
-    rows: categoriesList
-  };
-  const roles = {
-    headings: ['ID', 'Name', 'Description', 'Update', 'Delete'],
-    rows: rolesList,
-  };
-
-
-  const [tableData, setTableData] = useState('');
   useEffect(() => {
     if(context.manage == 'Manage Roles'){
     setTableData(roles);
@@ -37,6 +21,33 @@ export function Tracker(props: TrackerProps) {
       setTableData('')
     }
   }, [context]);
+
+  const [categoryListData , setCategoryListData] = useState<any>()
+  
+  const {data: rolesList} = useGetRoles()
+  const { data: categoriesList, isError } = useGetCategories({
+    // enabled: context?.manage == 'Manage Categories',
+    onSuccess: (data: any) => {
+      console.log("data->", data);
+    },
+    onError: (error: any) => {
+      console.error("Error fetching categories:", error);
+    }
+  });
+  
+  
+
+  const categories : any = {
+    headings: ['Category Id', 'Name','Update', 'Delete'],
+    rows: categoriesList
+  };
+  const roles : any = {
+    headings: ['ID', 'Name', 'Description', 'Update', 'Delete'],
+    rows: rolesList,
+  };
+
+
+  const [tableData, setTableData] = useState('');
 
   return (
     <div className={styles.container}>

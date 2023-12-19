@@ -84,12 +84,12 @@ export function ManageRoles({ tableData }: ManageRoles) {
               id="filled-number"
               label="categories"
               sx={{
-                backgroundColor: 'white',
+                backgroundcolor: 'white',
                 width: 150,
               }}
               InputLabelProps={{
                 shrink: true,
-                backgroundColor: 'white',
+                backgroundcolor: 'white',
               }}
             />
           )}

@@ -36,7 +36,7 @@ export function Header(props: HeaderProps) {
         ) : (
           <div className={styles.profile_container}>
             <div>
-              <Image src={logo} alt='logo' width={100} height={50} onClick={goToHome}/>
+              <Image src={logo} alt='logo' width={100} height={50} onClick={goToHome} priority/>
             </div>            
             <div className={styles.use_name_and_profile_pic}>
               <h1 className={styles.user_name}>Vishal</h1>

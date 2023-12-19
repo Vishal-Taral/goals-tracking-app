@@ -1,18 +1,26 @@
 import React, { useState } from 'react';
-import styles from './update-category.module.scss';
+import styles from './create-category.module.scss';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { useUpdateCategory } from '../../../../../data-access/src/lib/queries/updateCategory';
+import { useCreateCategory } from '../../../../../data-access/src/lib/queries/createCategory';
 
 export interface UpdateCategoryProps {
   open: any;
   handleClose: () => void;
-  selctedId: number;
 }
 
-export function UpdateCategory({ open, handleClose, selctedId }: UpdateCategoryProps) {
+export function CreateCategory({ open, handleClose }: UpdateCategoryProps) {
+
+  const [categoryName, setCategoryName] = useState('');
+  const { mutate } = useCreateCategory();
+
+  const handleCreateCategory = async () => {
+    await mutate(categoryName);
+    handleClose();
+  };
+  
   const styleObj = {
     position: 'absolute' as 'absolute',
     top: '50%',
@@ -27,27 +35,6 @@ export function UpdateCategory({ open, handleClose, selctedId }: UpdateCategoryP
     color: 'black',
   };
 
-  const { mutateAsync: updateCategory } = useUpdateCategory();
-  const [categoryName, setCategoryName] = useState('');
-
-  const ID = 1;
-
-  const payLoad = {
-    id: selctedId,
-    name: categoryName,
-  };
-
-  const handleUpdate = async () => {
-    handleClose();
-    try {
-      console.log('Payload:', payLoad);
-      await updateCategory(payLoad);
-      console.log('Category updated successfully');
-    } catch (error) {
-      console.error('Error updating category:', error);
-    }
-  };
-
   return (
     <div>
       <Modal
@@ -58,7 +45,7 @@ export function UpdateCategory({ open, handleClose, selctedId }: UpdateCategoryP
       >
         <Box sx={styleObj}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            <h1 className={styles.heading}>Update Category</h1>
+            <h1 className={styles.heading}>Create Category</h1>
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             <form>
@@ -85,8 +72,8 @@ export function UpdateCategory({ open, handleClose, selctedId }: UpdateCategoryP
                 >
                   Cancel
                 </Button>
-                <Button variant="contained" onClick={handleUpdate}>
-                  Update
+                <Button variant="contained" className={styles.create_button} onClick={handleCreateCategory}>
+                  Create
                 </Button>
               </div>
             </form>
@@ -97,4 +84,4 @@ export function UpdateCategory({ open, handleClose, selctedId }: UpdateCategoryP
   );
 }
 
-export default UpdateCategory;
+export default CreateCategory;
