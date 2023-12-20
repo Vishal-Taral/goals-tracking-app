@@ -22,7 +22,7 @@ export function Login(props: LoginProps) {
   const router = useRouter();
 
   const routFunction = () => {
-    router.push('./tracker')
+    router.push('./dashboard')
   }
 
   const fetchData = async () => {
