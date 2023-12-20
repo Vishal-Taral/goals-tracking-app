@@ -126,7 +126,7 @@ export function ManageCategories({ tableData } : ManageCategories) {
       </div>
       {openUpdate && selectedRowIndex !== null && (
         <UpdateCategory
-          open={handleOpen}
+          open={true}
           handleClose={handleClose} 
           selctedId={selectedRowIndex}
         />
@@ -134,7 +134,7 @@ export function ManageCategories({ tableData } : ManageCategories) {
 
       {openDelete && selectedRowIndex !== null && (
         <DeleteComponent
-          open={handleOpenDelete}
+          open={true}
           handleClose={handleCloseDelete}
           categoryId={selectedRowIndex}
         />
@@ -142,7 +142,7 @@ export function ManageCategories({ tableData } : ManageCategories) {
 
       {openCreatePopup && (
         <CreateCategory 
-          open={handleOpenCreatePopup}
+          open={true}
           handleClose={handleCloseCreatePopup}
         />
       )}
