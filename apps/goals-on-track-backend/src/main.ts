@@ -22,11 +22,12 @@ app.use('/api', RoleRouter);
 
 
 const appDataSource = new DataSource({
-  type: 'mysql',
-  host: '192.161.1.107:3333',
-  username: 'root',
-  password: 'admin@123',
-  database: 'testing',
+  type: 'postgres',
+  host: 'localhost',
+  port: 5432,
+  username: 'postgres',
+  password: 'password',
+  database: 'got',
   entities: [User, Role, Category, Goal, OrgTree],
   migrations: [SeedData1701843207086],
   migrationsRun: true,

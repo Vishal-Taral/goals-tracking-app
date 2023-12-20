@@ -6,5 +6,6 @@ export * from './lib/api-end-points';
 export * from '../src/lib/queries/getAllRoles'
 export * from '../src/lib/queries/getAllCategories'
 export * from '../src/lib/queries/useDeleteRoles'
-
+export * from '../src/lib/queries/useUpdateRoles'
+export * from '../src/lib/queries/useAddRole'
 

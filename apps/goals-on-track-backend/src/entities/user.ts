@@ -5,10 +5,8 @@ import {
   Column,
   JoinColumn,
   ManyToOne,
-  OneToMany,
 } from 'typeorm';
 import { Role } from './role';
-import { OrgTree } from './orgTree';
 
 @Entity()
 export class User extends BaseEntity {
