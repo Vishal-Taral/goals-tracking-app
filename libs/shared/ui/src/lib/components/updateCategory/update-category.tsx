@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import { useUpdateCategory } from '../../../../../data-access/src/lib/queries/updateCategory';
 
 export interface UpdateCategoryProps {
-  open: any;
+  open: boolean;
   handleClose: () => void;
   selctedId: number;
 }
@@ -58,36 +58,38 @@ export function UpdateCategory({ open, handleClose, selctedId }: UpdateCategoryP
       >
         <Box sx={styleObj}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            <h1 className={styles.heading}>Update Category</h1>
+            <div className={styles.heading}>Update Category</div>
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             <form>
-              <div className={styles.label_and_inputs}>
-                <div className={styles.field_name}>
-                  <label htmlFor="name">Category Name</label>
+              <div>
+                <div className={styles.label_and_inputs}>
+                  <div className={styles.field_name}>
+                    <label htmlFor="name">Category Name</label>
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      placeholder="Enter The Name"
+                      className={styles.input_fields}
+                      value={categoryName}
+                      onChange={(e) => setCategoryName(e.target.value)}
+                    />
+                  </div>
                 </div>
-                <div>
-                  <input
-                    type="text"
-                    placeholder="Enter The Name"
-                    className={styles.input_fields}
-                    value={categoryName}
-                    onChange={(e) => setCategoryName(e.target.value)}
-                  />
-                </div>
-              </div>
 
-              <div className={styles.update_btn}>
-                <Button
-                  variant="contained"
-                  onClick={handleClose}
-                  className={styles.cancel_button}
-                >
-                  Cancel
-                </Button>
-                <Button variant="contained" onClick={handleUpdate}>
-                  Update
-                </Button>
+                <div className={styles.update_btn}>
+                  <Button
+                    variant="contained"
+                    onClick={handleClose}
+                    className={styles.cancel_button}
+                  >
+                    Cancel
+                  </Button>
+                  <Button variant="contained" onClick={handleUpdate}>
+                    Update
+                  </Button>
+                </div>
               </div>
             </form>
           </Typography>
