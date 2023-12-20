@@ -6,14 +6,9 @@
       "description": "employeeRole"
     },
     {
-      "id": "2883e37c-aaff-414c-87b9-f6f83465d5a0",
-      "name": "manager",
-      "description": "managerRole"
-    },
-    {
-      "id": "b9063d46-98cf-11ee-8263-04e56e7607c1",
-      "name": "Admin",
-      "description": "Administrator Role"
+      "name": "x",
+      "description": "x",
+      "id": "cxo4dh_"
     }
   ]
 }

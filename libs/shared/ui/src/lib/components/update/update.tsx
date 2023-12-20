@@ -30,8 +30,9 @@ export function Update({ open, handleClose, updatePopupDataCallback }: UpdatePro
     name: '',description: ''
   })
   const changeHandler = (e, heading) => {
-    setUpdatePopupData({...updatePopupData, [heading]: e.target.value})
-    updatePopupDataCallback({...updatePopupData, [heading]: e.target.value})
+    const updatedData = {...updatePopupData, [heading]: e.target.value}
+    setUpdatePopupData(updatedData)
+    updatePopupDataCallback(updatedData)
   }
 
   return (

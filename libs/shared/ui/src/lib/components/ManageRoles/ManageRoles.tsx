@@ -78,7 +78,6 @@ export function ManageRoles({ tableData }: ManageRoles) {
     if (updateChecked == true && updateIndex >= 0) {
       // const api = xx.mutateAsync()
       const apixxx = xxx.mutateAsync();
-      console.log('apixxx', apixxx);
     }
   }, [updateChecked, updateIndex]);
 
@@ -103,10 +102,7 @@ export function ManageRoles({ tableData }: ManageRoles) {
   console.log('rolesList outside', rolesList);
 
   const [openAdd, setOpenAdd] = useState(false);
-  // const addRoleHandler = () => {
-  //   setOpenAdd(true);
-  // };
-
+  
   const handleCloseAdd = () => {
     setOpenAdd(false);
   };
