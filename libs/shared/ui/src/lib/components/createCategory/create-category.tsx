@@ -48,7 +48,7 @@ export function CreateCategory({ open, handleClose }: UpdateCategoryProps) {
             <div className={styles.heading}>Create Category</div>
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <form>
+            <form onSubmit={handleCreateCategory}>
               <div className={styles.label_and_inputs}>
                 <div className={styles.field_name}>
                   <label htmlFor="name">Category Name</label>
@@ -72,7 +72,7 @@ export function CreateCategory({ open, handleClose }: UpdateCategoryProps) {
                 >
                   Cancel
                 </Button>
-                <Button variant="contained" className={styles.create_button} onClick={handleCreateCategory}>
+                <Button variant="contained" className={styles.create_button} type="submit">
                   Create
                 </Button>
               </div>

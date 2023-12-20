@@ -65,7 +65,7 @@ export function DeleteCategory({ open, handleClose, categoryId, categories }: De
                 <span className={styles.warning_icon}>
                   <WarningIcon />
                 </span>
-                <span>{`You'll permanently lose this " ${categoryName} " category`}</span>
+                <span>{`You'll permanently lose this " ${categoryName} " named category`}</span>
               </div>
             </div>
 
