@@ -22,24 +22,16 @@ export function Tracker(props: TrackerProps) {
     }
   }, [context]);
 
-  const [categoryListData , setCategoryListData] = useState<any>()
+  // const [categoryListData , setCategoryListData] = useState<any>()
   
   const {data: rolesList} = useGetRoles()
-  const { data: categoriesList, isError } = useGetCategories({
-    // enabled: context?.manage == 'Manage Categories',
-    onSuccess: (data: any) => {
-      console.log("data->", data);
-    },
-    onError: (error: any) => {
-      console.error("Error fetching categories:", error);
-    }
-  });
+  // const { data: categoriesList, isError } = useGetCategories();
   
   
 
   const categories : any = {
     headings: ['Category Id', 'Name','Update', 'Delete'],
-    rows: categoriesList
+    // rows: categoriesList
   };
   const roles : any = {
     headings: ['ID', 'Name', 'Description', 'Update', 'Delete'],
