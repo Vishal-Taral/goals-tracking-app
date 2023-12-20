@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import styles from './update-category.module.scss';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -10,9 +10,10 @@ export interface UpdateCategoryProps {
   open: boolean;
   handleClose: () => void;
   selctedId: number;
+  categoriesList: any[];
 }
 
-export function UpdateCategory({ open, handleClose, selctedId }: UpdateCategoryProps) {
+export function UpdateCategory({ open, handleClose, selctedId , categoriesList,}: UpdateCategoryProps) {
   const styleObj = {
     position: 'absolute' as 'absolute',
     top: '50%',
@@ -29,6 +30,13 @@ export function UpdateCategory({ open, handleClose, selctedId }: UpdateCategoryP
 
   const { mutateAsync: updateCategory } = useUpdateCategory();
   const [categoryName, setCategoryName] = useState('');
+
+  useEffect(() => {
+    const selectedCategory = categoriesList.find((category) => category.id === selctedId);
+    if (selectedCategory) {
+      setCategoryName(selectedCategory.name);
+    }
+  }, [categoriesList, selctedId]);
 
   const ID = 1;
 
@@ -61,7 +69,7 @@ export function UpdateCategory({ open, handleClose, selctedId }: UpdateCategoryP
             <div className={styles.heading}>Update Category</div>
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <form>
+            <form onSubmit={handleUpdate}>
               <div>
                 <div className={styles.label_and_inputs}>
                   <div className={styles.field_name}>
@@ -86,7 +94,7 @@ export function UpdateCategory({ open, handleClose, selctedId }: UpdateCategoryP
                   >
                     Cancel
                   </Button>
-                  <Button variant="contained" onClick={handleUpdate}>
+                  <Button variant="contained"  type="submit">
                     Update
                   </Button>
                 </div>
