@@ -95,10 +95,8 @@ export function ManageRoles({ tableData }: ManageRoles) {
 
   useEffect(() => {
     if (deleteChecked == true && deleteIndex >= 0) {
-      console.log('xxx');
       const api = xx.mutateAsync();
       // const apixxx = xxx.mutateAsync();
-      console.log('api', api);
       console.log('tableData', tableData);
     }
   }, [deleteChecked, deleteIndex]);
