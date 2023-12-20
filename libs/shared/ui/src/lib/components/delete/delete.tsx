@@ -94,8 +94,7 @@ export interface DeleteProps {
 }
 
 export function Delete({ open, handleClose, categoryId }: DeleteProps) {
-  const { mutate } = useDeleteCategory(
-  );
+  const { mutate } = useDeleteCategory();
 
   const style = {
     position: 'absolute' as 'absolute',
@@ -113,7 +112,7 @@ export function Delete({ open, handleClose, categoryId }: DeleteProps) {
 
   const handleDelete = async () => {
     // Call the delete mutation with the categoryId
- await mutate(categoryId);
+    await mutate(categoryId);
     handleClose('delete');
   };
 

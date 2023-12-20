@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import { useCreateCategory } from '../../../../../data-access/src/lib/queries/createCategory';
 
 export interface UpdateCategoryProps {
-  open: any;
+  open: boolean;
   handleClose: () => void;
 }
 
@@ -45,7 +45,7 @@ export function CreateCategory({ open, handleClose }: UpdateCategoryProps) {
       >
         <Box sx={styleObj}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            <h1 className={styles.heading}>Create Category</h1>
+            <div className={styles.heading}>Create Category</div>
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             <form>

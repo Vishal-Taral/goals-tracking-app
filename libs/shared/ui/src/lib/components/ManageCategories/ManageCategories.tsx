@@ -9,6 +9,8 @@ import { useState } from 'react';
 import UpdateCategory from '../updateCategory/update-category';
 import DeleteComponent from '../delete/delete';
 import CreateCategory from '../createCategory/create-category';
+import DeleteCategory from '../deleteCategory/delete-category';
+import { useGetCategories } from '@goal-tracker/data-access';
 
 /* eslint-disable-next-line */
 
@@ -48,6 +50,8 @@ export function ManageCategories({ tableData } : ManageCategories) {
     // setSelectedRowIndex(index);
     setOpenCreatePopup(true);
   };
+
+  const { data: categoriesList, isError } = useGetCategories();
 
   return (
     <div className={styles.container}>
@@ -94,7 +98,7 @@ export function ManageCategories({ tableData } : ManageCategories) {
             </tr>
           </thead>
           <tbody>
-            {tableData?.rows?.map((data: any, index: number) => (
+            {categoriesList?.map((data: any, index: number) => (
               <tr key={index} className={styles.table_row}>
                 {/* {Object.entries(data).map((val, index) => (
                   <td className={styles.table_data} key={index}>{val[1]}</td>
@@ -126,23 +130,25 @@ export function ManageCategories({ tableData } : ManageCategories) {
       </div>
       {openUpdate && selectedRowIndex !== null && (
         <UpdateCategory
-          open={handleOpen}
+          open={true}
           handleClose={handleClose} 
           selctedId={selectedRowIndex}
+          categoriesList={categoriesList}
         />
       )}
 
       {openDelete && selectedRowIndex !== null && (
-        <DeleteComponent
-          open={handleOpenDelete}
+        <DeleteCategory
+          open={true}
           handleClose={handleCloseDelete}
           categoryId={selectedRowIndex}
+          categories={categoriesList}
         />
       )}
 
       {openCreatePopup && (
         <CreateCategory 
-          open={handleOpenCreatePopup}
+          open={true}
           handleClose={handleCloseCreatePopup}
         />
       )}

@@ -1,8 +1,8 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation ,useQueryClient } from '@tanstack/react-query';
 import { apiClient, apiUrlObject } from '@goal-tracker/data-access';
 
 const updateCategory: any = async (params: any): Promise<any> => {
-  const url = `${apiUrlObject.getAllCategories}/${params.id}`;
+  const url = `${apiUrlObject.updateCategory}/${params.id}`;
   console.log('URL:', url);
 
   // Assuming the API expects data in the format { name: updatedName }
@@ -14,6 +14,7 @@ const updateCategory: any = async (params: any): Promise<any> => {
 const QUERY_KEY = ['updateCategory'];
 
 export const useUpdateCategory = () => {
-  return useMutation({ mutationKey: QUERY_KEY, mutationFn: (payload: any) => updateCategory(payload) });
+  const queryClient = useQueryClient();
+  return useMutation({ mutationKey: QUERY_KEY, mutationFn: (payload: any) => updateCategory(payload) ,  onSuccess: ()=>queryClient.invalidateQueries(['updateCategory']) });
 };
 
