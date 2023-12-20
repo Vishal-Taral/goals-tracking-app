@@ -1,5 +1,8 @@
+import { useContext, useEffect } from 'react';
 import styles from './private-layout.module.scss';
 import { Header , Footer , Menus } from '@goal-tracker/ui';
+import { useRouter } from 'next/router';
+import AppContext from 'libs/shared/ui/src/lib/contexts/AppContext';
 
 /* eslint-disable-next-line */
 export interface PrivateLayoutProps {
@@ -7,6 +10,16 @@ export interface PrivateLayoutProps {
 }
 
 export function PrivateLayout(props: PrivateLayoutProps) {
+  const context = useContext(AppContext);
+
+  const router = useRouter()
+  useEffect(() => {
+    if(context?.manage == 'Manage Roles'){
+      router.push('http://localhost:4200/dashboard/manage/roles')
+    } else if(context?.manage == 'Manage Categories'){
+      router.push('http://localhost:4200/dashboard/manage/categories')
+    }
+  }, [context.manage]);
   return (
     <div className={styles['container']}>
       <div style={{display: 'flex' , width:'100%'}}>

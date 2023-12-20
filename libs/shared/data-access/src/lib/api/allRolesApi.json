@@ -1,9 +1,19 @@
 {
   "data": [
     {
-      "name": "asdfadsf",
-      "description": "asdfasdf",
-      "id": "WSqjMG3"
+      "id": "053f798f-cd5d-4a4a-a1df-52f752fb1a66",
+      "name": "employee",
+      "description": "employeeRole"
+    },
+    {
+      "id": "2883e37c-aaff-414c-87b9-f6f83465d5a0",
+      "name": "manager",
+      "description": "managerRole"
+    },
+    {
+      "id": "b9063d46-98cf-11ee-8263-04e56e7607c1",
+      "name": "Admin",
+      "description": "Administrator Role"
     }
   ]
 }
