@@ -1,17 +1,18 @@
-import styles from './update.module.scss';
+import styles from './UpdateRole.module.scss';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import {useState,useEffect} from 'react'
+import {useState} from 'react'
+import { useUpdateRoles } from '@goal-tracker/data-access';
 /* eslint-disable-next-line */
-export interface UpdateProps {
-  open: any;
-  handleClose: (action: any) => void;
-  updatePopupDataCallback: () => void;
+export interface UpdateRoleProps {
+  open: boolean;
+  handleClose: () => void;
+  updateRoleId: string | null;
 }
 
-export function Update({ open, handleClose, updatePopupDataCallback }: UpdateProps) {
+export function UpdateRole({ open, handleClose, updateRoleId }: UpdateRoleProps) {
   const styleObj = {
     position: 'absolute' as 'absolute',
     top: '50%',
@@ -29,11 +30,15 @@ export function Update({ open, handleClose, updatePopupDataCallback }: UpdatePro
   const [updatePopupData, setUpdatePopupData] = useState({
     name: '',description: ''
   })
-  const changeHandler = (e, heading) => {
+  const changeHandler = (e: any, heading: string) => {
     const updatedData = {...updatePopupData, [heading]: e.target.value}
-    setUpdatePopupData(updatedData)
-    updatePopupDataCallback(updatedData)
+    setUpdatePopupData(updatedData);
   }
+  const updateRole = useUpdateRoles({...updatePopupData, id: updateRoleId});
+  const handleUpdate = async () => {
+      await updateRole.mutate();    
+      handleClose();
+  };
 
   return (
     <div>
@@ -67,39 +72,9 @@ export function Update({ open, handleClose, updatePopupDataCallback }: UpdatePro
                     <input onChange={(e)=>changeHandler(e,'description')} type="text" placeholder='Enter the goal' className={styles.input_fields} />
                   </div>
                 </div>
-
-                {/* <div className={styles.duration}>
-                  <div className={styles.label_and_inputs}>
-                    <div className={styles.field_name}>
-                      <label htmlFor="name">Duration from</label>
-                    </div>
-                    <div >
-                      <input type="date" className={styles.input_fields} />
-                    </div>
-                  </div>
-
-                  <div className={styles.label_and_inputs}>
-                    <div className={styles.field_name}>
-                      <label htmlFor="name">To</label>
-                    </div>
-                    <div >
-                      <input type="date" className={styles.input_fields} />
-                    </div>
-                  </div>
-                </div>
-
-                <div className={styles.label_and_inputs}>
-                  <div className={styles.field_name}>
-                    <label htmlFor="name">Email</label>
-                  </div>
-                  <div >
-                    <input type="email" placeholder='Enter the email' className={styles.input_fields} />
-                  </div>
-                </div> */}
-
                 <div className={styles.update_btn}>
                   <Button variant="contained" onClick={()=>handleClose('cancel')} className={styles.cancel_button}>Cancel</Button>
-                  <Button variant="contained" onClick={()=>handleClose('update')}>Update</Button>
+                  <Button variant="contained" onClick={handleUpdate}>Update</Button>
                 </div>
               </form>
             </Typography>
@@ -110,5 +85,5 @@ export function Update({ open, handleClose, updatePopupDataCallback }: UpdatePro
   );
 }
 
-export default Update;
+export default UpdateRole;
 

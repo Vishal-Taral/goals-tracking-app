@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styles from './AddRole.module.scss';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { useAddRole } from '@goal-tracker/data-access';
+import AppContext from '../../contexts/AppContext';
 
 export interface AddRoleProps {
   open: boolean;
@@ -16,15 +17,18 @@ export function CreateCategory({ open, handleClose }: AddRoleProps) {
   const [categoryName, setCategoryName] = useState('');
   const [descName, setDescName] = useState('');
 
-  const { mutate } = useAddRole();
+  const addRole = useAddRole();
 
   const obj = {
     name: categoryName,
     description: descName
   }
 
+  // const context = useContext(AppContext)
+
   const handleCreateCategory = async () => {
-    await mutate(obj);
+    // context.setAddRole(obj)
+    await addRole.mutate(obj);
     handleClose();
   };
 
