@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import Update from './update';
+import DeleteRole from './DeleteRole';
 
-describe('Update', () => {
+describe('DeleteRole', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<Update />);
+    const { baseElement } = render(<DeleteRole />);
     expect(baseElement).toBeTruthy();
   });
 });

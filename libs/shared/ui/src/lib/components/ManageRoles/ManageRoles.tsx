@@ -4,16 +4,11 @@ import Autocomplete from '@mui/material/Autocomplete';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-import { useState, useEffect } from 'react';
-import Update from '../update/update';
-import DeleteComponent from '../delete/delete';
+import { useState } from 'react';
 import AddRole from '../AddRole/AddRole';
-import {
-  useDeleteRoles,
-  useGetRoles,
-  useUpdateRoles,
-} from '@goal-tracker/data-access';
-import { table } from 'console';
+import { useGetRoles } from '@goal-tracker/data-access';
+import UpdateRole from '../UpdateRole/UpdateRole';
+import DeleteRole from '../DeleteRole/DeleteRole';
 
 /* eslint-disable-next-line */
 
@@ -24,94 +19,23 @@ export interface ManageRoles {
 }
 
 export function ManageRoles({ tableData }: ManageRoles) {
-  const [openUpdate, setOpenUpdate] = useState(false);
-  const [openDelete, setOpenDelete] = useState(false);
-  const [updateChecked, setUpdateCheked] = useState('');
-  const handleOpen = () => setOpenUpdate(true);
-  const handleClose = (data) => {
-    setOpenUpdate(false);
-    console.log('data', data);
-    if (data == 'cancel') {
-      setUpdateCheked(false);
-    } else if (data == 'update') {
-      setUpdateCheked(true);
-    } else {
-      setUpdateCheked(false);
-    }
-  };
-
-  const [deleteChecked, setDeleteChecked] = useState('');
-  const handleCloseDelete = (data) => {
-    setOpenDelete(false);
-    console.log('data', data);
-    if (data == 'cancel') {
-      setDeleteChecked(false);
-    } else if (data == 'delete') {
-      setDeleteChecked(true);
-    } else {
-      setDeleteChecked(false);
-    }
-  };
-  const [selectedRowIndex, setSelectedRowIndex] = useState<number | null>(null);
-
-  const [updateIndex, setUpdateIndex] = useState(null);
-  const [updateRoleId, setUpdateRoleId] = useState(null);
-  const [presentPopData , setPresentPopData] = useState('');
-  const updatePopupOpenHandler = (index: number, data: any) => {
-    setSelectedRowIndex(index);
-    setOpenUpdate(true);
-    setUpdateIndex(index);
-    console.log('index data', data);
-    setUpdateRoleId(data.id);
-    setPresentPopData(data)
-  };
-
-  const [deleteIndex, setDeleteIndex] = useState(null);
-  const [deleteRoleId, setDeleteRoleId] = useState(null);
-  const deletePopupOpenHandler = (index: number, data: any) => {
-    setSelectedRowIndex(index);
-    setOpenDelete(true);
-    setDeleteIndex(index);
-    setDeleteRoleId(data.id);
-  };
-
-  useEffect(() => {
-    console.log('updateChecked', updateChecked, 'updateIndex', updateIndex);
-    if (updateChecked == true && updateIndex >= 0) {
-      // const api = xx.mutateAsync()
-      const apixxx = xxx.mutateAsync();
-      console.log('apixxx', apixxx);
-    }
-  }, [updateChecked, updateIndex]);
-
-  const [updateDataObj, setUpdateDataObj] = useState();
-  const updatePopupDataCallback = (data) => {
-    console.log('dataxxx', data);
-    setUpdateDataObj({ ...data, id: updateRoleId });
-  };
-
-  const xx = useDeleteRoles(deleteRoleId);
-  const xxx = useUpdateRoles(updateDataObj);
-
   const { data: rolesList } = useGetRoles();
 
-  useEffect(() => {
-    if (deleteChecked == true && deleteIndex >= 0) {
-      const api = xx.mutateAsync();
-      // const apixxx = xxx.mutateAsync();
-      console.log('tableData', tableData);
-    }
-  }, [deleteChecked, deleteIndex]);
-  console.log('rolesList outside', rolesList);
-
-  const [openAdd, setOpenAdd] = useState(false);
-  // const addRoleHandler = () => {
-  //   setOpenAdd(true);
-  // };
-
-  const handleCloseAdd = () => {
-    setOpenAdd(false);
+  const [openUpdatePopup, setOpenUpdatePopup] = useState(false);
+  const [updateRoleId, setUpdateRoleId] = useState(null);
+  const updatePopupOpenHandler = (index: number, data: any) => {
+    setOpenUpdatePopup(true);
+    setUpdateRoleId(data.id);
   };
+  const handleCloseUpdatePopup = () => setOpenUpdatePopup(false);
+
+  const [openDeletePopup, setOpenDeletePopup] = useState(false);
+  const [deleteRoleId, setDeleteRoleId] = useState(null);
+  const deletePopupOpenHandler = (index: number, data: any) => {
+    setOpenDeletePopup(true);
+    setDeleteRoleId(data.id);
+  };
+  const handleCloseDeletePopup = () => setOpenDeletePopup(false);
 
   const [openCreatePopup, setOpenCreatePopup] = useState(false);
   const handleOpenCreatePopup = () => setOpenCreatePopup(true);
@@ -195,24 +119,26 @@ export function ManageRoles({ tableData }: ManageRoles) {
           </tbody>
         </table>
       </div>
-      {openUpdate && selectedRowIndex !== null && (
-        <Update
-          open={handleOpen}
-          handleClose={handleClose}
-          updatePopupDataCallback={updatePopupDataCallback}
-          roleListData={presentPopData}
+
+      {openUpdatePopup && (
+        <UpdateRole
+          open={true}
+          handleClose={handleCloseUpdatePopup}
+          updateRoleId={updateRoleId}
         />
       )}
 
       {openCreatePopup && (
-        <AddRole
-          open={true}
-          handleClose={handleCloseCreatePopup}
-        />
+        <AddRole open={true} handleClose={handleCloseCreatePopup} />
       )}
 
-      <DeleteComponent open={openDelete} handleClose={handleCloseDelete} />
-
+      {openDeletePopup && (
+        <DeleteRole
+          open={true}
+          handleClose={handleCloseDeletePopup}
+          deleteRoleId={deleteRoleId}
+        />
+      )}
     </div>
   );
 }

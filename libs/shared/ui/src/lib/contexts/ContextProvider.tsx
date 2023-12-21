@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useReducer, useState } from 'react'
 import AppContext from './AppContext'
 
 const ContextProvider = (props: any) => {
-    const [manage, setManage] = useState('')
-    
+    const [manage, setManage] = useState('');
+
   return (
     <AppContext.Provider value={{manage, setManage}}>
       {props.children}
