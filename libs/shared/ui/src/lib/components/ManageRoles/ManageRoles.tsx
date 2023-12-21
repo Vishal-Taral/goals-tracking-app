@@ -74,28 +74,24 @@ export function ManageRoles({ tableData }: ManageRoles) {
   };
 
   useEffect(() => {
-    console.log('updateChecked', updateChecked, 'updateIndex', updateIndex);
     if (updateChecked == true && updateIndex >= 0) {
-      // const api = xx.mutateAsync()
-      const apixxx = xxx.mutateAsync();
+      const apiupdateRole = updateRole.mutateAsync();
     }
   }, [updateChecked, updateIndex]);
 
   const [updateDataObj, setUpdateDataObj] = useState();
   const updatePopupDataCallback = (data) => {
-    console.log('dataxxx', data);
     setUpdateDataObj({ ...data, id: updateRoleId });
   };
 
-  const xx = useDeleteRoles(deleteRoleId);
-  const xxx = useUpdateRoles(updateDataObj);
+  const deleteRole = useDeleteRoles(deleteRoleId);
+  const updateRole = useUpdateRoles(updateDataObj);
 
   const { data: rolesList } = useGetRoles();
 
   useEffect(() => {
     if (deleteChecked == true && deleteIndex >= 0) {
-      const api = xx.mutateAsync();
-      // const apixxx = xxx.mutateAsync();
+      const api = deleteRole.mutateAsync();
       console.log('tableData', tableData);
     }
   }, [deleteChecked, deleteIndex]);
