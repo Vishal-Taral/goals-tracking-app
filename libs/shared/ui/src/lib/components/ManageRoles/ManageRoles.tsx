@@ -88,14 +88,14 @@ export function ManageRoles({ tableData }: ManageRoles) {
           </thead>
           <tbody>
             {rolesList?.map((data: any, index: number) => (
-              <tr key={index} className={styles.table_row}>
-                <td className={styles.table_data} key={index}>
+              <tr className={styles.table_row} key={index}>
+                <td className={styles.table_data}>
                   {data.id}
                 </td>
-                <td className={styles.table_data} key={index}>
+                <td className={styles.table_data}>
                   {data.name}
                 </td>
-                <td className={styles.table_data} key={index}>
+                <td className={styles.table_data}>
                   {data.description}
                 </td>
                 <td className={styles.table_data}>
