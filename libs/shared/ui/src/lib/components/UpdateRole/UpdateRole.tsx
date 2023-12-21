@@ -10,9 +10,12 @@ export interface UpdateRoleProps {
   open: boolean;
   handleClose: () => void;
   updateRoleId: string | null;
+  prefilledInputData : any;
 }
-
-export function UpdateRole({ open, handleClose, updateRoleId }: UpdateRoleProps) {
+ 
+export function UpdateRole({ open, handleClose, updateRoleId, prefilledInputData }: UpdateRoleProps) {
+  const roleName = prefilledInputData.name;
+  const roleDescription = prefilledInputData.description
   const styleObj = {
     position: 'absolute' as 'absolute',
     top: '50%',
@@ -26,9 +29,9 @@ export function UpdateRole({ open, handleClose, updateRoleId }: UpdateRoleProps)
     p: 2,
     color: 'black',
   };
-
+ 
   const [updatePopupData, setUpdatePopupData] = useState({
-    name: '',description: ''
+    name: roleName,description: roleDescription
   })
   const changeHandler = (e: any, heading: string) => {
     const updatedData = {...updatePopupData, [heading]: e.target.value}
@@ -39,7 +42,7 @@ export function UpdateRole({ open, handleClose, updateRoleId }: UpdateRoleProps)
       await updateRole.mutate();    
       handleClose();
   };
-
+ 
   return (
     <div>
       <div>
@@ -63,7 +66,7 @@ export function UpdateRole({ open, handleClose, updateRoleId }: UpdateRoleProps)
                     <input onChange={(e)=>changeHandler(e,'name')} type="text" placeholder='Enter The Name' className={styles.input_fields} />
                   </div>
                 </div>
-
+ 
                 <div className={styles.label_and_inputs}>
                   <div className={styles.field_name}>
                     <label htmlFor="name">Role description</label>
@@ -84,6 +87,6 @@ export function UpdateRole({ open, handleClose, updateRoleId }: UpdateRoleProps)
     </div>
   );
 }
-
+ 
 export default UpdateRole;
-
+ 
