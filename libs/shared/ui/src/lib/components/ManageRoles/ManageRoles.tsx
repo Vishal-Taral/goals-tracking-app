@@ -23,9 +23,11 @@ export function ManageRoles({ tableData }: ManageRoles) {
 
   const [openUpdatePopup, setOpenUpdatePopup] = useState(false);
   const [updateRoleId, setUpdateRoleId] = useState(null);
+  const [prefilledInputData , setPrefilledInputData] = useState();
   const updatePopupOpenHandler = (index: number, data: any) => {
     setOpenUpdatePopup(true);
     setUpdateRoleId(data.id);
+    setPrefilledInputData(data);
   };
   const handleCloseUpdatePopup = () => setOpenUpdatePopup(false);
 
@@ -125,6 +127,7 @@ export function ManageRoles({ tableData }: ManageRoles) {
           open={true}
           handleClose={handleCloseUpdatePopup}
           updateRoleId={updateRoleId}
+          prefilledInputData={prefilledInputData}
         />
       )}
 
