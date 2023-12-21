@@ -56,12 +56,14 @@ export function ManageRoles({ tableData }: ManageRoles) {
 
   const [updateIndex, setUpdateIndex] = useState(null);
   const [updateRoleId, setUpdateRoleId] = useState(null);
+  const [presentPopData , setPresentPopData] = useState('');
   const updatePopupOpenHandler = (index: number, data: any) => {
     setSelectedRowIndex(index);
     setOpenUpdate(true);
     setUpdateIndex(index);
     console.log('index data', data);
     setUpdateRoleId(data.id);
+    setPresentPopData(data)
   };
 
   const [deleteIndex, setDeleteIndex] = useState(null);
@@ -162,14 +164,14 @@ export function ManageRoles({ tableData }: ManageRoles) {
           </thead>
           <tbody>
             {rolesList?.map((data: any, index: number) => (
-              <tr key={index} className={styles.table_row}>
-                <td className={styles.table_data} key={index}>
+              <tr className={styles.table_row} key={index}>
+                <td className={styles.table_data}>
                   {data.id}
                 </td>
-                <td className={styles.table_data} key={index}>
+                <td className={styles.table_data}>
                   {data.name}
                 </td>
-                <td className={styles.table_data} key={index}>
+                <td className={styles.table_data}>
                   {data.description}
                 </td>
                 <td className={styles.table_data}>
@@ -198,6 +200,7 @@ export function ManageRoles({ tableData }: ManageRoles) {
           open={handleOpen}
           handleClose={handleClose}
           updatePopupDataCallback={updatePopupDataCallback}
+          roleListData={presentPopData}
         />
       )}
 

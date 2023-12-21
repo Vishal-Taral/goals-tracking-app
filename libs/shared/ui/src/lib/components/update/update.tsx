@@ -9,9 +9,15 @@ export interface UpdateProps {
   open: any;
   handleClose: (action: any) => void;
   updatePopupDataCallback: () => void;
+  roleListData : any;
 }
 
-export function Update({ open, handleClose, updatePopupDataCallback }: UpdateProps) {
+export function Update({ open, handleClose, updatePopupDataCallback, roleListData }: UpdateProps) {
+  console.log("roleListData======>" , roleListData);
+
+  const roleName = roleListData.name;
+  const roleDescription =  roleListData.description;
+
   const styleObj = {
     position: 'absolute' as 'absolute',
     top: '50%',
@@ -27,11 +33,11 @@ export function Update({ open, handleClose, updatePopupDataCallback }: UpdatePro
   };
 
   const [updatePopupData, setUpdatePopupData] = useState({
-    name: '',description: ''
+    name: roleName ,description: roleDescription
   })
-  const changeHandler = (e, heading) => {
-    setUpdatePopupData({...updatePopupData, [heading]: e.target.value})
-    updatePopupDataCallback({...updatePopupData, [heading]: e.target.value})
+  const changeHandler = (e : any, heading : any) => {
+    setUpdatePopupData({...updatePopupData, [heading]: e})
+    updatePopupDataCallback({...updatePopupData, [heading]: e})
   }
 
   return (
@@ -54,7 +60,7 @@ export function Update({ open, handleClose, updatePopupDataCallback }: UpdatePro
                     <label htmlFor="name">Role Name</label>
                   </div>
                   <div >
-                    <input onChange={(e)=>changeHandler(e,'name')} type="text" placeholder='Enter The Name' className={styles.input_fields} />
+                    <input value={roleName} onChange={(e)=> changeHandler(e,'name')} type="text" placeholder='Enter The Name' className={styles.input_fields} />
                   </div>
                 </div>
 
@@ -63,7 +69,7 @@ export function Update({ open, handleClose, updatePopupDataCallback }: UpdatePro
                     <label htmlFor="name">Role description</label>
                   </div>
                   <div >
-                    <input onChange={(e)=>changeHandler(e,'description')} type="text" placeholder='Enter the goal' className={styles.input_fields} />
+                    <input value={roleDescription} onChange={(e)=> changeHandler(e,'description')} type="text" placeholder='Enter the goal' className={styles.input_fields} />
                   </div>
                 </div>
 
