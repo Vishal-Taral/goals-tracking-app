@@ -2,7 +2,7 @@ import styles from './index.module.scss';
 import { useGetUsers } from '@goal-tracker/data-access';
 import PrivateLayout from 'apps/goals-on-track/component/common/privateLayout/private-layout';
 import HOCAuth from 'libs/shared/ui/src/lib/components/HOCAuth/HOCAuth'
-import { ManageUsers } from '@goal-tracker/ui'
+import { ManageUsers } from 'libs/shared/ui/src/lib/components/manageUsers/ManageUsers';
 
 /* eslint-disable-next-line */
 export interface UsersProps { }
