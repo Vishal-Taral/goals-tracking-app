@@ -1,0 +1,17 @@
+{
+    "data": [
+        {
+            "userId": "d7ac43b2-98cf-11ee-8263-04e56e7607c1",
+            "firstName": "Hrishikesh",
+            "lastName": "Gore",
+            "email": "hrishikesh.gore@polyglots.io",
+            "gender": "Male",
+            "mobile_number": "9158551076",
+            "role": {
+                "roleId": "b9063d46-98cf-11ee-8263-04e56e7607c1",
+                "name": "Admin",
+                "description": "Administrator Role"
+            }
+        }
+    ]
+}

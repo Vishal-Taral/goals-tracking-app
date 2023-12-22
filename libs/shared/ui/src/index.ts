@@ -12,4 +12,5 @@ export * from './lib/components/ManageCategories/ManageCategories';
 export * from './lib/components/AddRole/AddRole';
 export * from './lib/components/UpdateRole/UpdateRole';
 export * from './lib/components/DeleteRole/DeleteRole';
+export * from './lib/components/ManageUsers/ManageUsers';
 

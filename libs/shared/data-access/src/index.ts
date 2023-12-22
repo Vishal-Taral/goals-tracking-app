@@ -8,4 +8,5 @@ export * from '../src/lib/queries/getAllCategories'
 export * from '../src/lib/queries/useDeleteRoles'
 export * from '../src/lib/queries/useUpdateRoles'
 export * from '../src/lib/queries/useAddRole'
+export * from '../src/lib/queries/useGetAllUsers';
 
