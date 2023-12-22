@@ -16,7 +16,7 @@ const Roles = () => {
     <PrivateLayout>
     <div className={styles.dashboard_page_container}>
       <div className={styles.header_and_user_detail_section}>
-      <HOCAuth Component={ManageRoles} tableData={roles}  />
+      <ManageRoles tableData={roles}  />
       </div>
     </div>
     </PrivateLayout>

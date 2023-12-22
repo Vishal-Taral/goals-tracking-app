@@ -20,6 +20,7 @@ export function Header(props: HeaderProps) {
   const goToHome = () => {
     router.push('/tracker')
   }
+  console.log('x', router.pathname.includes('/'))
 
   return (
     <div className={styles.container}>

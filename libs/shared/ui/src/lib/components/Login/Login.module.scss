@@ -1,0 +1,65 @@
+@mixin flexBox ($justify , $alignItem) {
+    display: flex;
+    justify-content: $justify;
+    align-items: $alignItem;
+}
+
+.container {
+    @include flexBox(center, center);
+    height: 100vh;
+    background-color: azure;
+
+    .login_container {
+        width: 15rem;
+        padding: 1rem;
+        border: 1px solid rgb(184, 184, 243);
+        border-radius: 1rem;
+        background-color: white;
+        box-shadow: 0 0 20px #0000001a;
+        .login_heading{
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .login {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            // .inputs {
+            //     width: 100%;
+            //     padding: 0.5rem 0.5rem;
+            //     border-radius: 0.2rem;
+            //     border: 1px solid aqua;
+            // }
+
+            .text_fields{
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .remember{
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+
+                input[type=checkbox] {
+                    zoom: 1.2;
+                }
+
+                .remember_label{
+                    font-size: 14px;
+                }
+            }
+        }
+
+        .forgot_password{
+            text-align: right;
+
+            .label{
+                color: #03a9f4;
+                cursor: pointer;
+            }
+        }
+    }
+}

@@ -11,6 +11,7 @@ import {
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import ContextProvider from 'libs/shared/ui/src/lib/contexts/ContextProvider';
 import { useEffect } from 'react';
+import HOCAuth from 'libs/shared/ui/src/lib/components/HOCAuth/HOCAuth';
 
 function CustomApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient()
@@ -27,7 +28,8 @@ function CustomApp({ Component, pageProps }: AppProps) {
             <title>Welcome to goals-on-track!</title>
           </Head>
           <main className="app">
-            <Component {...pageProps} />
+            {/* <Component {...pageProps} /> */}
+            <HOCAuth Component={Component} {...pageProps}/>
           </main>
           <ReactQueryDevtools initialIsOpen={false} buttonPosition={'bottom-left'} />
         </ContextProvider>

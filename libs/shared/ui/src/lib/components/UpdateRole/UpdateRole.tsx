@@ -12,7 +12,7 @@ export interface UpdateRoleProps {
   updateRoleId: string | null;
   prefilledInputData : any;
 }
-
+ 
 export function UpdateRole({ open, handleClose, updateRoleId, prefilledInputData }: UpdateRoleProps) {
 
   const styleObj = {
@@ -28,7 +28,7 @@ export function UpdateRole({ open, handleClose, updateRoleId, prefilledInputData
     p: 2,
     color: 'black',
   };
-
+ 
   const [updatePopupData, setUpdatePopupData] = useState({
     name: prefilledInputData?.name ,description: prefilledInputData?.description
   })
@@ -41,7 +41,7 @@ export function UpdateRole({ open, handleClose, updateRoleId, prefilledInputData
       await updateRole.mutate();    
       handleClose();
   };
-
+ 
   return (
     <div>
       <div>
@@ -65,7 +65,7 @@ export function UpdateRole({ open, handleClose, updateRoleId, prefilledInputData
                     <input defaultValue={updatePopupData.name} onChange={(e)=>changeHandler(e,'name')} type="text" placeholder='Enter The Name' className={styles.input_fields} />
                   </div>
                 </div>
-
+ 
                 <div className={styles.label_and_inputs}>
                   <div className={styles.field_name}>
                     <label htmlFor="name">Role description</label>
@@ -86,6 +86,6 @@ export function UpdateRole({ open, handleClose, updateRoleId, prefilledInputData
     </div>
   );
 }
-
+ 
 export default UpdateRole;
-
+ 
