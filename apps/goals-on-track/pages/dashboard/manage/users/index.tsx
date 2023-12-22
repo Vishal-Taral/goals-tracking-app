@@ -11,7 +11,7 @@ export function Users(props: UsersProps) {
   const { data: usersList } = useGetUsers();
 
   const users : any = {
-    headings: ['First Name','Last Name', 'Gender' , 'Email' , 'Mobile No.' , 'Role' , 'update' , 'Delete'],
+    headings: ['Id', 'First Name','Last Name', 'Gender' , 'Email' , 'Mobile No.' , 'Role' , 'update' , 'Delete'],
     rows: usersList
   };
 

@@ -8,7 +8,7 @@ import { useState } from 'react';
 // import Update from '../update/update';
 import UpdateCategory from '../updateCategory/update-category';
 import DeleteComponent from '../delete/delete';
-import CreateCategory from '../createCategory/create-category';
+import CreateUsers from '../CreateUsers/CreateUsers';
 import DeleteCategory from '../deleteCategory/delete-category';
 import { useGetUsers } from '@goal-tracker/data-access';
 
@@ -85,7 +85,7 @@ export function ManageUsers({ tableData } : ManageCategories) {
           )}
         />
 
-        <Button variant="outlined" onClick={() => handleCreateCategory()}>Add Category</Button>
+        <Button variant="outlined" onClick={() => handleCreateCategory()}>Add User</Button>
       </div>
 
       <div className={styles.user_detail_container}>
@@ -108,6 +108,7 @@ export function ManageUsers({ tableData } : ManageCategories) {
                 <td className={styles.table_data}>{data?.gender}</td>
                 <td className={styles.table_data}>{data?.email}</td>
                 <td className={styles.table_data}>{data?.mobile_number}</td>
+                <td className={styles.table_data}>{data?.role?.name}</td>
                 <td className={styles.table_data}>
                   <span
                     className={styles.icons}
@@ -148,7 +149,7 @@ export function ManageUsers({ tableData } : ManageCategories) {
       )}
 
       {openCreatePopup && (
-        <CreateCategory 
+        <CreateUsers 
           open={true}
           handleClose={handleCloseCreatePopup}
         />
