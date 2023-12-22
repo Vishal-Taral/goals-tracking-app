@@ -10,6 +10,7 @@ import { useGetRoles } from '@goal-tracker/data-access';
 import UpdateRole from '../UpdateRole/UpdateRole';
 import DeleteRole from '../DeleteRole/DeleteRole';
 
+
 /* eslint-disable-next-line */
 
 const options = ['story', 'upskill', 'task completing ', 'achievable'];
@@ -20,7 +21,6 @@ export interface ManageRoles {
 
 export function ManageRoles({ tableData }: ManageRoles) {
   const { data: rolesList } = useGetRoles();
-
   const [openUpdatePopup, setOpenUpdatePopup] = useState(false);
   const [updateRoleId, setUpdateRoleId] = useState(null);
   const [prefilledInputData , setPrefilledInputData] = useState();

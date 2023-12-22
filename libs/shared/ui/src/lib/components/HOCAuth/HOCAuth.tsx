@@ -1,27 +1,39 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { useRouter } from 'next/router';
+import Footer from '../footer/footer';
+import Login from '../Login/Login';
+import Loader from '../Loader/Loader';
 
 const HOCAuth = ({ Component, ...props }: any) => {
   const router = useRouter();
   const [authenticated, setAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true)
 
   const authCheck = () => {
     if (localStorage.getItem('token') !== null) {
       setAuthenticated(true);
     } else {
-      setAuthenticated(false);
-      router.push('/login')
+      if (router.pathname.includes('/dashboard')) {
+        setAuthenticated(false);
+        router.push('/login');
+      } else {
+        setAuthenticated(true);
+      }
     }
+    setLoading(false)
+  };
+
+  useLayoutEffect(() => {
+    authCheck();
+  }, []);
+
+  if(loading){
+    return <Loader />
   }
-
-  useEffect(() => {
-    authCheck()
-  }, [])
-
   if (authenticated) {
-    return <Component {...props}/>;
+    return <Component {...props} />;
   } else {
-    return null;
+    return <Login />;
   }
 };
 

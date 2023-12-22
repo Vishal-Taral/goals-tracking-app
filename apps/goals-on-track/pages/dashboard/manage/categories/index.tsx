@@ -17,7 +17,7 @@ const Categories = () => {
     <PrivateLayout>
     <div className={styles.dashboard_page_container}>
       <div className={styles.header_and_user_detail_section}>
-      <HOCAuth Component={ManageCategories} tableData={categories}  />
+      <ManageCategories tableData={categories}  />
       </div>
     </div>
     </PrivateLayout>
