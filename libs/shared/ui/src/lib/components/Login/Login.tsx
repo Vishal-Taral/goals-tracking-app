@@ -106,7 +106,7 @@ export function Login(props: LoginProps) {
             <Button variant="contained" color="success" type="submit">
               Login
             </Button>
-            
+
             {/* Snackbars for invalid credentials and successfully logged in start */}
             <Snackbar
               open={snackbarOpen}
