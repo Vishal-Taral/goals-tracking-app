@@ -1,10 +1,6 @@
 {
-    "loginData" : {
-        "id":1,
-        "username":"admin@123",
-        "email":"admin@123",
-        "firstName":"vishal",
-        "lastName":"taral",
-        "gender":"male"
-    }
- }
+  "loginData": {
+    "email": "atharva.bhuse@polyglots.io",
+    "password": "sssss"
+  }
+}

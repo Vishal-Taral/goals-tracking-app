@@ -4,7 +4,7 @@ import { apiUrlObject } from "../api-end-points";
 
 const deleteRoles = async(data: any) => {
     try{
-    const response = await apiClient.delete(`http://localhost:8001/data/${data}`)
+    const response = await apiClient.delete(`${apiUrlObject.deleteRole}/${data}`)
     console.log('response', response)
     return response.data
     } catch(error){
