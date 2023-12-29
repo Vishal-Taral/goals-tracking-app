@@ -4,7 +4,7 @@ import { apiUrlObject } from "../api-end-points";
 
 const deleteUsers = async(data: any) => {
     try{
-    const response = await apiClient.delete(`http://localhost:8002/data/${data}`)
+    const response = await apiClient.delete(`${apiUrlObject.deleteUser}/${data}`)
     console.log('response', response)
     return response.data
     } catch(error){
@@ -13,7 +13,7 @@ const deleteUsers = async(data: any) => {
     }
 }
 
-const QUERY_KEY = ['deleteUsers']
+const QUERY_KEY = ['deleteUser']
 export const useDeleteUsers = (data: any) => {
     const queryClient = useQueryClient()
     return useMutation({mutationKey: QUERY_KEY, mutationFn: ()=>deleteUsers(data),onSuccess: ()=>queryClient.invalidateQueries(['deleteUsers'])})

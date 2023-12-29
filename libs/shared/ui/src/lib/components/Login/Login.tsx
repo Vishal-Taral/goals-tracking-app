@@ -1,6 +1,5 @@
 import styles from './Login.module.scss';
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import axios from 'axios';
 import Button from '@mui/material/Button';
@@ -9,8 +8,10 @@ import TextField from '@mui/material/TextField';
 import { useRouter } from 'next/router';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import { usePostLogin } from '@goal-tracker/data-access';
+import { dataTagSymbol } from '@tanstack/react-query';
 
-export interface LoginProps { }
+export interface LoginProps {}
 
 interface FormData {
   email: string;
@@ -18,29 +19,33 @@ interface FormData {
 }
 
 export function Login(props: LoginProps) {
-
   const router = useRouter();
 
   const routFunction = () => {
-    router.push('./dashboard')
-  }
-
-  const fetchData = async () => {
-    const response = await axios.get('http://localhost:3000/loginData');
-    return response.data;
+    router.push('./dashboard');
   };
 
-  const { control, handleSubmit, formState: { errors } } = useForm<FormData>();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [successSnackbar, setSuccessSnackbar] = useState(false); 
-  const { data: apiData, status: apiStatus } = useQuery({ queryKey: ['todos'], queryFn: fetchData });
+  const [successSnackbar, setSuccessSnackbar] = useState(false);
+  // const { data: apiData, status: apiStatus } = useGetLogin();
 
   const [loginError, setLoginError] = useState<string | null>(null);
   const [successMassage, setSuccessMassage] = useState<string | null>(null);
 
-  const onSubmit: SubmitHandler<FormData> = (data: any) => {
-    if (apiStatus === 'success' && apiData) {
-      if (data.email === apiData.email && data.password === apiData.username) {
+  const [loginCredentials, setLoginCredentials] = useState({});
+  const responseData = usePostLogin(loginCredentials);
+
+  const onSubmit: SubmitHandler<FormData> = async (data: any) => {
+    setLoginCredentials({ email: data.email, password: data.password });
+    const response = await responseData.mutateAsync();
+    console.log('response', response, 'data',data)
+    if (response.data) {
+      if (data.email === response.data.email && data.password === response.data.password) {
         setLoginError(null);
         routFunction();
         setSuccessSnackbar(true);
@@ -54,7 +59,7 @@ export function Login(props: LoginProps) {
 
   const handleCloseSuccessSnackbar = () => {
     setSuccessSnackbar(false);
-  }
+  };
 
   const handleCloseSnackbar = () => {
     setSnackbarOpen(false);
@@ -106,8 +111,6 @@ export function Login(props: LoginProps) {
             <Button variant="contained" color="success" type="submit">
               Login
             </Button>
-
-            {/* Snackbars for invalid credentials and successfully logged in start */}
             <Snackbar
               open={snackbarOpen}
               autoHideDuration={2000}
@@ -139,8 +142,6 @@ export function Login(props: LoginProps) {
                 {successMassage}
               </MuiAlert>
             </Snackbar>
-            {/* Snackbars for invalid credentials and successfully logged in end */}
-
           </div>
         </form>
       </div>
