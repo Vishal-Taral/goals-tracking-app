@@ -12,7 +12,7 @@ const getAllUsers = async (): Promise<any> => {
 
 const QUERY_KEY = ['users'];
 
-export const useGetUsers = (config?: any) => {
+export const useGetAllUsers = (config?: any) => {
   console.log(config);
   return useQuery<any>({
     queryKey: QUERY_KEY,
