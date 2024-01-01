@@ -1,5 +1,5 @@
 import { User } from '../entities/user';
-
+const bcrypt = require('bcrypt');
 const removeUserService = async (userId: string) => {
   try {
     const deletedUser = await User.delete(userId);
@@ -21,13 +21,16 @@ const addUserService = async (body) => {
       role,
     } = body;
 
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(password, salt);
+
     const newUser = User.create({
       firstName,
       lastName,
       gender,
       mobile_number,
       email,
-      password,
+      password: hash,
       role,
       createdAt: new Date(),
       createdBy: 'admin',
