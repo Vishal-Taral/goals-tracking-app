@@ -11,3 +11,4 @@ export * from '../src/lib/queries/useAddRole'
 export * from '../src/lib/queries/useGetAllUsers';
 export * from '../src/lib/queries/useDeleteUsers';
 export * from './lib/queries/usePostLogin';
+export * from './lib/queries/useCreateUser';

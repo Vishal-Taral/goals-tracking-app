@@ -45,8 +45,8 @@ export function Login(props: LoginProps) {
     const response = await responseData.mutateAsync();
     console.log('response', response, 'data',data)
     if (response.data) {
-      if (response.success == true) {
-        localStorage.setItem('AUTHORIZATION',response.data)
+      if (response.data.success == true) {
+        localStorage.setItem('AUTHORIZATION',response.data.data)
         setLoginError(null);
         routFunction();
         setSuccessSnackbar(true);
