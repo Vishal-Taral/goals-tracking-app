@@ -45,7 +45,8 @@ export function Login(props: LoginProps) {
     const response = await responseData.mutateAsync();
     console.log('response', response, 'data',data)
     if (response.data) {
-      if (data.email === response.data.email && data.password === response.data.password) {
+      if (response.success == true) {
+        localStorage.setItem('AUTHORIZATION',response.data)
         setLoginError(null);
         routFunction();
         setSuccessSnackbar(true);
@@ -54,6 +55,16 @@ export function Login(props: LoginProps) {
         setLoginError('Invalid credentials. Please try again.');
         setSnackbarOpen(true);
       }
+
+      // if (data.email === response.data.email && data.password === response.data.password) {
+      //   setLoginError(null);
+      //   routFunction();
+      //   setSuccessSnackbar(true);
+      //   setSuccessMassage('You successfully logged in');
+      // } else {
+      //   setLoginError('Invalid credentials. Please try again.');
+      //   setSnackbarOpen(true);
+      // }
     }
   };
 
