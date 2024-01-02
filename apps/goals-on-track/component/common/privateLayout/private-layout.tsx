@@ -11,13 +11,15 @@ export interface PrivateLayoutProps {
 
 export function PrivateLayout(props: PrivateLayoutProps) {
   const context = useContext(AppContext);
-
+  
   const router = useRouter()
   useEffect(() => {
     if(context?.manage == 'Manage Roles'){
       router.push('http://localhost:4200/dashboard/manage/roles')
     } else if(context?.manage == 'Manage Categories'){
       router.push('http://localhost:4200/dashboard/manage/categories')
+    } else if(context?.manage == 'Manage Users'){
+      router.push('http://localhost:4200/dashboard/manage/users')
     }
   }, [context.manage]);
   return (

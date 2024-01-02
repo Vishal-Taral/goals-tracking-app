@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import { useCreateUser } from '../../../../../data-access/src/lib/queries/useCreateUser';
 
 export interface UpdateCategoryProps {
   open: boolean;
@@ -11,6 +12,30 @@ export interface UpdateCategoryProps {
 }
 
 export function CreateUsers({ open, handleClose }: UpdateCategoryProps) {
+  const { mutate } = useCreateUser();
+
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    mobileNo: "",
+    role: "",
+    gender: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
+  const handelCreateUser = async (e) => {
+    e.preventDefault();
+    await mutate(formData);
+    handleClose();
+  };
 
   const styleObj = {
     position: 'absolute' as 'absolute',
@@ -26,6 +51,24 @@ export function CreateUsers({ open, handleClose }: UpdateCategoryProps) {
     color: 'black',
   };
 
+  const renderInputField = (label : string, name : string, type : string) => (
+    <div className={styles.label_and_inputs}>
+      <div className={styles.field_name}>
+        <label htmlFor={name}>{label}</label>
+      </div>
+      <div>
+        <input
+          type={type}
+          placeholder={`Enter the ${name}`}
+          className={styles.input_fields}
+          name={name}
+          value={formData[name]}
+          onChange={handleInputChange}
+        />
+      </div>
+    </div>
+  );
+
   return (
     <div>
       <Modal
@@ -39,82 +82,37 @@ export function CreateUsers({ open, handleClose }: UpdateCategoryProps) {
             <div className={styles.heading}>Create User</div>
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <form>
+            <form onSubmit={handelCreateUser}>
               <div className={styles.multiple_inputs}>
-                <div className={styles.label_and_inputs}>
-                  <div className={styles.field_name}>
-                    <label htmlFor="name">User's First Name</label>
-                  </div>
-                  <div>
-                    <input
-                      type="text"
-                      placeholder="Enter the first name"
-                      className={styles.input_fields}
-                    />
-                  </div>
-                </div>
-
-                <div className={styles.label_and_inputs}>
-                  <div className={styles.field_name}>
-                    <label htmlFor="name">User's last name</label>
-                  </div>
-                  <div>
-                    <input
-                      type="text"
-                      placeholder="Enter the last name"
-                      className={styles.input_fields}
-                    />
-                  </div>
-                </div>
+                {renderInputField("User's First Name", "firstName" , "text")}
+                {renderInputField("User's Last Name", "lastName" , "text")}
               </div>
 
               <div className={styles.multiple_inputs}>
-                <div className={styles.label_and_inputs}>
-                  <div className={styles.field_name}>
-                    <label htmlFor="name">Email</label>
-                  </div>
-                  <div>
-                    <input
-                      type="email"
-                      placeholder="Enter the mail"
-                      className={styles.input_fields}
-                    />
-                  </div>
-                </div>
-
-                <div className={styles.label_and_inputs}>
-                  <div className={styles.field_name}>
-                    <label htmlFor="name">User's Mobile No.</label>
-                  </div>
-                  <div>
-                    <input
-                      type="tel"
-                      placeholder="Enter the Mobile No."
-                      className={styles.input_fields}
-                    />
-                  </div>
-                </div>
+                {renderInputField("Email", "email", "email")}
+                {renderInputField("User's Mobile No.", "mobileNo", "tel" )}
               </div>
-
+              
               <div className={styles.multiple_inputs}>
-                <div className={styles.label_and_inputs}>
-                  <div className={styles.field_name}>
-                    <label htmlFor="name">User's Role</label>
-                  </div>
-                  <div>
-                    <input
-                      type="tel"
-                      placeholder="Enter the Role"
-                      className={styles.input_fields}
-                    />
-                  </div>
-                </div>
+                {renderInputField("User's Role", "role" , "text")}
+                  <div className={styles.gender}>
+                   <div className={styles.field_name}>
+                     <label htmlFor="name">Gender</label>
+                   </div>
+                   <div className={styles.gender_selection_section}>
+                     <div className={styles.input_and_label}>
+                       <input type="radio" name="gender" value="male" />
+                       <label>Male</label>
+                     </div>
 
-                <div className={styles.gender_selection_section}>
-                  vishal
-                </div>
-
+                     <div className={styles.input_and_label}>
+                       <input type="radio" name="gender" value="female" />
+                       <label>Female</label>
+                     </div>                
+                   </div>
+                  </div>
               </div>
+              
 
               <div className={styles.update_btn}>
                 <Button
@@ -124,7 +122,12 @@ export function CreateUsers({ open, handleClose }: UpdateCategoryProps) {
                 >
                   Cancel
                 </Button>
-                <Button variant="contained" className={styles.create_button} type="submit">
+                <Button
+                  variant="contained"
+                  className={styles.create_button}
+                  type="submit"
+                  // onClick={handleCreateUser}
+                >
                   Create
                 </Button>
               </div>

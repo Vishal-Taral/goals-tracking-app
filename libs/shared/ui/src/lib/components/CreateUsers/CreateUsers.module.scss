@@ -55,3 +55,20 @@
         }
     }
 }
+
+.gender{
+    margin-top: 1rem;
+    .field_name {
+            margin-left: 0.5rem;
+            font-size: 14px;
+        }
+    .gender_selection_section{
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        .input_and_label{
+            display: flex;
+            gap: 0.2rem;
+        }
+    }
+}

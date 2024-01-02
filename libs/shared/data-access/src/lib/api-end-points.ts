@@ -1,4 +1,4 @@
-const serverUrl = 'http://192.168.1.104:3333/api';
+const serverUrl = 'http://192.168.1.105:3333/api';
 
 export const apiUrlObject = {
     // getAllRoles : `${serverUrl}/roles`,
@@ -24,6 +24,7 @@ export const apiUrlObject = {
     deleteUser : 'http://localhost:8002/data',
     updateUser : 'http://localhost:8002/data',
 
-    getLogin: 'http://localhost:8003/loginData'
+    // getLogin: 'http://localhost:8003/loginData',
+    getLogin : `${serverUrl}/Login`,
 }
 
