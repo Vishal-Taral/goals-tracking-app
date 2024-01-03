@@ -6,13 +6,13 @@ import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
 import WarningIcon from '@mui/icons-material/Warning';
 import Button from '@mui/material/Button';
-import { useDeleteCategory } from '../../../../../data-access/src/lib/queries/deleteCategories';
+import { useDeleteCategory } from '@goal-tracker/data-access';
 
 export interface DeleteProps {
   open: boolean;
   handleClose: (action: any) => void;
   categoryId: string;
-  categories: any[];
+  categories: any;
 }
 
 export function DeleteCategory({ open, handleClose, categoryId, categories }: DeleteProps) {

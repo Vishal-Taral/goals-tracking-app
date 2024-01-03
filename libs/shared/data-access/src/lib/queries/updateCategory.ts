@@ -2,12 +2,8 @@ import { useMutation ,useQueryClient } from '@tanstack/react-query';
 import { apiClient, apiUrlObject } from '@goal-tracker/data-access';
 
 const updateCategory: any = async (params: any): Promise<any> => {
-  const url = `${apiUrlObject.updateCategory}/${params.id}`;
-  console.log('URL:', url);
-
-  // Assuming the API expects data in the format { name: updatedName }
-  const updatedValue = await apiClient.put(url, { name: params.name });
-  console.log('Updated Value:', updatedValue);
+  const url = `${apiUrlObject.updateCategory}/${params.categoryId}`;
+  const updatedValue = await apiClient.put(url, { categoryName: params.categoryName });
   return updatedValue;
 };
 
