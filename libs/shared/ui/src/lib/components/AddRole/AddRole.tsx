@@ -20,8 +20,8 @@ export function CreateCategory({ open, handleClose }: AddRoleProps) {
   const addRole = useAddRole();
 
   const obj = {
-    name: categoryName,
-    description: descName
+    roleName: categoryName,
+    roleDescription: descName
   }
 
   // const context = useContext(AppContext)
