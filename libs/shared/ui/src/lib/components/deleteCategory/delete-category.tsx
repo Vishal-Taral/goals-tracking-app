@@ -11,14 +11,14 @@ import { useDeleteCategory } from '../../../../../data-access/src/lib/queries/de
 export interface DeleteProps {
   open: boolean;
   handleClose: (action: any) => void;
-  categoryId: number;
+  categoryId: string;
   categories: any[];
 }
 
 export function DeleteCategory({ open, handleClose, categoryId, categories }: DeleteProps) {
   const { mutate } = useDeleteCategory();
 
-  const category = categories.find((cat) => cat.id === categoryId);
+  const category = categories?.data?.find((category : any) => category.id === categoryId);
   const categoryName = category ? category.name : '';
 
   const style = {

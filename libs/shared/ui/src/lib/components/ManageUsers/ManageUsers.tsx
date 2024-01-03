@@ -119,7 +119,7 @@ export function ManageUsers({ tableData } : ManageCategories) {
             </tr>
           </thead>
           <tbody>
-            {tableData.rows?.map((data: any, index: number) => (
+            {tableData?.rows?.data?.map((data: any, index: number) => (
               <tr key={index} className={styles.table_row}>
                 <td className={styles.table_data}>{data.userId}</td>
                 <td className={styles.table_data}>{data?.firstName}</td>
