@@ -26,11 +26,11 @@ app.use('/api', AuthorizeRouter);
 
 const appDataSource = new DataSource({
   type: 'postgres',
-  host: 'localhost',
-  port: 5432,
-  username: 'postgres',
-  password: 'password',
-  database: 'got',
+  host: process.env.HOST,
+  port: Number.parseInt(process.env.DB_PORT, 10),
+  username: process.env.USERNAME,
+  password: process.env.PASSWORD,
+  database: process.env.DATABASE,
   entities: [User, Role, Category, Goal, OrgTree],
   migrations: [SeedData1701843207086],
   migrationsRun: true,

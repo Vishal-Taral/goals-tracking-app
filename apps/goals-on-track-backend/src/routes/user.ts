@@ -4,19 +4,20 @@ import {
   deleteUser,
   getAllUsers,
   updateUser,
-  getUserById
+  getUserById,
 } from '../controllers/userController';
+import { userAuthentication } from '../middleware/userAuthentication';
 
 const router = express.Router();
 
-router.get('/users', getAllUsers);
+router.get('/users', userAuthentication, getAllUsers);
 
-router.get('/user/:id', getUserById);
+router.get('/user/:id',userAuthentication, getUserById);
 
-router.post('/addUser', addUser);
+router.post('/addUser',userAuthentication, addUser);
 
-router.put('/updateUser/:id', updateUser);
+router.put('/updateUser/:id',userAuthentication, updateUser);
 
-router.delete('/deleteUser/:id', deleteUser);
+router.delete('/deleteUser/:id',userAuthentication, deleteUser);
 
 export { router as UserRouter };
