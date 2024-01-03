@@ -17,10 +17,8 @@ import axios from 'axios';
 function CustomApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();
 
-  console.log('axios', axios)
   axios.interceptors.request.use((request)=> {
     const token = localStorage.getItem('AUTHORIZATION')
-    console.log('request', request)
     if(token){
     request.headers.AUTHORIZATION = token
     }
