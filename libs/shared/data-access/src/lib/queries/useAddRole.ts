@@ -3,7 +3,6 @@ import { apiClient } from "../api-client"
 import { apiUrlObject } from "../api-end-points"
 
 const addRole = async(payload) => {
-    console.log('payload', payload)
     return await apiClient.post(apiUrlObject.addRole,payload)
 }
 

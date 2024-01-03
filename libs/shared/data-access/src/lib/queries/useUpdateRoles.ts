@@ -4,7 +4,7 @@ import { apiUrlObject } from "../api-end-points"
 
 const updateRoles = async(payload) => {
     try{
-        const response = await apiClient.put(`${apiUrlObject.deleteRole}/${payload?.id}`,{name: payload?.name, description: payload?.description})
+        const response = await apiClient.put(`${apiUrlObject.updateRole}/${payload?.id}`,{roleName: payload?.name, roleDescription: payload?.description})
         return response.data
     }catch(error){
         console.log(error)

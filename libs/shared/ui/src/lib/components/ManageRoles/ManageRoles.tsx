@@ -28,7 +28,7 @@ export function ManageRoles({ tableData }: ManageRoles) {
   const [prefilledInputData , setPrefilledInputData] = useState();
   const updatePopupOpenHandler = (index: number, data: any) => {
     setOpenUpdatePopup(true);
-    setUpdateRoleId(data.id);
+    setUpdateRoleId(data.roleId);
     setPrefilledInputData(data);
   };
   const handleCloseUpdatePopup = () => setOpenUpdatePopup(false);
@@ -37,7 +37,7 @@ export function ManageRoles({ tableData }: ManageRoles) {
   const [deleteRoleId, setDeleteRoleId] = useState(null);
   const deletePopupOpenHandler = (index: number, data: any) => {
     setOpenDeletePopup(true);
-    setDeleteRoleId(data.id);
+    setDeleteRoleId(data.roleId);
   };
   const handleCloseDeletePopup = () => setOpenDeletePopup(false);
 
