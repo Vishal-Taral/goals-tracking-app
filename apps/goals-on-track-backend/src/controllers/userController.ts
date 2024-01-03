@@ -40,7 +40,8 @@ const addUser = async (req, res) => {
 const getUserById = async (req, res) => {
   try {
     const userId = req.params.id;
-    const existingUser = getUserByIdService(userId);
+    const existingUser = await getUserByIdService(userId);
+    
     if (!existingUser) {
       return res.status(404).json({ error: 'User not found' });
     }

@@ -1,6 +1,6 @@
-import app from "./main";
-
-const port = 9696;
+import app from './main';
+import 'dotenv/config';
+const port = process.env.PORT;
 const server = app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}/api`);
 });
