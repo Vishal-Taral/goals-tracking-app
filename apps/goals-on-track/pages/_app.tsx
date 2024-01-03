@@ -17,10 +17,13 @@ import axios from 'axios';
 function CustomApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();
 
-  // axios.interceptors.request.use((request)=> {
-  //   localStorage.getItem('AUTHORIZATION')
-  //   request.headers.AUTHORIZATION = 
-  // })
+  axios.interceptors.request.use((request)=> {
+    const token = localStorage.getItem('AUTHORIZATION')
+    if(token){
+    request.headers.AUTHORIZATION = token
+    }
+    return request
+  })
 
   return (
     <>
