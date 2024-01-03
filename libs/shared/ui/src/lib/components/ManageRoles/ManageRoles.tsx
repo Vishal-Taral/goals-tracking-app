@@ -21,6 +21,8 @@ export interface ManageRoles {
 
 export function ManageRoles({ tableData }: ManageRoles) {
   const { data: rolesList } = useGetRoles();
+  console.log("rolesList",rolesList);
+  
   const [openUpdatePopup, setOpenUpdatePopup] = useState(false);
   const [updateRoleId, setUpdateRoleId] = useState(null);
   const [prefilledInputData , setPrefilledInputData] = useState();
@@ -92,7 +94,7 @@ export function ManageRoles({ tableData }: ManageRoles) {
             {rolesList?.data?.map((data: any, index: number) => (
               <tr className={styles.table_row} key={index}>
                 <td className={styles.table_data}>
-                  {data.id}
+                  {data.roleId}
                 </td>
                 <td className={styles.table_data}>
                   {data.name}

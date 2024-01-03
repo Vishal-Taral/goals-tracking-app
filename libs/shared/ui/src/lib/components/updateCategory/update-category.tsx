@@ -9,7 +9,7 @@ import { useUpdateCategory } from '../../../../../data-access/src/lib/queries/up
 export interface UpdateCategoryProps {
   open: boolean;
   handleClose: () => void;
-  selctedId: number;
+  selctedId: string;
   categoriesList: any[];
 }
 
@@ -31,8 +31,11 @@ export function UpdateCategory({ open, handleClose, selctedId , categoriesList,}
   const { mutateAsync: updateCategory } = useUpdateCategory();
   const [categoryName, setCategoryName] = useState('');
 
+  console.log("category List ", categoriesList , selctedId);
+  
+
   useEffect(() => {
-    const selectedCategory = categoriesList.find((category) => category.id === selctedId);
+    const selectedCategory = categoriesList?.data?.find((category : any) => category.categoryId === selctedId);
     if (selectedCategory) {
       setCategoryName(selectedCategory.name);
     }
@@ -41,7 +44,7 @@ export function UpdateCategory({ open, handleClose, selctedId , categoriesList,}
   const ID = 1;
 
   const payLoad = {
-    id: selctedId,
+    categoryId: selctedId,
     name: categoryName,
   };
 

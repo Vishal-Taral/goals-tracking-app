@@ -27,7 +27,7 @@ export function ManageCategories({ tableData } : ManageCategories) {
   const handleOpenDelete = () => setOpenDelete(true);
   const handleClose = () => setOpenUpdate(false);
   const handleCloseDelete = () => setOpenDelete(false);
-  const [selectedRowIndex, setSelectedRowIndex] = useState<number | null>(null);
+  const [selectedRowIndex, setSelectedRowIndex] = useState<string | null>(null);
 
   
   const [openCreatePopup, setOpenCreatePopup] = useState(false);
@@ -36,12 +36,12 @@ export function ManageCategories({ tableData } : ManageCategories) {
 
   console.log("id" , selectedRowIndex);
 
-  const handleOpenUpdate = (index: number) => {
+  const handleOpenUpdate = (index: string) => {
     setSelectedRowIndex(index);
     setOpenUpdate(true);
   };
 
-  const handleOpenDelate = (index: number) => {
+  const handleOpenDelate = (index: string) => {
     setSelectedRowIndex(index);
     setOpenDelete(true);
   };
@@ -98,19 +98,19 @@ export function ManageCategories({ tableData } : ManageCategories) {
             </tr>
           </thead>
           <tbody>
-            {categoriesList?.map((data: any, index: number) => (
+            {categoriesList?.data?.map((data: any, index: number) => (
               <tr key={index} className={styles.table_row}>
                 {/* {Object.entries(data).map((val, index) => (
                   <td className={styles.table_data} key={index}>{val[1]}</td>
                 ))} */}
-                <td className={styles.table_data}>{data.id}</td>
+                <td className={styles.table_data}>{data.categoryId}</td>
 
                 <td className={styles.table_data}>{data?.name}</td>
                 
                 <td className={styles.table_data}>
                   <span
                     className={styles.icons}
-                    onClick={() => handleOpenUpdate(data.id)}
+                    onClick={() => handleOpenUpdate(data.categoryId)}
                   >
                     <EditIcon />
                   </span>
@@ -118,7 +118,7 @@ export function ManageCategories({ tableData } : ManageCategories) {
                 <td className={styles.table_data}>
                   <span
                     className={styles.icons}
-                    onClick={() => handleOpenDelate(data.id)}
+                    onClick={() => handleOpenDelate(data.categoryId)}
                   >
                     <DeleteIcon />
                   </span>
