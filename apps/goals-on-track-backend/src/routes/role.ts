@@ -7,19 +7,20 @@ import {
   getRoleById,
   // userLogin,
 } from '../controllers/roleController';
+import { userAuthentication } from '../middleware/userAuthentication';
 
 const router = express.Router();
 
-router.get('/roles', getAllRoles);
+router.get('/roles',userAuthentication, getAllRoles);
 
-router.get('/role/:id', getRoleById);
+router.get('/role/:id',userAuthentication, getRoleById);
 
 // router.post('/login', userLogin);
 
-router.post('/addRole', addRole);
+router.post('/addRole',userAuthentication, addRole);
 
-router.put('/updateRole/:id', updateRole);
+router.put('/updateRole/:id',userAuthentication, updateRole);
 
-router.delete('/deleteRole/:id', deleteRole);
+router.delete('/deleteRole/:id',userAuthentication, deleteRole);
 
 export { router as RoleRouter };
