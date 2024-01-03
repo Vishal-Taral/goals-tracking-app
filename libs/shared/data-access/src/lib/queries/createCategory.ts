@@ -3,7 +3,7 @@ import { apiClient, apiUrlObject } from '@goal-tracker/data-access';
 
 const createCategory: any = async (categoryName: string): Promise<any> => {
   const url = `${apiUrlObject.addCategory}`;
-  const createdCategory = await apiClient.post(url, { name: categoryName });
+  const createdCategory = await apiClient.post(url, { categoryName: categoryName });
 
   return createdCategory;
 };
