@@ -4,13 +4,13 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { useUpdateCategory } from '../../../../../data-access/src/lib/queries/updateCategory';
+import { useUpdateCategory } from '@goal-tracker/data-access';
 
 export interface UpdateCategoryProps {
   open: boolean;
   handleClose: () => void;
   selctedId: string;
-  categoriesList: any[];
+  categoriesList: any;
 }
 
 export function UpdateCategory({ open, handleClose, selctedId , categoriesList,}: UpdateCategoryProps) {
@@ -31,11 +31,9 @@ export function UpdateCategory({ open, handleClose, selctedId , categoriesList,}
   const { mutateAsync: updateCategory } = useUpdateCategory();
   const [categoryName, setCategoryName] = useState('');
 
-  console.log("category List ", categoriesList , selctedId);
-  
-
   useEffect(() => {
     const selectedCategory = categoriesList?.data?.find((category : any) => category.categoryId === selctedId);
+    
     if (selectedCategory) {
       setCategoryName(selectedCategory.name);
     }
@@ -45,13 +43,12 @@ export function UpdateCategory({ open, handleClose, selctedId , categoriesList,}
 
   const payLoad = {
     categoryId: selctedId,
-    name: categoryName,
+    categoryName: categoryName,
   };
 
   const handleUpdate = async () => {
     handleClose();
     try {
-      console.log('Payload:', payLoad);
       await updateCategory(payLoad);
       console.log('Category updated successfully');
     } catch (error) {

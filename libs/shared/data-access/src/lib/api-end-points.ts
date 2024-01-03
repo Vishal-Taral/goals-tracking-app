@@ -6,14 +6,6 @@ export const apiUrlObject = {
     addCategory : `${serverUrl}/addCategory`,
     deleteCategory : `${serverUrl}/deleteCategory`,
 
-    // Json Server Urls
-
-    // getAllCategories : 'http://localhost:8000/data',
-    // updateCategory : 'http://localhost:8000/data',
-    // addCategory : 'http://localhost:8000/data',
-    // deleteCategory : 'http://localhost:8000/data',
-
-    // getAllRoles : 'http://localhost:8001/data',
     getAllRoles : `${serverUrl}/roles`,
     addRole : `${serverUrl}/addRole`,
     deleteRole : `${serverUrl}/deleteRole`,
@@ -24,7 +16,6 @@ export const apiUrlObject = {
     deleteUser : `${serverUrl}/updateUser`,
     updateUser : `${serverUrl}/deleteUser`,
 
-    // getLogin: 'http://localhost:8003/loginData',
     getLogin : `${serverUrl}/Login`,
 }
 

@@ -12,3 +12,6 @@ export * from '../src/lib/queries/useGetAllUsers';
 export * from '../src/lib/queries/useDeleteUsers';
 export * from './lib/queries/usePostLogin';
 export * from './lib/queries/useCreateUser';
+export * from './lib/queries/createCategory';
+export * from './lib/queries/deleteCategories';
+export * from './lib/queries/updateCategory';

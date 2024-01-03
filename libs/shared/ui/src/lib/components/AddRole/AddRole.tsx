@@ -12,7 +12,7 @@ export interface AddRoleProps {
   handleClose: () => void;
 }
 
-export function CreateCategory({ open, handleClose }: AddRoleProps) {
+export function AddRole({ open, handleClose }: AddRoleProps) {
 
   const [categoryName, setCategoryName] = useState('');
   const [descName, setDescName] = useState('');
@@ -104,4 +104,4 @@ export function CreateCategory({ open, handleClose }: AddRoleProps) {
   );
 }
 
-export default CreateCategory;
+export default AddRole;

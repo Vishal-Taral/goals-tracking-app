@@ -4,14 +4,14 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { useCreateCategory } from '../../../../../data-access/src/lib/queries/createCategory';
+import { useCreateCategory } from '@goal-tracker/data-access';
 
-export interface UpdateCategoryProps {
+export interface CreateCategoryProps {
   open: boolean;
   handleClose: () => void;
 }
 
-export function CreateCategory({ open, handleClose }: UpdateCategoryProps) {
+export function CreateCategory({ open, handleClose }: CreateCategoryProps) {
 
   const [categoryName, setCategoryName] = useState('');
   const { mutate } = useCreateCategory();
