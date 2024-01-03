@@ -15,11 +15,7 @@ import HOCAuth from 'libs/shared/ui/src/lib/components/HOCAuth/HOCAuth';
 
 function CustomApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient()
-  useEffect(()=> {
-    // localStorage.setItem('token','tokenIsPresent')
-    // localStorage.removeItem('token')
-    
-  },[])
+
   return (
     <>
       <QueryClientProvider client={queryClient}>

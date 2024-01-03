@@ -89,7 +89,7 @@ export function ManageRoles({ tableData }: ManageRoles) {
             </tr>
           </thead>
           <tbody>
-            {rolesList?.map((data: any, index: number) => (
+            {rolesList?.data?.map((data: any, index: number) => (
               <tr className={styles.table_row} key={index}>
                 <td className={styles.table_data}>
                   {data.id}

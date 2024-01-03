@@ -55,16 +55,6 @@ export function Login(props: LoginProps) {
         setLoginError('Invalid credentials. Please try again.');
         setSnackbarOpen(true);
       }
-
-      // if (data.email === response.data.email && data.password === response.data.password) {
-      //   setLoginError(null);
-      //   routFunction();
-      //   setSuccessSnackbar(true);
-      //   setSuccessMassage('You successfully logged in');
-      // } else {
-      //   setLoginError('Invalid credentials. Please try again.');
-      //   setSnackbarOpen(true);
-      // }
     }
   };
 

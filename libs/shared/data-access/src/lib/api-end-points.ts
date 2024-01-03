@@ -14,7 +14,7 @@ export const apiUrlObject = {
     addCategory : 'http://localhost:8000/data',
     deleteCategory : 'http://localhost:8000/data',
 
-    getAllRoles : 'http://localhost:8001/data',
+    getAllRoles : 'http://164.52.214.199:9696/api/roles',
     addRole : 'http://localhost:8001/data',
     deleteRole : 'http://localhost:8001/data',
     updateRole : 'http://localhost:8001/data',
