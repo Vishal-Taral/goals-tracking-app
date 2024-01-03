@@ -14,7 +14,7 @@
         "outputPath": "dist/apps/goals-on-track-backend",
         "main": "apps/goals-on-track-backend/src/server.ts",
         "tsConfig": "apps/goals-on-track-backend/tsconfig.app.json",
-        "assets": ["apps/goals-on-track-backend/src/assets"],
+        "assets": ["apps/goals-on-track-backend/src/assets","apps/goals-on-track-backend/src/config-pm2.json"],
         "isolatedConfig": true,
         "webpackConfig": "apps/goals-on-track-backend/webpack.config.js"
       },
