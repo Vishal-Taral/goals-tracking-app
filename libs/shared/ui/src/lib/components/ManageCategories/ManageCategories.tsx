@@ -5,11 +5,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
-// import Update from '../update/update';
-import UpdateCategory from '../updateCategory/update-category';
-import DeleteComponent from '../delete/delete';
-import CreateCategory from '../createCategory/create-category';
-import DeleteCategory from '../deleteCategory/delete-category';
+import {UpdateCategory , DeleteCategory , CreateCategory } from '@goal-tracker/ui';
 import { useGetCategories } from '@goal-tracker/data-access';
 
 /* eslint-disable-next-line */
@@ -34,8 +30,6 @@ export function ManageCategories({ tableData } : ManageCategories) {
   const handleCloseCreatePopup = () => setOpenCreatePopup(false)
   const handleOpenCreatePopup = () => setOpenCreatePopup(true);
 
-  console.log("id" , selectedRowIndex);
-
   const handleOpenUpdate = (index: string) => {
     setSelectedRowIndex(index);
     setOpenUpdate(true);
@@ -47,7 +41,6 @@ export function ManageCategories({ tableData } : ManageCategories) {
   };
 
   const handleCreateCategory = () => {
-    // setSelectedRowIndex(index);
     setOpenCreatePopup(true);
   };
 
@@ -100,9 +93,6 @@ export function ManageCategories({ tableData } : ManageCategories) {
           <tbody>
             {categoriesList?.data?.map((data: any, index: number) => (
               <tr key={index} className={styles.table_row}>
-                {/* {Object.entries(data).map((val, index) => (
-                  <td className={styles.table_data} key={index}>{val[1]}</td>
-                ))} */}
                 <td className={styles.table_data}>{data.categoryId}</td>
 
                 <td className={styles.table_data}>{data?.name}</td>
