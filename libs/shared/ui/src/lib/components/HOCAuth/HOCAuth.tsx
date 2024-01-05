@@ -10,7 +10,7 @@ const HOCAuth = ({ Component, ...props }: any) => {
   const [loading, setLoading] = useState(true)
 
   const authCheck = () => {
-    if (localStorage.getItem('AUTHORIZATION') == null) {
+    if (localStorage.getItem('AUTHORIZATION') !== null) {
       setAuthenticated(true);
     } else {
       if (router.pathname.includes('/dashboard')) {
