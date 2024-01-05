@@ -21,8 +21,8 @@ export const apiUrlObject = {
  
     getAllUsers : `${serverUrl}/users`,
     addUser : `${serverUrl}/addUser`,
-    deleteUser : `${serverUrl}/updateUser`,
-    updateUser : `${serverUrl}/deleteUser`,
+    deleteUser : `${serverUrl}/deleteUser`,
+    updateUser : `${serverUrl}/updateUser`,
  
     // getLogin: 'http://localhost:8003/loginData',
     getLogin : `${serverUrl}/Login`,
