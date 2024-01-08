@@ -9,7 +9,7 @@ const updateCategory: any = async (params: any): Promise<any> => {
 
 const MUTATION_KEY = ['updateCategory'];
 
-export const useUpdateCategory = (payload: any) => {
+export const usePutUpdateCategory = (payload: any) => {
   const queryClient = useQueryClient();
   return useMutation({ mutationKey: MUTATION_KEY, mutationFn: () => updateCategory(payload) ,onSuccess: () => payload.success() });
 };

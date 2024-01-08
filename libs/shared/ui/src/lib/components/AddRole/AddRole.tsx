@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { useAddRole } from '@goal-tracker/data-access';
+import { usePostAddRole } from '@goal-tracker/data-access';
 import AppContext from '../../contexts/AppContext';
 
 export interface AddRoleProps {
@@ -17,7 +17,7 @@ export function AddRole({ open, handleClose }: AddRoleProps) {
   const [categoryName, setCategoryName] = useState('');
   const [descName, setDescName] = useState('');
 
-  const addRole = useAddRole({success: handleClose});
+  const addRole = usePostAddRole({success: handleClose});
 
   const obj = {
     roleName: categoryName,

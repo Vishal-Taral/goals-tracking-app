@@ -14,7 +14,7 @@ const deleteRoles = async(data: any) => {
 }
 
 const QUERY_KEY = ['deleteRoles']
-export const useDeleteRoles = (data: any) => {
+export const useDeleteRole = (data: any) => {
     const queryClient = useQueryClient()
     return useMutation({mutationKey: QUERY_KEY, mutationFn: ()=>deleteRoles(data),onSuccess: ()=>queryClient.invalidateQueries(['deleteRoles'])})
 }

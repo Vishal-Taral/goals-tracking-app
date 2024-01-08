@@ -10,7 +10,7 @@
 
 // const QUERY_KEY = ['updateUser'];
 
-// export const useUpdateUser = () => {
+// export const usePutUpdateUser = () => {
 //   const queryClient = useQueryClient();
 //   return useMutation({
 //     mutationKey: QUERY_KEY,
@@ -19,11 +19,16 @@
 //   });
 // };
 
-
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient, apiUrlObject } from '@goal-tracker/data-access';
 
-const updateUser: any = async ({ userId, updatedUserData }: { userId: string; updatedUserData: any }): Promise<any> => {
+const updateUser: any = async ({
+  userId,
+  updatedUserData,
+}: {
+  userId: string;
+  updatedUserData: any;
+}): Promise<any> => {
   const url = `${apiUrlObject.updateUser}/${userId}`;
   const updatedUser = await apiClient.put(url, updatedUserData);
 
@@ -32,11 +37,12 @@ const updateUser: any = async ({ userId, updatedUserData }: { userId: string; up
 
 const QUERY_KEY = ['updateUser'];
 
-export const useUpdateUser = () => {
+export const usePutUpdateUser = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationKey: QUERY_KEY,
-    mutationFn: (payload: { userId: string; updatedUserData: any }) => updateUser(payload),
-    onSuccess: () => queryClient.invalidateQueries(['updateUser']),
+    mutationFn: (payload: { userId: string; updatedUserData: any }) =>
+      updateUser(payload),
+    // onSuccess: () => payload.success()
   });
 };

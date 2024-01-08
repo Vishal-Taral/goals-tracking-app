@@ -1,10 +1,9 @@
 import { useGetRoles } from '@goal-tracker/data-access';
-import { ManageRoles } from '@goal-tracker/ui';
+import { ErrorHandler, ManageRoles } from '@goal-tracker/ui';
 import PrivateLayout from 'apps/goals-on-track/component/common/privateLayout/private-layout';
 import HOCAuth from 'libs/shared/ui/src/lib/components/HOCAuth/HOCAuth';
 import React from 'react';
 import styles from './index.module.scss';
-import { ErrorHandler } from 'libs/shared/ui/src/lib/components/ErrorHandler/ErrorHandler';
 
 const Roles = () => {
   const { data: rolesList } = useGetRoles();

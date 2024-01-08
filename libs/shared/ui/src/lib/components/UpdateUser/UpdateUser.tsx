@@ -4,7 +4,7 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import {useState} from 'react'
-import { useUpdateUser } from '@goal-tracker/data-access';
+import { usePutUpdateUser } from '@goal-tracker/data-access';
 /* eslint-disable-next-line */
 export interface UpdateUserProps {
   open: boolean;
@@ -24,7 +24,7 @@ export function UpdateUser({ open, handleClose, prefilledInputData }: UpdateUser
     role: '',
   });
 
-  const { mutate } = useUpdateUser();
+  const { mutate } = usePutUpdateUser();
 
   const styleObj = {
     position: 'absolute' as 'absolute',

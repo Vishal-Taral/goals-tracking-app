@@ -4,7 +4,7 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import {useState} from 'react'
-import { useUpdateRoles } from '@goal-tracker/data-access';
+import { usePutUpdateRole } from '@goal-tracker/data-access';
 /* eslint-disable-next-line */
 export interface UpdateRoleProps {
   open: boolean;
@@ -36,7 +36,7 @@ export function UpdateRole({ open, handleClose, updateRoleId, prefilledInputData
     const updatedData = {...updatePopupData, [heading]: e.target.value}
     setUpdatePopupData(updatedData);
   }
-  const updateRole = useUpdateRoles({...updatePopupData, id: updateRoleId, success: handleClose});
+  const updateRole = usePutUpdateRole({...updatePopupData, id: updateRoleId, success: handleClose});
   const handleUpdate = () => updateRole.mutate();    
 
   return (
