@@ -10,7 +10,6 @@ import { useGetRoles } from '@goal-tracker/data-access';
 import UpdateRole from '../UpdateRole/UpdateRole';
 import DeleteRole from '../DeleteRole/DeleteRole';
 
-
 /* eslint-disable-next-line */
 
 const options = ['story', 'upskill', 'task completing ', 'achievable'];

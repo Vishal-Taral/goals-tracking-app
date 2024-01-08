@@ -27,9 +27,14 @@ export function UpdateCategory({ open, handleClose, selctedId , categoriesList,}
     p: 2,
     color: 'black',
   };
-
-  const { mutateAsync: updateCategory } = useUpdateCategory();
   const [categoryName, setCategoryName] = useState('');
+
+  const payLoad = {
+    categoryId: selctedId,
+    categoryName: categoryName,
+  };
+
+  const updateCategory = useUpdateCategory({...payLoad, success: handleClose});
 
   useEffect(() => {
     const selectedCategory = categoriesList?.data?.find((category : any) => category.categoryId === selctedId);
@@ -41,15 +46,10 @@ export function UpdateCategory({ open, handleClose, selctedId , categoriesList,}
 
   const ID = 1;
 
-  const payLoad = {
-    categoryId: selctedId,
-    categoryName: categoryName,
-  };
-
   const handleUpdate = async () => {
     try {
       handleClose();
-      await updateCategory(payLoad);
+      await updateCategory.mutate();
       console.log('Category updated successfully');
     } catch (error) {
       console.error('Error updating category:', error);

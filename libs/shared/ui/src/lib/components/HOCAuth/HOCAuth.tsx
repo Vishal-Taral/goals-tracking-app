@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { useRouter } from 'next/router';
 import Footer from '../footer/footer';
 import Login from '../Login/Login';
@@ -7,7 +7,7 @@ import Loader from '../Loader/Loader';
 const HOCAuth = ({ Component, ...props }: any) => {
   const router = useRouter();
   const [authenticated, setAuthenticated] = useState(false);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
 
   const authCheck = () => {
     if (localStorage.getItem('AUTHORIZATION') !== null) {
@@ -20,15 +20,15 @@ const HOCAuth = ({ Component, ...props }: any) => {
         setAuthenticated(true);
       }
     }
-    setLoading(false)
+    setLoading(false);
   };
 
   useLayoutEffect(() => {
     authCheck();
   }, []);
 
-  if(loading){
-    return <Loader />
+  if (loading) {
+    return <Loader />;
   }
   if (authenticated) {
     return <Component {...props} />;
