@@ -27,7 +27,6 @@ function CustomApp({ Component, pageProps }: AppProps) {
       return response;
     },
     (error) => {
-      console.log('error', error);
       router.push(`/responseInterceptorErrorHandler/${error.message}`);
     }
   );

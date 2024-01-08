@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
 import WarningIcon from '@mui/icons-material/Warning';
 import Button from '@mui/material/Button';
-import { useDeleteRoles, useDeleteUsers } from '@goal-tracker/data-access';
+import { useDeleteRole, useDeleteUser } from '@goal-tracker/data-access';
 
 export interface DeleteUserProps {
   open: boolean;
@@ -29,7 +29,7 @@ export function DeleteUser({ open, handleClose, deleteUserId }: DeleteUserProps)
   };
 
   console.log('deleteUserId', deleteUserId)
-  const deleteUsers = useDeleteUsers(deleteUserId);
+  const deleteUsers = useDeleteUser(deleteUserId);
   const handleDelete = async () => {
     console.log('deleteUserId',deleteUserId,'deleteUsers',deleteUsers)
     await deleteUsers.mutate();

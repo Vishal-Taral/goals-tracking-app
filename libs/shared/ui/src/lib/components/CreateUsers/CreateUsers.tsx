@@ -4,7 +4,7 @@
 // import Modal from '@mui/material/Modal';
 // import Box from '@mui/material/Box';
 // import Button from '@mui/material/Button';
-// import { useCreateUser } from '../../../../../data-access/src/lib/queries/useCreateUser';
+// import { usePostAddUser } from '../../../../../data-access/src/lib/queries/usePostAddUser';
 
 // export interface UpdateCategoryProps {
 //   open: boolean;
@@ -12,7 +12,7 @@
 // }
 
 // export function CreateUsers({ open, handleClose }: UpdateCategoryProps) {
-//   const { mutate } = useCreateUser();
+//   const { mutate } = usePostAddUser();
 
 //   const [formData, setFormData] = useState({
 //     firstName: "",
@@ -172,7 +172,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { useCreateUser } from '../../../../../data-access/src/lib/queries/useCreateUser';
+import { usePostAddUser } from '../../../../../data-access/src/lib/queries/usePostAddUser';
 
 export interface UpdateCategoryProps {
   open: boolean;
@@ -180,7 +180,7 @@ export interface UpdateCategoryProps {
 }
 
 export function CreateUsers({ open, handleClose }: UpdateCategoryProps) {
-  const { mutate, isLoading } = useCreateUser();
+  const { mutate, isLoading } = usePostAddUser();
 
   const [formData, setFormData] = useState({
     firstName: '',

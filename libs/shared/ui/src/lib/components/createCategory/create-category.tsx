@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { useCreateCategory } from '@goal-tracker/data-access';
+import { usePostAddCategory } from '@goal-tracker/data-access';
 
 export interface CreateCategoryProps {
   open: boolean;
@@ -14,7 +14,7 @@ export interface CreateCategoryProps {
 export function CreateCategory({ open, handleClose }: CreateCategoryProps) {
 
   const [categoryName, setCategoryName] = useState('');
-  const createCategory = useCreateCategory({success: handleClose});
+  const createCategory = usePostAddCategory({success: handleClose});
 
   const handleCreateCategory = async () => {
     createCategory.mutate(categoryName);
