@@ -46,10 +46,10 @@ export function UpdateCategory({ open, handleClose, selctedId , categoriesList,}
 
   const ID = 1;
 
-  const handleUpdate = async () => {
+  const handleUpdate = (event : any) => {
+    event.preventDefault();
     try {
-      handleClose();
-      await updateCategory.mutate();
+      updateCategory.mutate();
       console.log('Category updated successfully');
     } catch (error) {
       console.error('Error updating category:', error);

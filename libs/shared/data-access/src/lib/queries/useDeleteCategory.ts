@@ -9,7 +9,7 @@ const deleteCategory: any = async (id: string): Promise<any> => {
 
 const QUERY_KEY = ['deleteCategory'];
 
-export const useDeleteCategory = () => {
+export const useDeleteCategory = (payload : any) => {
   const queryClient = useQueryClient();
-  return useMutation({ mutationKey: QUERY_KEY, mutationFn: (id: string) => deleteCategory(id) ,  onSuccess: ()=>queryClient.invalidateQueries(['deleteCategory']) });
+  return useMutation({ mutationKey: QUERY_KEY, mutationFn: (id: string) => deleteCategory(id) ,  onSuccess: () => payload.success() });
 };

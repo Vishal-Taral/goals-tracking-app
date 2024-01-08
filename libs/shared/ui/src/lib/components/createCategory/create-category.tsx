@@ -16,9 +16,9 @@ export function CreateCategory({ open, handleClose }: CreateCategoryProps) {
   const [categoryName, setCategoryName] = useState('');
   const createCategory = usePostAddCategory({success: handleClose});
 
-  const handleCreateCategory = async () => {
+  const handleCreateCategory = async (event : any) => {
+    event.preventDefault();
     createCategory.mutate(categoryName);
-    handleClose();
   };
   
   const styleObj = {

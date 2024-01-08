@@ -16,7 +16,7 @@ export interface DeleteProps {
 }
 
 export function DeleteCategory({ open, handleClose, categoryId, categories }: DeleteProps) {
-  const { mutate } = useDeleteCategory();
+  const deleteCategory = useDeleteCategory({success : handleClose});
 
   const category = categories?.data?.find((category : any) => category.id === categoryId);
   const categoryName = category ? category.name : '';
@@ -35,9 +35,8 @@ export function DeleteCategory({ open, handleClose, categoryId, categories }: De
     color: 'black',
   };
 
-  const handleDelete = async () => {
-    await mutate(categoryId);
-    handleClose('delete');
+  const handleDelete = () => {
+    deleteCategory.mutate(categoryId);
   };
 
   return (
