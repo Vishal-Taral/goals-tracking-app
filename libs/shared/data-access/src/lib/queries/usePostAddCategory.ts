@@ -8,7 +8,7 @@ const createCategory: any = async (categoryName: string): Promise<any> => {
 
 const QUERY_KEY = ['createCategory'];
 
-export const useCreateCategory = (payload : any) => {
+export const usePostAddCategory = (payload : any) => {
   const queryClient = useQueryClient();
   return useMutation({ mutationKey: QUERY_KEY, mutationFn: (categoryName: string) => createCategory(categoryName) , onSuccess: () => payload.success() });
 };

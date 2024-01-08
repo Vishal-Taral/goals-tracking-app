@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import { useState } from 'react';
 import CreateUsers from '../CreateUsers/CreateUsers';
 import DeleteUser from '../DeleteUser/DeleteUser';
-import { useGetAllUsers , useUpdateUser } from '@goal-tracker/data-access';
+import { useGetUsers , usePutUpdateUser } from '@goal-tracker/data-access';
 import UpdateUser from '../UpdateUser/UpdateUser';
 
 /* eslint-disable-next-line */
@@ -19,7 +19,7 @@ export interface ManageCategories {
 }
 
 export function ManageUsers({ tableData } : ManageCategories) {
-  const { data: usersList } = useGetAllUsers();
+  const { data: usersList } = useGetUsers();
   console.log("usersList" , usersList);
   
   const [openCreatePopup, setOpenCreatePopup] = useState(false);

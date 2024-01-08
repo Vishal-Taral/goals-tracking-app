@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { useUpdateCategory } from '@goal-tracker/data-access';
+import { usePutUpdateCategory } from '@goal-tracker/data-access';
 
 export interface UpdateCategoryProps {
   open: boolean;
@@ -34,7 +34,7 @@ export function UpdateCategory({ open, handleClose, selctedId , categoriesList,}
     categoryName: categoryName,
   };
 
-  const updateCategory = useUpdateCategory({...payLoad, success: handleClose});
+  const updateCategory = usePutUpdateCategory({...payLoad, success: handleClose});
 
   useEffect(() => {
     const selectedCategory = categoriesList?.data?.find((category : any) => category.categoryId === selctedId);
