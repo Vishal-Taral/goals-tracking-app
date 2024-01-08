@@ -1,0 +1,9 @@
+.errorHandler{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .message{
+        font-size: 2rem;
+    }
+}
