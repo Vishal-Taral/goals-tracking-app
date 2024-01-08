@@ -17,7 +17,7 @@ export function AddRole({ open, handleClose }: AddRoleProps) {
   const [categoryName, setCategoryName] = useState('');
   const [descName, setDescName] = useState('');
 
-  const addRole = useAddRole();
+  const addRole = useAddRole({success: handleClose});
 
   const obj = {
     roleName: categoryName,
@@ -26,11 +26,7 @@ export function AddRole({ open, handleClose }: AddRoleProps) {
 
   // const context = useContext(AppContext)
 
-  const handleCreateCategory = async () => {
-    // context.setAddRole(obj)
-    await addRole.mutate(obj);
-    handleClose();
-  };
+  const handleCreateCategory = () => addRole.mutate(obj);
 
   const styleObj = {
     position: 'absolute',

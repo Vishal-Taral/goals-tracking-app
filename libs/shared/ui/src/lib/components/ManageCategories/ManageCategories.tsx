@@ -21,13 +21,22 @@ export function ManageCategories({ tableData } : ManageCategories) {
   const [openDelete, setOpenDelete] = useState(false);
   const handleOpen = () => setOpenUpdate(true);
   const handleOpenDelete = () => setOpenDelete(true);
-  const handleClose = () => setOpenUpdate(false);
-  const handleCloseDelete = () => setOpenDelete(false);
+  const handleCloseUpdate = () => {
+    setOpenUpdate(false);
+    refetch();
+  };
+  const handleCloseDelete = () => {
+    setOpenDelete(false);
+    refetch();
+  }
   const [selectedRowIndex, setSelectedRowIndex] = useState<string | null>(null);
 
   
   const [openCreatePopup, setOpenCreatePopup] = useState(false);
-  const handleCloseCreatePopup = () => setOpenCreatePopup(false)
+  const handleCloseCreatePopup = () => {
+    setOpenCreatePopup(false);
+    refetch();
+  }
   const handleOpenCreatePopup = () => setOpenCreatePopup(true);
 
   const handleOpenUpdate = (index: string) => {
@@ -44,7 +53,7 @@ export function ManageCategories({ tableData } : ManageCategories) {
     setOpenCreatePopup(true);
   };
 
-  const { data: categoriesList, isError } = useGetCategories();
+  const { data: categoriesList , refetch } = useGetCategories();
 
   return (
     <div className={styles.container}>
@@ -121,7 +130,7 @@ export function ManageCategories({ tableData } : ManageCategories) {
       {openUpdate && selectedRowIndex !== null && (
         <UpdateCategory
           open={true}
-          handleClose={handleClose} 
+          handleClose={handleCloseUpdate} 
           selctedId={selectedRowIndex}
           categoriesList={categoriesList}
         />

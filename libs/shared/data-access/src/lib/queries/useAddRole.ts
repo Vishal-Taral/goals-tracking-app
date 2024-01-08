@@ -7,7 +7,7 @@ const addRole = async(payload) => {
 }
 
 const QUERY_KEY = ['addRole']
-export const useAddRole = () => {
+export const useAddRole = (payload : any) => {
     const queryClient = useQueryClient()
-    return useMutation({mutationKey: QUERY_KEY, mutationFn: (payload)=> addRole(payload),onSuccess: ()=>queryClient.invalidateQueries(['addRole'])})
+    return useMutation({mutationKey: QUERY_KEY, mutationFn: (payload)=> addRole(payload),onSuccess: () => payload.success()})
 }

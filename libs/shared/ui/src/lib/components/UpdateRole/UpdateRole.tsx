@@ -36,12 +36,9 @@ export function UpdateRole({ open, handleClose, updateRoleId, prefilledInputData
     const updatedData = {...updatePopupData, [heading]: e.target.value}
     setUpdatePopupData(updatedData);
   }
-  const updateRole = useUpdateRoles({...updatePopupData, id: updateRoleId});
-  const handleUpdate = async () => {
-      await updateRole.mutate();    
-      handleClose();
-  };
- 
+  const updateRole = useUpdateRoles({...updatePopupData, id: updateRoleId, success: handleClose});
+  const handleUpdate = () => updateRole.mutate();    
+
   return (
     <div>
       <div>

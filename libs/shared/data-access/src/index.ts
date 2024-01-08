@@ -15,3 +15,4 @@ export * from './lib/queries/useCreateUser';
 export * from './lib/queries/createCategory';
 export * from './lib/queries/deleteCategories';
 export * from './lib/queries/updateCategory';
+export * from './lib/queries/useUpdateUser';

@@ -3,14 +3,12 @@ import { apiClient, apiUrlObject } from '@goal-tracker/data-access';
 
 const createCategory: any = async (categoryName: string): Promise<any> => {
   const url = `${apiUrlObject.addCategory}`;
-  const createdCategory = await apiClient.post(url, { categoryName: categoryName });
-
-  return createdCategory;
+  return await apiClient.post(url, { categoryName: categoryName });
 };
 
 const QUERY_KEY = ['createCategory'];
 
-export const useCreateCategory = () => {
+export const useCreateCategory = (payload : any) => {
   const queryClient = useQueryClient();
-  return useMutation({ mutationKey: QUERY_KEY, mutationFn: (categoryName: string) => createCategory(categoryName) , onSuccess: ()=>queryClient.invalidateQueries(['createCategory']) });
+  return useMutation({ mutationKey: QUERY_KEY, mutationFn: (categoryName: string) => createCategory(categoryName) , onSuccess: () => payload.success() });
 };

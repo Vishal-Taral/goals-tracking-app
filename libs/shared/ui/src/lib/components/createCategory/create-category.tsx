@@ -14,10 +14,10 @@ export interface CreateCategoryProps {
 export function CreateCategory({ open, handleClose }: CreateCategoryProps) {
 
   const [categoryName, setCategoryName] = useState('');
-  const { mutate } = useCreateCategory();
+  const createCategory = useCreateCategory({success: handleClose});
 
   const handleCreateCategory = async () => {
-    await mutate(categoryName);
+    createCategory.mutate(categoryName);
     handleClose();
   };
   

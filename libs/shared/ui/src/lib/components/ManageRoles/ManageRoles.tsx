@@ -20,7 +20,7 @@ export interface ManageRoles {
 }
 
 export function ManageRoles({ tableData }: ManageRoles) {
-  const { data: rolesList } = useGetRoles();
+  const { data: rolesList, refetch } = useGetRoles();
   console.log("rolesList",rolesList);
   
   const [openUpdatePopup, setOpenUpdatePopup] = useState(false);
@@ -31,7 +31,10 @@ export function ManageRoles({ tableData }: ManageRoles) {
     setUpdateRoleId(data.roleId);
     setPrefilledInputData(data);
   };
-  const handleCloseUpdatePopup = () => setOpenUpdatePopup(false);
+  const handleCloseUpdatePopup = () => {
+    setOpenUpdatePopup(false);
+    refetch();
+  };
 
   const [openDeletePopup, setOpenDeletePopup] = useState(false);
   const [deleteRoleId, setDeleteRoleId] = useState(null);
@@ -43,7 +46,10 @@ export function ManageRoles({ tableData }: ManageRoles) {
 
   const [openCreatePopup, setOpenCreatePopup] = useState(false);
   const handleOpenCreatePopup = () => setOpenCreatePopup(true);
-  const handleCloseCreatePopup = () => setOpenCreatePopup(false);
+  const handleCloseCreatePopup = () => {
+    setOpenCreatePopup(false);
+    refetch();
+  };
 
   return (
     <div className={styles.container}>
