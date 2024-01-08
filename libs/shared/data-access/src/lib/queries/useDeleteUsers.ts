@@ -16,5 +16,5 @@ const deleteUsers = async(data: any) => {
 const QUERY_KEY = ['deleteUser']
 export const useDeleteUsers = (data: any) => {
     const queryClient = useQueryClient()
-    return useMutation({mutationKey: QUERY_KEY, mutationFn: ()=>deleteUsers(data),onSuccess: ()=>queryClient.invalidateQueries(['deleteUsers'])})
+    return useMutation({mutationKey: QUERY_KEY, mutationFn: ()=>deleteUsers(data),onSuccess: ()=>queryClient.invalidateQueries(['deleteUser'])})
 }

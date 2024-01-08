@@ -34,6 +34,7 @@ export function ManageUsers({ tableData } : ManageCategories) {
 
   const [deleteUserId, setDeleteUserId] = useState(null);
   const deletePopupOpenHandler = (index: number, data: any) => {
+    console.log('data delete', data)
     setOpenDeletePopup(true);
     setDeleteUserId(data?.userId);
     console.log('data.id',data)
@@ -106,7 +107,7 @@ export function ManageUsers({ tableData } : ManageCategories) {
                 <td className={styles.table_data}>
                   <span
                     className={styles.icons}
-                    onClick={() => updatePopupOpenHandler(index, usersList[data.userId])}
+                    onClick={() => updatePopupOpenHandler(index, data)}
                   >
                     <EditIcon />
                   </span>
@@ -114,7 +115,7 @@ export function ManageUsers({ tableData } : ManageCategories) {
                 <td className={styles.table_data}>
                   <span
                     className={styles.icons}
-                    onClick={() => deletePopupOpenHandler(index, usersList[data.userId])}
+                    onClick={() => deletePopupOpenHandler(index, data)}
                   >
                     <DeleteIcon />
                   </span>
