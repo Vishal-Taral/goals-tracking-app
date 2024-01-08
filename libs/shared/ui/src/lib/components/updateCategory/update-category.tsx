@@ -47,8 +47,8 @@ export function UpdateCategory({ open, handleClose, selctedId , categoriesList,}
   };
 
   const handleUpdate = async () => {
-    handleClose();
     try {
+      handleClose();
       await updateCategory(payLoad);
       console.log('Category updated successfully');
     } catch (error) {

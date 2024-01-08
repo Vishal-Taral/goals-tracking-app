@@ -4,18 +4,28 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import {useState} from 'react'
-import { useUpdateRoles } from '@goal-tracker/data-access';
+import { useUpdateUser } from '@goal-tracker/data-access';
 /* eslint-disable-next-line */
 export interface UpdateUserProps {
   open: boolean;
   handleClose: () => void;
-  updateRoleId: string | null;
   prefilledInputData : any;
 }
 
-export function UpdateUser({ open, handleClose, updateRoleId, prefilledInputData }: UpdateUserProps) {
-  const roleName = prefilledInputData.name;
-  const roleDescription = prefilledInputData.description
+export function UpdateUser({ open, handleClose, prefilledInputData }: UpdateUserProps) {
+
+  console.log("prefilledInputData-->",prefilledInputData);
+  
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    mobileNumber: '',
+    role: '',
+  });
+
+  const { mutate } = useUpdateUser();
+
   const styleObj = {
     position: 'absolute' as 'absolute',
     top: '50%',
@@ -29,18 +39,14 @@ export function UpdateUser({ open, handleClose, updateRoleId, prefilledInputData
     p: 2,
     color: 'black',
   };
- 
-  const [updatePopupData, setUpdatePopupData] = useState({
-    name: roleName,description: roleDescription
-  })
-  const changeHandler = (e: any, heading: string) => {
-    const updatedData = {...updatePopupData, [heading]: e.target.value}
-    setUpdatePopupData(updatedData);
-  }
-  const updateRole = useUpdateRoles({...updatePopupData, id: updateRoleId});
-  const handleUpdate = async () => {
-      await updateRole.mutate();    
-      handleClose();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await mutate({
+      userId: prefilledInputData?.userId, 
+      updatedUserData: formData,
+    });
+    handleClose();
   };
  
   return (
@@ -57,13 +63,13 @@ export function UpdateUser({ open, handleClose, updateRoleId, prefilledInputData
               <h1 className={styles.heading}>Update Role</h1>
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className={styles.label_and_inputs}>
                   <div className={styles.field_name}>
                     <label htmlFor="name">User First Name</label>
                   </div>
                   <div >
-                    <input onChange={(e)=>changeHandler(e,'firstName')} type="text" placeholder='Enter The Name' className={styles.input_fields} />
+                    <input type="text" placeholder='Enter The Name' className={styles.input_fields} />
                   </div>
                 </div>
  
@@ -72,7 +78,7 @@ export function UpdateUser({ open, handleClose, updateRoleId, prefilledInputData
                     <label htmlFor="name">User Last Name</label>
                   </div>
                   <div >
-                    <input onChange={(e)=>changeHandler(e,'lastName')} type="text" placeholder='Enter the goal' className={styles.input_fields} />
+                    <input type="text" placeholder='Enter the goal' className={styles.input_fields} />
                   </div>
                 </div>
 
@@ -81,7 +87,7 @@ export function UpdateUser({ open, handleClose, updateRoleId, prefilledInputData
                     <label htmlFor="name">Email</label>
                   </div>
                   <div >
-                    <input onChange={(e)=>changeHandler(e,'email')} type="text" placeholder='Enter The Name' className={styles.input_fields} />
+                    <input type="text" placeholder='Enter The Name' className={styles.input_fields} />
                   </div>
                 </div>
 
@@ -90,7 +96,7 @@ export function UpdateUser({ open, handleClose, updateRoleId, prefilledInputData
                     <label htmlFor="name">Mobile Number</label>
                   </div>
                   <div >
-                    <input onChange={(e)=>changeHandler(e,'mobileNumber')} type="text" placeholder='Enter The Name' className={styles.input_fields} />
+                    <input type="text" placeholder='Enter The Name' className={styles.input_fields} />
                   </div>
                 </div>
 
@@ -99,12 +105,12 @@ export function UpdateUser({ open, handleClose, updateRoleId, prefilledInputData
                     <label htmlFor="name">Role</label>
                   </div>
                   <div >
-                    <input onChange={(e)=>changeHandler(e,'role')} type="text" placeholder='Enter The Name' className={styles.input_fields} />
+                    <input type="text" placeholder='Enter The Name' className={styles.input_fields} />
                   </div>
                 </div>
                 <div className={styles.update_btn}>
-                  <Button variant="contained" onClick={()=>handleClose('cancel')} className={styles.cancel_button}>Cancel</Button>
-                  <Button variant="contained" onClick={handleUpdate}>Update</Button>
+                  <Button variant="contained" className={styles.cancel_button} onClick={handleClose}>Cancel</Button>
+                  <Button variant="contained" type='submit'>Update</Button>
                 </div>
               </form>
             </Typography>

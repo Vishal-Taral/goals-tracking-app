@@ -164,6 +164,7 @@
 // export default CreateUsers;
 
 // CreateUsers.tsx
+// CreateUsers.tsx
 
 import React, { useState } from 'react';
 import styles from './CreateUsers.module.scss';
@@ -326,4 +327,3 @@ export function CreateUsers({ open, handleClose }: UpdateCategoryProps) {
 }
 
 export default CreateUsers;
-

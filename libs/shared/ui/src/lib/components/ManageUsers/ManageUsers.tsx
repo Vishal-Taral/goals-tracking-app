@@ -5,13 +5,9 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
-// import Update from '../update/update';
-import UpdateCategory from '../updateCategory/update-category';
-import DeleteComponent from '../delete/delete';
 import CreateUsers from '../CreateUsers/CreateUsers';
-import DeleteCategory from '../deleteCategory/delete-category';
 import DeleteUser from '../DeleteUser/DeleteUser';
-import { useGetAllUsers } from '@goal-tracker/data-access';
+import { useGetAllUsers , useUpdateUser } from '@goal-tracker/data-access';
 import UpdateUser from '../UpdateUser/UpdateUser';
 
 /* eslint-disable-next-line */
@@ -23,33 +19,11 @@ export interface ManageCategories {
 }
 
 export function ManageUsers({ tableData } : ManageCategories) {
-  const { data: rolesList } = useGetAllUsers();
-  console.log("tableData" , tableData.rows);
-  
-  const [openUpdate, setOpenUpdate] = useState(false);
-  const [openDelete, setOpenDelete] = useState(false);
-  const handleOpen = () => setOpenUpdate(true);
-  const handleOpenDelete = () => setOpenDelete(true);
-  const handleClose = () => setOpenUpdate(false);
-  const handleCloseDelete = () => setOpenDelete(false);
-  const [selectedRowIndex, setSelectedRowIndex] = useState<number | null>(null);
-
+  const { data: usersList } = useGetAllUsers();
+  console.log("usersList" , usersList);
   
   const [openCreatePopup, setOpenCreatePopup] = useState(false);
   const handleCloseCreatePopup = () => setOpenCreatePopup(false)
-  const handleOpenCreatePopup = () => setOpenCreatePopup(true);
-
-  console.log("id" , selectedRowIndex);
-
-  const handleOpenUpdate = (index: number) => {
-    setSelectedRowIndex(index);
-    setOpenUpdate(true);
-  };
-
-  // const handleOpenDelate = (index: number) => {
-  //   setSelectedRowIndex(index);
-  //   setOpenDelete(true);
-  // };
 
   const handleCreateCategory = () => {
     // setSelectedRowIndex(index);
@@ -61,7 +35,7 @@ export function ManageUsers({ tableData } : ManageCategories) {
   const [deleteUserId, setDeleteUserId] = useState(null);
   const deletePopupOpenHandler = (index: number, data: any) => {
     setOpenDeletePopup(true);
-    setDeleteUserId(data.userId);
+    setDeleteUserId(data?.userId);
     console.log('data.id',data)
   };
   const [updateRoleId, setUpdateRoleId] = useState(null);
@@ -71,7 +45,8 @@ export function ManageUsers({ tableData } : ManageCategories) {
   const handleCloseUpdatePopup = () => setOpenUpdatePopup(false);
   const updatePopupOpenHandler = (index: number, data: any) => {
     setOpenUpdatePopup(true);
-    setUpdateRoleId(data.id);
+    setUpdateRoleId(data?.userId);
+    console.log("data?.userId",data?.userId)
     setPrefilledInputData(data);
   };
   return (
@@ -131,7 +106,7 @@ export function ManageUsers({ tableData } : ManageCategories) {
                 <td className={styles.table_data}>
                   <span
                     className={styles.icons}
-                    onClick={() => updatePopupOpenHandler(index, rolesList[index])}
+                    onClick={() => updatePopupOpenHandler(index, usersList[data.userId])}
                   >
                     <EditIcon />
                   </span>
@@ -139,7 +114,7 @@ export function ManageUsers({ tableData } : ManageCategories) {
                 <td className={styles.table_data}>
                   <span
                     className={styles.icons}
-                    onClick={() => deletePopupOpenHandler(index, rolesList[index])}
+                    onClick={() => deletePopupOpenHandler(index, usersList[data.userId])}
                   >
                     <DeleteIcon />
                   </span>
@@ -153,7 +128,6 @@ export function ManageUsers({ tableData } : ManageCategories) {
         <UpdateUser
         open={true}
         handleClose={handleCloseUpdatePopup}
-        updateRoleId={updateRoleId}
         prefilledInputData={prefilledInputData}
         />
       )}
