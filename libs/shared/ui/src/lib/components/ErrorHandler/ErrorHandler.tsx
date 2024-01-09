@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { ReactNode, useState } from 'react';
 import styles from './ErrorHandler.module.scss';
 
 /* eslint-disable-next-line */
-export interface ErrorHandlerProps {}
+export interface ErrorHandlerProps {
+  children: ReactNode
+}
+export interface ErrorHandlerState {
+  error: any;
+  errorInfo: any;
+  hasError: boolean
+}
 
-export class ErrorHandler extends React.Component {
-  constructor(props) {
+export class ErrorHandler extends React.Component<ErrorHandlerProps, ErrorHandlerState> {
+  constructor(props: any) {
     super(props);
     this.state = {
       error: null,
@@ -13,8 +22,8 @@ export class ErrorHandler extends React.Component {
       hasError: false,
     };
   }
-  static getDerivedStateFromError(error) {
-    return { hasError: true, error: error };
+  static getDerivedStateFromError(error: any): ErrorHandlerState {
+    return { hasError: true, error: error, errorInfo: null };
   }
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
     this.setState({
