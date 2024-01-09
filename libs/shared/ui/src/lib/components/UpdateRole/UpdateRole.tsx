@@ -14,21 +14,6 @@ export interface UpdateRoleProps {
 }
  
 export function UpdateRole({ open, handleClose, updateRoleId, prefilledInputData }: UpdateRoleProps) {
-
-  const styleObj = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 500,
-    bgcolor: 'white',
-    border: '1px solid #fff',
-    borderRadius: 4,
-    boxShadow: 24,
-    p: 2,
-    color: 'black',
-  };
- 
   const [updatePopupData, setUpdatePopupData] = useState({
     name: prefilledInputData?.name ,description: prefilledInputData?.description
   })
@@ -48,7 +33,7 @@ export function UpdateRole({ open, handleClose, updateRoleId, prefilledInputData
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box sx={styleObj}>
+          <Box className={styles.update_role_modal}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
               <h1 className={styles.heading}>Update Role</h1>
             </Typography>

@@ -215,20 +215,6 @@ export function CreateUsers({ open, handleClose }: UpdateCategoryProps) {
     handleClose();
   };
 
-  const styleObj = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 500,
-    bgcolor: 'white',
-    border: '1px solid #fff',
-    borderRadius: 4,
-    boxShadow: 24,
-    p: 2,
-    color: 'black',
-  };
-
   const renderInputField = (label: string, name: string, type: string) => (
     <div className={styles.label_and_inputs}>
       <div className={styles.field_name}>
@@ -255,7 +241,7 @@ export function CreateUsers({ open, handleClose }: UpdateCategoryProps) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={styleObj}>
+        <Box className={styles.create_user_modal}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             <div className={styles.heading}>Create User</div>
           </Typography>

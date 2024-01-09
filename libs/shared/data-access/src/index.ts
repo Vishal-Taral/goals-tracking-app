@@ -2,6 +2,7 @@
 
 export * from './lib/data-access';
 export * from './lib/api-client';
+export * from './lib/models/api-models';
 export * from './lib/api-end-points';
 export * from './lib/queries/useGetRoles'
 export * from './lib/queries/useGetCategories'
