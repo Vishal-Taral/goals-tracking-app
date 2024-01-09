@@ -55,7 +55,10 @@ export function AddRole({ open, handleClose }: AddRoleProps) {
                     onChange={(e) => setCategoryName(e.target.value)}
                   />
                 </div>
-                <div>
+                <div className={styles.label_and_inputs}>
+                  <div className={styles.field_name}>
+                    <label htmlFor="name">Role Name</label>
+                  </div>
                   <input
                     type="text"
                     placeholder="Enter The Name"
