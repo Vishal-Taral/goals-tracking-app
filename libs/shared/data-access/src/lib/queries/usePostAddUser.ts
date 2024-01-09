@@ -7,11 +7,11 @@ const addRole = async (payload: any) => {
 };
 
 const QUERY_KEY = ['addUser'];
-export const usePostAddUser = () => {
+export const usePostAddUser = (payload : any) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationKey: QUERY_KEY,
     mutationFn: (payload) => addRole(payload),
-    // onSuccess: () => payload.success(),
+    onSuccess: () => payload.success(),
   });
 };

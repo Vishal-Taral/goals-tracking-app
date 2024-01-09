@@ -20,17 +20,23 @@ export interface ManageCategories {
 }
 
 export function ManageUsers({ tableData } : ManageCategories) {
-  const { data: usersList } = useGetUsers();
+  const { data: usersList , refetch } = useGetUsers();
   console.log("usersList" , usersList);
   
   const [openCreatePopup, setOpenCreatePopup] = useState(false);
-  const handleCloseCreatePopup = () => setOpenCreatePopup(false)
+  const handleCloseCreatePopup = () => {
+    refetch();
+    setOpenCreatePopup(false)
+  }
 
   const handleCreateCategory = () => {
     // setSelectedRowIndex(index);
     setOpenCreatePopup(true);
   };
-  const handleCloseDeletePopup = () => setOpenDeletePopup(false);
+  const handleCloseDeletePopup = () => {
+    setOpenDeletePopup(false);
+    refetch();
+  };
   const [openDeletePopup, setOpenDeletePopup] = useState(false);
 
   const [deleteUserId, setDeleteUserId] = useState(null);
@@ -44,7 +50,10 @@ export function ManageUsers({ tableData } : ManageCategories) {
   const [prefilledInputData, setPrefilledInputData] = useState();
   const [openUpdatePopup, setOpenUpdatePopup] = useState(false);
 
-  const handleCloseUpdatePopup = () => setOpenUpdatePopup(false);
+  const handleCloseUpdatePopup = () => {
+    refetch();
+    setOpenUpdatePopup(false);
+  }
   const updatePopupOpenHandler = (index: number, data: any) => {
     setOpenUpdatePopup(true);
     setUpdateRoleId(data?.userId);
@@ -175,6 +184,7 @@ export function ManageUsers({ tableData } : ManageCategories) {
         open={true}
         handleClose={handleCloseUpdatePopup}
         prefilledInputData={prefilledInputData}
+        userId={updateRoleId}
         />
       )}
       {openDeletePopup && (

@@ -180,9 +180,9 @@ export interface UpdateCategoryProps {
 }
 
 export function CreateUsers({ open, handleClose }: UpdateCategoryProps) {
-  const { mutate, isLoading } = usePostAddUser();
+  const createUser = usePostAddUser({success : handleClose});
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<any>({
     firstName: '',
     lastName: '',
     email: '',
@@ -209,10 +209,9 @@ export function CreateUsers({ open, handleClose }: UpdateCategoryProps) {
     }
   };
 
-  const handleCreateUser = async (e: any) => {
+  const handleCreateUser = (e: any) => {
     e.preventDefault();
-    await mutate(formData);
-    handleClose();
+    createUser.mutate(formData);
   };
 
   const renderInputField = (label: string, name: string, type: string) => (
@@ -299,9 +298,9 @@ export function CreateUsers({ open, handleClose }: UpdateCategoryProps) {
                   variant="contained"
                   className={styles.create_button}
                   type="submit"
-                  disabled={isLoading}
+                  
                 >
-                  {isLoading ? 'Creating...' : 'Create'}
+                  create
                 </Button>
               </div>
             </form>
