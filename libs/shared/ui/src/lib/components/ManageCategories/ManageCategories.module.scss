@@ -20,8 +20,13 @@
     .searchButton {
       width: 10%;
       padding: 0.5rem;
-      background-color: skyblue;
+      background-color: green;
       color: white;
+      margin-left: 0.5rem;
+      font-weight: 600;
+    }
+    .searchButton:hover{
+        cursor: pointer;
     }
   }
   .searchResultBlock {
@@ -44,7 +49,6 @@
     .table_row {
       text-align: left;
       margin-left: 1rem;
-
       &:nth-child(even) {
         background-color: #f5f5f5;
       }
@@ -69,6 +73,7 @@
     .table_data {
       border-collapse: collapse;
       padding: 0.5rem;
+      border: 1px solid black;
     }
   }
 }

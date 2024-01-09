@@ -3,12 +3,17 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  .errorMessageHeading{
+    font-size: 2rem;
+  }
   .errorMessage {
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 2rem;
     flex-direction: column;
+    border: 1px solid lightgrey;
+    margin-bottom: 0.5rem;
   }
   .redirectButton {
     display: flex;

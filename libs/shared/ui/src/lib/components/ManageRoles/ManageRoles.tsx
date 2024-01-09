@@ -143,7 +143,7 @@ export function ManageRoles({ tableData }: ManageRoles) {
                 <td className={styles.table_data}>{data.roleId}</td>
                 <td className={styles.table_data}>{data.name}</td>
                 <td className={styles.table_data}>{data.description}</td>
-                <td className={styles.table_data}>
+                <td className={styles.table_data_icon}>
                   <span
                     className={styles.icons}
                     onClick={() => updatePopupOpenHandler(index, data)}
@@ -151,7 +151,7 @@ export function ManageRoles({ tableData }: ManageRoles) {
                     <EditIcon />
                   </span>
                 </td>
-                <td className={styles.table_data}>
+                <td className={styles.table_data_icon}>
                   <span
                     className={styles.icons}
                     onClick={() => deletePopupOpenHandler(index, data)}
