@@ -16,3 +16,4 @@ export * from './lib/queries/usePostAddCategory';
 export * from './lib/queries/useDeleteCategory';
 export * from './lib/queries/usePutUpdateCategory';
 export * from './lib/queries/usePutUpdateUser';
+export * from './lib/queries/useGetUserAuthorization';

@@ -1,6 +1,7 @@
 import { render } from '@testing-library/react';
 
 import Loader from './Loader';
+import React from 'react';
 
 describe('Loader', () => {
   it('should render successfully', () => {

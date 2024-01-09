@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import styles from './ManageRoles.module.scss';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -41,8 +42,11 @@ export function ManageRoles({ tableData }: ManageRoles) {
     setOpenDeletePopup(true);
     setDeleteRoleId(data.roleId);
   };
-  const handleCloseDeletePopup = () => setOpenDeletePopup(false);
 
+  const handleCloseDeletePopup = () => {
+    setOpenDeletePopup(false);
+    refetch();
+  };
   const [openCreatePopup, setOpenCreatePopup] = useState(false);
   const handleOpenCreatePopup = () => setOpenCreatePopup(true);
   const handleCloseCreatePopup = () => {
