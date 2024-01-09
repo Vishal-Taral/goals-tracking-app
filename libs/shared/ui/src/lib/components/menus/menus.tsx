@@ -1,11 +1,10 @@
 import styles from './menus.module.scss';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import WalletIcon from '@mui/icons-material/Wallet';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SportsScoreIcon from '@mui/icons-material/SportsScore';
 
@@ -20,18 +19,6 @@ export function Menus(props: MenusProps) {
   const context = useContext(AppContext)
 
   const menusData = [
-    {
-      type: 'Manage Users',
-      icon: <WalletIcon />,
-      titleArray: [
-        {
-          title: 'Roles',
-        },
-        {
-          title: 'Categories',
-        }
-      ],
-    },
     {
       type: 'Your goals',
       icon: <SportsScoreIcon />

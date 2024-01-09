@@ -18,3 +18,6 @@ export * from './lib/queries/useDeleteCategory';
 export * from './lib/queries/usePutUpdateCategory';
 export * from './lib/queries/usePutUpdateUser';
 export * from './lib/queries/useGetUserAuthorization';
+export * from './lib/queries/useGetRoleByID';
+export * from './lib/queries/useGetCategoryByID';
+export * from './lib/queries/useGetUserByID';
