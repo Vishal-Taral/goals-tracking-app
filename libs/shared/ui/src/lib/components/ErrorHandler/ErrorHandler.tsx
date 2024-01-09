@@ -23,9 +23,11 @@ export class ErrorHandler extends React.Component<ErrorHandlerProps, ErrorHandle
     };
   }
   static getDerivedStateFromError(error: any): ErrorHandlerState {
+    console.log('error', error)
     return { hasError: true, error: error, errorInfo: null };
   }
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
+    console.log('errorInfo', errorInfo)
     this.setState({
       error: error,
       errorInfo: errorInfo,
@@ -36,7 +38,7 @@ export class ErrorHandler extends React.Component<ErrorHandlerProps, ErrorHandle
       return (
         <div className={styles.errorHandler}>
           <div className={styles.message}>Error boundry message</div>
-          <div className={styles.message}>{this.state.error.toString()}</div>
+          <textarea cols={25} rows={5} readOnly className={styles.message}>{this.state.error.toString()}</textarea>
         </div>
       );
     }

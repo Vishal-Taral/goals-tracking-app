@@ -17,7 +17,7 @@ export function DeleteRole({ open, handleClose, deleteRoleId }: DeleteRoleProps)
 
   const deleteRole = useDeleteRole({success : handleClose});
   const handleDelete = () => {
-    deleteRole.mutate(deleteRoleId);
+    deleteRole.mutate('deleteRoleId');
   };
 
 

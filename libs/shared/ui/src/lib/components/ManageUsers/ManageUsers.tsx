@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import { useState } from 'react';
 import CreateUsers from '../CreateUsers/CreateUsers';
 import DeleteUser from '../DeleteUser/DeleteUser';
-import { useGetUsers } from '@goal-tracker/data-access';
+import { useGetUserByID, useGetUsers } from '@goal-tracker/data-access';
 import UpdateUser from '../UpdateUser/UpdateUser';
 
 /* eslint-disable-next-line */
@@ -60,6 +60,23 @@ export function ManageUsers({ tableData } : ManageCategories) {
     console.log("data?.userId",data?.userId)
     setPrefilledInputData(data);
   };
+
+  const [searchID, setSearchID] = useState('');
+  const [searchResultDisplay, setSearchResultDisplay] = useState(false)
+  const { data: searchResponse, refetch: refetchSearch } =
+    useGetUserByID(searchID);
+
+  const searchInputChangeHandler = (e: any) => {
+    setSearchID(e.target.value);
+  };
+
+  const searchHandler = () => {
+    console.log('searchID', searchID);
+    refetchSearch();
+    console.log('searchResponse', searchResponse);
+    setSearchResultDisplay(true)
+
+  };
   return (
     <div className={styles.container}>
       <div className={styles.categories}>
@@ -93,6 +110,33 @@ export function ManageUsers({ tableData } : ManageCategories) {
         <Button variant="outlined" onClick={() => handleCreateCategory()}>Add User</Button>
       </div>
 
+      <div className={styles.searchBlock}>
+        <input
+          onChange={searchInputChangeHandler}
+          className={styles.searchInput}
+          placeholder="Search By ID"
+        />
+        <button className={styles.searchButton} onClick={searchHandler}>
+          Search
+        </button>
+      </div>
+      {searchResultDisplay ? (
+        <div className={styles.searchResultBlock}>
+          <b>Search Result</b>
+          <div>ID- {searchResponse?.data?.userId}</div>
+          <div>First Name- {searchResponse?.data?.firstName}</div>
+          <div>Last Name- {searchResponse?.data?.lastName}</div>
+          <div>Gender- {searchResponse?.data?.gender}</div>
+          <div>Email- {searchResponse?.data?.email}</div>
+          <div>Role ID- {searchResponse?.data?.role.roleId}</div>
+          <div>Role Name- {searchResponse?.data?.role.name}</div>
+          <div>Role Description- {searchResponse?.data?.role.description}</div>
+
+          <button className={styles.searchResultCloseButton} onClick={()=>setSearchResultDisplay(false)}>Close</button>
+        </div>
+      ) : (
+        ''
+      )}
       <div className={styles.user_detail_container}>
         <table className={styles.table}>
           <thead className={styles.table_headings_section}>

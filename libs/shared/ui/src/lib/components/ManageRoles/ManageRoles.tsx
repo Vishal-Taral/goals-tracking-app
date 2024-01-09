@@ -7,7 +7,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
 import AddRole from '../AddRole/AddRole';
-import { useGetRoles } from '@goal-tracker/data-access';
+import { useGetRoleByID, useGetRoles } from '@goal-tracker/data-access';
 import UpdateRole from '../UpdateRole/UpdateRole';
 import DeleteRole from '../DeleteRole/DeleteRole';
 
@@ -21,11 +21,11 @@ export interface ManageRoles {
 
 export function ManageRoles({ tableData }: ManageRoles) {
   const { data: rolesList, refetch } = useGetRoles();
-  console.log("rolesList",rolesList);
-  
+  console.log('rolesList', rolesList);
+
   const [openUpdatePopup, setOpenUpdatePopup] = useState(false);
   const [updateRoleId, setUpdateRoleId] = useState(null);
-  const [prefilledInputData , setPrefilledInputData] = useState();
+  const [prefilledInputData, setPrefilledInputData] = useState();
   const updatePopupOpenHandler = (index: number, data: any) => {
     setOpenUpdatePopup(true);
     setUpdateRoleId(data.roleId);
@@ -52,6 +52,22 @@ export function ManageRoles({ tableData }: ManageRoles) {
   const handleCloseCreatePopup = () => {
     setOpenCreatePopup(false);
     refetch();
+  };
+
+  const [searchID, setSearchID] = useState('');
+  const [searchResultDisplay, setSearchResultDisplay] = useState(false);
+  const { data: searchResponse, refetch: refetchSearch } =
+    useGetRoleByID(searchID);
+
+  const searchInputChangeHandler = (e) => {
+    setSearchID(e.target.value);
+  };
+
+  const searchHandler = () => {
+    console.log('searchID', searchID);
+    refetchSearch();
+    console.log('searchResponse', searchResponse);
+    setSearchResultDisplay(true);
   };
 
   return (
@@ -88,6 +104,28 @@ export function ManageRoles({ tableData }: ManageRoles) {
           Add Role
         </Button>
       </div>
+      <div className={styles.searchBlock}>
+        <input
+          onChange={searchInputChangeHandler}
+          className={styles.searchInput}
+          placeholder="Search By ID"
+        />
+        <button className={styles.searchButton} onClick={searchHandler}>
+          Search
+        </button>
+      </div>
+      {searchResultDisplay ? (
+        <div className={styles.searchResultBlock}>
+          <b>Search Result</b>
+          <div>ID- {searchResponse?.data?.roleId}</div>
+          <div>Name- {searchResponse?.data?.name}</div>
+          <div>Description- {searchResponse?.data?.description}</div>
+          <button className={styles.searchResultCloseButton} onClick={()=>setSearchResultDisplay(false)}>Close</button>
+        </div>
+      ) : (
+        ''
+      )}
+
       <div className={styles.user_detail_container}>
         <table className={styles.table}>
           <thead className={styles.table_headings_section}>
@@ -102,16 +140,10 @@ export function ManageRoles({ tableData }: ManageRoles) {
           <tbody>
             {rolesList?.data?.map((data: any, index: number) => (
               <tr className={styles.table_row} key={index}>
-                <td className={styles.table_data}>
-                  {data.roleId}
-                </td>
-                <td className={styles.table_data}>
-                  {data.name}
-                </td>
-                <td className={styles.table_data}>
-                  {data.description}
-                </td>
-                <td className={styles.table_data}>
+                <td className={styles.table_data}>{data.roleId}</td>
+                <td className={styles.table_data}>{data.name}</td>
+                <td className={styles.table_data}>{data.description}</td>
+                <td className={styles.table_data_icon}>
                   <span
                     className={styles.icons}
                     onClick={() => updatePopupOpenHandler(index, data)}
@@ -119,7 +151,7 @@ export function ManageRoles({ tableData }: ManageRoles) {
                     <EditIcon />
                   </span>
                 </td>
-                <td className={styles.table_data}>
+                <td className={styles.table_data_icon}>
                   <span
                     className={styles.icons}
                     onClick={() => deletePopupOpenHandler(index, data)}

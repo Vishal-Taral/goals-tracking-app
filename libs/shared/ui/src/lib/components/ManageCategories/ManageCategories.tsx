@@ -5,18 +5,25 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
-import {UpdateCategory , DeleteCategory , CreateCategory } from '@goal-tracker/ui';
-import { useGetCategories } from '@goal-tracker/data-access';
+import {
+  UpdateCategory,
+  DeleteCategory,
+  CreateCategory,
+} from '@goal-tracker/ui';
+import {
+  useGetCategories,
+  useGetCategoryByID,
+} from '@goal-tracker/data-access';
 
 /* eslint-disable-next-line */
 
 const options = ['story', 'upskill', 'task completing ', 'achievable'];
 
 export interface ManageCategories {
-  tableData : any;
+  tableData: any;
 }
 
-export function ManageCategories({ tableData } : ManageCategories) {
+export function ManageCategories({ tableData }: ManageCategories) {
   const [openUpdate, setOpenUpdate] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const handleOpen = () => setOpenUpdate(true);
@@ -28,15 +35,14 @@ export function ManageCategories({ tableData } : ManageCategories) {
   const handleCloseDelete = () => {
     setOpenDelete(false);
     refetch();
-  }
+  };
   const [selectedRowIndex, setSelectedRowIndex] = useState<string | null>(null);
 
-  
   const [openCreatePopup, setOpenCreatePopup] = useState(false);
   const handleCloseCreatePopup = () => {
     setOpenCreatePopup(false);
     refetch();
-  }
+  };
   const handleOpenCreatePopup = () => setOpenCreatePopup(true);
 
   const handleOpenUpdate = (index: string) => {
@@ -53,7 +59,24 @@ export function ManageCategories({ tableData } : ManageCategories) {
     setOpenCreatePopup(true);
   };
 
-  const { data: categoriesList , refetch } = useGetCategories();
+  const { data: categoriesList, refetch } = useGetCategories();
+
+  const [searchID, setSearchID] = useState('');
+  const [searchResultDisplay, setSearchResultDisplay] = useState(false)
+  const { data: searchResponse, refetch: refetchSearch } =
+    useGetCategoryByID(searchID);
+
+  const searchInputChangeHandler = (e) => {
+    setSearchID(e.target.value);
+  };
+
+  const searchHandler = () => {
+    console.log('searchID', searchID);
+    refetchSearch();
+    console.log('searchResponse', searchResponse);
+    setSearchResultDisplay(true)
+
+  };
 
   return (
     <div className={styles.container}>
@@ -85,9 +108,30 @@ export function ManageCategories({ tableData } : ManageCategories) {
           )}
         />
 
-        <Button variant="outlined" onClick={() => handleCreateCategory()}>Add Category</Button>
+        <Button variant="outlined" onClick={() => handleCreateCategory()}>
+          Add Category
+        </Button>
       </div>
-
+      <div className={styles.searchBlock}>
+        <input
+          onChange={searchInputChangeHandler}
+          className={styles.searchInput}
+          placeholder="Search By ID"
+        />
+        <button className={styles.searchButton} onClick={searchHandler}>
+          Search
+        </button>
+      </div>
+      {searchResultDisplay ? (
+        <div className={styles.searchResultBlock}>
+          <b>Search Result</b>
+          <div>ID- {searchResponse?.data?.categoryId}</div>
+          <div>Name- {searchResponse?.data?.name}</div>
+          <button className={styles.searchResultCloseButton} onClick={()=>setSearchResultDisplay(false)}>Close</button>
+        </div>
+      ) : (
+        ''
+      )}
       <div className={styles.user_detail_container}>
         <table className={styles.table}>
           <thead className={styles.table_headings_section}>
@@ -105,7 +149,7 @@ export function ManageCategories({ tableData } : ManageCategories) {
                 <td className={styles.table_data}>{data.categoryId}</td>
 
                 <td className={styles.table_data}>{data?.name}</td>
-                
+
                 <td className={styles.table_data}>
                   <span
                     className={styles.icons}
@@ -130,7 +174,7 @@ export function ManageCategories({ tableData } : ManageCategories) {
       {openUpdate && selectedRowIndex !== null && (
         <UpdateCategory
           open={true}
-          handleClose={handleCloseUpdate} 
+          handleClose={handleCloseUpdate}
           selctedId={selectedRowIndex}
           categoriesList={categoriesList}
         />
@@ -146,10 +190,7 @@ export function ManageCategories({ tableData } : ManageCategories) {
       )}
 
       {openCreatePopup && (
-        <CreateCategory 
-          open={true}
-          handleClose={handleCloseCreatePopup}
-        />
+        <CreateCategory open={true} handleClose={handleCloseCreatePopup} />
       )}
     </div>
   );
