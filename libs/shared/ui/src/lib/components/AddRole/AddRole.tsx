@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { usePostAddRole } from '@goal-tracker/data-access';
+import { usePostAddRole , AddRoleInput } from '@goal-tracker/data-access';
 import AppContext from '../../contexts/AppContext';
 
 export interface AddRoleProps {
@@ -19,7 +19,7 @@ export function AddRole({ open, handleClose }: AddRoleProps) {
 
   const addRole = usePostAddRole({success: handleClose});
 
-  const obj = {
+  const obj : AddRoleInput = {
     roleName: categoryName,
     roleDescription: descName
   }
@@ -27,20 +27,6 @@ export function AddRole({ open, handleClose }: AddRoleProps) {
   // const context = useContext(AppContext)
 
   const handleCreateCategory = () => addRole.mutate(obj);
-
-  const styleObj = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 500,
-    bgcolor: 'white',
-    border: '1px solid #fff',
-    borderRadius: 4,
-    boxShadow: 24,
-    p: 2,
-    color: 'black',
-  };
 
   return (
     <div>
@@ -50,7 +36,7 @@ export function AddRole({ open, handleClose }: AddRoleProps) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={styleObj}>
+        <Box className={styles.updateUserModal}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             <h1 className={styles.heading}>Create Role</h1>
           </Typography>

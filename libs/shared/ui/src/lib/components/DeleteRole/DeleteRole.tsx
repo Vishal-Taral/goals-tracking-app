@@ -14,19 +14,6 @@ export interface DeleteRoleProps {
 }
 
 export function DeleteRole({ open, handleClose, deleteRoleId }: DeleteRoleProps) {
-  const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'white',
-    borderTop: '5px solid red',
-    borderRadius: 4,
-    boxShadow: 24,
-    p: 2,
-    color: 'black',
-  };
 
   const deleteRole = useDeleteRole({success : handleClose});
   const handleDelete = () => {
@@ -42,7 +29,7 @@ export function DeleteRole({ open, handleClose, deleteRoleId }: DeleteRoleProps)
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box className={styles.delete_role_modal}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             <div className={styles.delete_icon}>
               <span className={styles.icon}>

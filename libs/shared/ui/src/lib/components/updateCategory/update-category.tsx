@@ -14,19 +14,7 @@ export interface UpdateCategoryProps {
 }
 
 export function UpdateCategory({ open, handleClose, selctedId , categoriesList,}: UpdateCategoryProps) {
-  const styleObj = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 500,
-    bgcolor: 'white',
-    border: '1px solid #fff',
-    borderRadius: 4,
-    boxShadow: 24,
-    p: 2,
-    color: 'black',
-  };
+
   const [categoryName, setCategoryName] = useState('');
 
   const payLoad = {
@@ -64,7 +52,7 @@ export function UpdateCategory({ open, handleClose, selctedId , categoriesList,}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={styleObj}>
+        <Box className={styles.update_category_modal}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             <div className={styles.heading}>Update Category</div>
           </Typography>
