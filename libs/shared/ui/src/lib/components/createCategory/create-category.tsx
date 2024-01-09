@@ -20,20 +20,6 @@ export function CreateCategory({ open, handleClose }: CreateCategoryProps) {
     event.preventDefault();
     createCategory.mutate(categoryName);
   };
-  
-  const styleObj = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 500,
-    bgcolor: 'white',
-    border: '1px solid #fff',
-    borderRadius: 4,
-    boxShadow: 24,
-    p: 2,
-    color: 'black',
-  };
 
   return (
     <div>
@@ -43,7 +29,7 @@ export function CreateCategory({ open, handleClose }: CreateCategoryProps) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={styleObj}>
+        <Box className={styles.create_category_modal}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             <div className={styles.heading}>Create Category</div>
           </Typography>

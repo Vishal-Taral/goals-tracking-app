@@ -26,20 +26,6 @@ export function UpdateUser({ open, handleClose, prefilledInputData }: UpdateUser
 
   const { mutate } = usePutUpdateUser();
 
-  const styleObj = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 500,
-    bgcolor: 'white',
-    border: '1px solid #fff',
-    borderRadius: 4,
-    boxShadow: 24,
-    p: 2,
-    color: 'black',
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await mutate({
@@ -58,9 +44,9 @@ export function UpdateUser({ open, handleClose, prefilledInputData }: UpdateUser
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box sx={styleObj}>
+          <Box className={styles.update_user_modal}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              <h1 className={styles.heading}>Update Role</h1>
+              <h1 className={styles.heading}>Update User</h1>
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
               <form onSubmit={handleSubmit}>
