@@ -14,8 +14,8 @@ const ResponseInterceptorErrorHandler = () => {
   return (
     <PrivateLayout>
       <div className={styles.container}>
-        <div className={styles.errorMessage}>Response interceptor message</div>
-        <div className={styles.errorMessage}>{message}</div>
+        <div className={styles.errorMessageHeading}>Response interceptor message</div>
+        <textarea rows={5} cols={25} readOnly className={styles.errorMessage}>{message}</textarea>
         <button
           className={styles.redirectButton}
           onClick={redirectHandler}
