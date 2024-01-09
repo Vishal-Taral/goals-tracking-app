@@ -15,11 +15,11 @@ export interface DeleteRoleProps {
 
 export function DeleteRole({ open, handleClose, deleteRoleId }: DeleteRoleProps) {
 
-  const deleteRole = useDeleteRole(deleteRoleId);
-  const handleDelete = async () => {
-    await deleteRole.mutate();
-    handleClose();
+  const deleteRole = useDeleteRole({success : handleClose});
+  const handleDelete = () => {
+    deleteRole.mutate(deleteRoleId);
   };
+
 
   return (
     <div>

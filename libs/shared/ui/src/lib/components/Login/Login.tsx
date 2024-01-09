@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField';
 import { useRouter } from 'next/router';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import { usePostLogin } from '@goal-tracker/data-access';
+import { useGetUserAuthorization, usePostLogin } from '@goal-tracker/data-access';
 import { dataTagSymbol } from '@tanstack/react-query';
 
 export interface LoginProps {}
@@ -39,11 +39,14 @@ export function Login(props: LoginProps) {
 
   const [loginCredentials, setLoginCredentials] = useState({});
   const responseData = usePostLogin(loginCredentials);
+  // const {data: userAuthorization} = useGetUserAuthorization()
+
 
   const onSubmit: SubmitHandler<FormData> = async (data: any) => {
     setLoginCredentials({ email: data.email, password: data.password });
     const response = await responseData.mutateAsync();
     console.log('response', response, 'data',data)
+    // console.log('userAuthorization', userAuthorization)
     if (response.data) {
       if (response.data.success == true) {
         localStorage.setItem('AUTHORIZATION',response.data.data)

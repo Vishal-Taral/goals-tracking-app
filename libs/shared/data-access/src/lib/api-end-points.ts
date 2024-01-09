@@ -26,5 +26,6 @@ export const apiUrlObject = {
  
     // getLogin: 'http://localhost:8003/loginData',
     getLogin : `${serverUrl}/Login`,
+    getUserAuthorization: `${serverUrl}/getUserAuthorize`
 }
  

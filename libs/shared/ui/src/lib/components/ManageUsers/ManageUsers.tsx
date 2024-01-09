@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import styles from './ManageUsers.module.scss';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -7,7 +8,7 @@ import Button from '@mui/material/Button';
 import { useState } from 'react';
 import CreateUsers from '../CreateUsers/CreateUsers';
 import DeleteUser from '../DeleteUser/DeleteUser';
-import { useGetUsers , usePutUpdateUser } from '@goal-tracker/data-access';
+import { useGetUsers } from '@goal-tracker/data-access';
 import UpdateUser from '../UpdateUser/UpdateUser';
 
 /* eslint-disable-next-line */
