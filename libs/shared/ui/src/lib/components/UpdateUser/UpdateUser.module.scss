@@ -1,4 +1,4 @@
-.update_user_modal {
+.create_user_modal{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -11,13 +11,19 @@
     padding: 1rem;
     color: black;
 
-    .heading {
-        font-weight: 700;
-        text-decoration: underline;
-    }
+.heading {
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+.multiple_inputs {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
 
     .label_and_inputs {
         margin-top: 1rem;
+        flex-basis: 50%;
 
         .field_name {
             margin-left: 0.5rem;
@@ -32,29 +38,51 @@
             box-shadow: -1px 3px 5px 0px rgba(204, 196, 204, 1);
         }
     }
+}
 
-    .duration {
-        display: flex;
-        width: 100%;
-        gap: 0.5rem;
+.duration {
+    display: flex;
+    width: 100%;
+    gap: 0.5rem;
 
-        .label_and_inputs {
-            flex-basis: 50%;
-        }
+    .label_and_inputs {
+        flex-basis: 50%;
+    }
+}
+
+.update_btn {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+    gap: 0.5rem;
+
+    .create_button {
+        background-color: rgb(80, 96, 80);
     }
 
-    .update_btn {
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 1rem;
-        gap: 0.5rem;
+    .cancel_button {
+        background-color: red;
 
-        .cancel_button {
-            background-color: red;
-
-            &:hover {
-                background-color: rgb(235, 117, 117);
-            }
+        &:hover {
+            background-color: rgb(235, 117, 117);
         }
     }
+}
+
+.gender{
+    margin-top: 1rem;
+    .field_name {
+            margin-left: 0.5rem;
+            font-size: 14px;
+        }
+    .gender_selection_section{
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        .input_and_label{
+            display: flex;
+            gap: 0.2rem;
+        }
+    }
+}
 }

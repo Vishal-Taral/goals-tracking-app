@@ -19,7 +19,7 @@ export function AddRole({ open, handleClose }: AddRoleProps) {
 
   const addRole = usePostAddRole({success: handleClose});
 
-  const obj : AddRoleInput = {
+  const obj : any = {
     roleName: categoryName,
     roleDescription: descName
   }

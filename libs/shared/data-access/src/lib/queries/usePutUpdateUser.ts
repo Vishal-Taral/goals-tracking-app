@@ -37,12 +37,12 @@ const updateUser: any = async ({
 
 const QUERY_KEY = ['updateUser'];
 
-export const usePutUpdateUser = () => {
+export const usePutUpdateUser = (payload : any) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationKey: QUERY_KEY,
     mutationFn: (payload: { userId: string; updatedUserData: any }) =>
       updateUser(payload),
-    // onSuccess: () => payload.success()
+    onSuccess: () => payload.success()
   });
 };
