@@ -10,14 +10,14 @@ import { useDeleteRole } from '@goal-tracker/data-access';
 export interface DeleteRoleProps {
   open: boolean;
   handleClose: () => void;
-  deleteRoleId: number | null; 
+  deleteRoleId: string; 
 }
 
 export function DeleteRole({ open, handleClose, deleteRoleId }: DeleteRoleProps) {
 
   const deleteRole = useDeleteRole({success : handleClose});
   const handleDelete = () => {
-    deleteRole.mutate('deleteRoleId');
+    deleteRole.mutate(deleteRoleId);
   };
 
 

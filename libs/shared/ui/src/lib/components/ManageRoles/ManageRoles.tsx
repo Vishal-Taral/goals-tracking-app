@@ -21,7 +21,6 @@ export interface ManageRoles {
 
 export function ManageRoles({ tableData }: ManageRoles) {
   const { data: rolesList, refetch } = useGetRoles();
-  console.log('rolesList', rolesList);
 
   const [openUpdatePopup, setOpenUpdatePopup] = useState(false);
   const [updateRoleId, setUpdateRoleId] = useState(null);
@@ -59,7 +58,7 @@ export function ManageRoles({ tableData }: ManageRoles) {
   const { data: searchResponse, refetch: refetchSearch } =
     useGetRoleByID(searchID);
 
-  const searchInputChangeHandler = (e) => {
+  const searchInputChangeHandler = (e: any) => {
     setSearchID(e.target.value);
   };
 
@@ -120,7 +119,12 @@ export function ManageRoles({ tableData }: ManageRoles) {
           <div>ID- {searchResponse?.data?.roleId}</div>
           <div>Name- {searchResponse?.data?.name}</div>
           <div>Description- {searchResponse?.data?.description}</div>
-          <button className={styles.searchResultCloseButton} onClick={()=>setSearchResultDisplay(false)}>Close</button>
+          <button
+            className={styles.searchResultCloseButton}
+            onClick={() => setSearchResultDisplay(false)}
+          >
+            Close
+          </button>
         </div>
       ) : (
         ''
