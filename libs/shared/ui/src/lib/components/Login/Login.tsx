@@ -39,14 +39,14 @@ export function Login(props: LoginProps) {
 
   const [loginCredentials, setLoginCredentials] = useState({});
   const responseData = usePostLogin(loginCredentials);
-  // const {data: userAuthorization} = useGetUserAuthorization()
+  const {data: userAuthorization, refetch: refetchUserAuthorization} = useGetUserAuthorization()
 
 
   const onSubmit: SubmitHandler<FormData> = async (data: any) => {
     setLoginCredentials({ email: data.email, password: data.password });
     const response = await responseData.mutateAsync();
     console.log('response', response, 'data',data)
-    // console.log('userAuthorization', userAuthorization)
+    console.log('userAuthorization', userAuthorization);
     if (response.data) {
       if (response.data.success == true) {
         localStorage.setItem('AUTHORIZATION',response.data.data)
@@ -54,6 +54,7 @@ export function Login(props: LoginProps) {
         routFunction();
         setSuccessSnackbar(true);
         setSuccessMassage('You successfully logged in');
+        refetchUserAuthorization()
       } else {
         setLoginError('Invalid credentials. Please try again.');
         setSnackbarOpen(true);
