@@ -7,14 +7,27 @@ import {
   updateUserService,
 } from '../services/userService';
 
+const getPagination = (page, size) => {
+  const limit = size ? +size : 3;
+  const offset = page ? +(page - 1) * limit : 0;
+
+  return { limit, offset };
+};
+
 const getAllUsers = async (req, res) => {
   try {
-    const users = await listOfUserService();
+    const { page, size, search } = req.query;
+    const { limit, offset } = getPagination(page, size);
+    const { users, userCount } = await listOfUserService(offset, limit, search);
     const userDto = UserDetailsDto.toDto(users);
+    const totalPages = Math.ceil(userCount / limit);
     return res.json({
       statusCode: 200,
       status: 'success',
       message: 'users fetched successfully.',
+      totalCount: userCount,
+      totalPages,
+      currentPage: parseInt(page),
       data: userDto,
     });
   } catch (error) {
@@ -41,7 +54,7 @@ const getUserById = async (req, res) => {
   try {
     const userId = req.params.id;
     const existingUser = await getUserByIdService(userId);
-    
+
     if (!existingUser) {
       return res.status(404).json({ error: 'User not found' });
     }

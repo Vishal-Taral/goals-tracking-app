@@ -1,3 +1,4 @@
+import { Like } from 'typeorm';
 import { User } from '../entities/user';
 const bcrypt = require('bcrypt');
 const removeUserService = async (userId: string) => {
@@ -53,10 +54,23 @@ const getUserByIdService = async (userId: string) => {
   }
 };
 
-const listOfUserService = async () => {
+const listOfUserService = async (offset, limit, search) => {
   try {
-    const users = await User.find();
-    return users;
+    // const users = await User.find({
+    //   skip: 0,
+    //   take: 0,
+    //   order: { createdAt: 'desc' },
+    // });
+    const users = await User.find({
+      skip: offset,
+      take: limit,
+      order: { createdAt: 'ASC' },
+      where: {
+        firstName: Like(`%${search}%`),
+      },
+    });
+    const userCount = await User.count();
+    return { users, userCount };
   } catch (error) {
     console.log(error);
   }

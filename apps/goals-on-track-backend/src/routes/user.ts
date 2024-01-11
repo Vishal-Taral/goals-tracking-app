@@ -12,12 +12,12 @@ const router = express.Router();
 
 router.get('/users', userAuthentication, getAllUsers);
 
-router.get('/user/:id',userAuthentication, getUserById);
+router.get('/user/:id', userAuthentication, getUserById);
 
-router.post('/addUser',userAuthentication, addUser);
+router.post('/addUser', userAuthentication, addUser);
 
-router.put('/updateUser/:id',userAuthentication, updateUser);
+router.put('/updateUser/:id', userAuthentication, updateUser);
 
-router.delete('/deleteUser/:id',userAuthentication, deleteUser);
+router.delete('/deleteUser/:id', userAuthentication, deleteUser);
 
 export { router as UserRouter };
