@@ -66,7 +66,7 @@ export function ManageCategories({ tableData }: ManageCategories) {
   const { data: searchResponse, refetch: refetchSearch } =
     useGetCategoryByID(searchID);
 
-  const searchInputChangeHandler = (e) => {
+  const searchInputChangeHandler = (e : any) => {
     setSearchID(e.target.value);
   };
 
@@ -190,7 +190,7 @@ export function ManageCategories({ tableData }: ManageCategories) {
       )}
 
       {openCreatePopup && (
-        <CreateCategory open={true} handleClose={handleCloseCreatePopup} />
+        <CreateCategory open={true} handleClose={handleCloseCreatePopup} categoriesList={categoriesList} />
       )}
     </div>
   );
