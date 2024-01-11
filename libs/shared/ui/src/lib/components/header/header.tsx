@@ -4,6 +4,8 @@ import Avatar from '@mui/material/Avatar';
 import logo from '../../assets/goal_tracker_logo.jpg';
 import Image from 'next/image';
 import Button from '@mui/material/Button';
+import { useGetUserAuthorization } from '@goal-tracker/data-access';
+import { useEffect } from 'react';
 
 /* eslint-disable-next-line */
 export interface HeaderProps { }
@@ -21,7 +23,9 @@ export function Header(props: HeaderProps) {
     router.push('/tracker')
   }
   console.log('x', router.pathname.includes('/'))
+  const {data: userAuthorization, refetch: refetchUserAuthorization} = useGetUserAuthorization()
 
+  useEffect(()=>{refetchUserAuthorization()},[])
   return (
     <div className={styles.container}>
       {
@@ -36,16 +40,12 @@ export function Header(props: HeaderProps) {
           </div>
         ) : (
           <div className={styles.profile_container}>
-            <div>
-              <Image src={logo} alt='logo' width={100} height={50} onClick={goToHome} priority/>
+            <div style={{fontSize: '2rem',color: 'white',fontWeight: '600'}}>
+              GoalsOnTrack
             </div>            
             <div className={styles.use_name_and_profile_pic}>
-              <h1 className={styles.user_name}>Vishal</h1>
-              <Avatar
-                alt="Vishal Taral"
-                src="/static/images/avatar/1.jpg"
-                sx={{ width: 40, height: 40 }}
-              />
+            <h1 style={{backgroundColor: 'skyblue',borderRadius: '100%',padding: '0.7rem 1rem',fontWeight: '600',color: 'white'}}>{userAuthorization?.response?.firstName[0]}</h1>
+              <h1 className={styles.userName} style={{color: 'white'}}>{userAuthorization?.response?.firstName}</h1>
             </div>
           </div>
         )
