@@ -17,10 +17,10 @@ export interface DeleteProps {
 
 export function DeleteCategory({ open, handleClose, categoryId, categories }: DeleteProps) {
   const deleteCategory = useDeleteCategory({success : handleClose});
-
-  const category = categories?.data?.find((category : any) => category.id === categoryId);
+  
+  const category = categories?.data?.find((category : any) => category.categoryId === categoryId);
   const categoryName = category ? category.name : '';
-
+  
   const handleDelete = () => {
     deleteCategory.mutate(categoryId);
   };

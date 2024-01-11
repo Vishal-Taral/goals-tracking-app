@@ -9,15 +9,24 @@ import { usePostAddCategory } from '@goal-tracker/data-access';
 export interface CreateCategoryProps {
   open: boolean;
   handleClose: () => void;
+  categoriesList: any;
 }
 
-export function CreateCategory({ open, handleClose }: CreateCategoryProps) {
+export function CreateCategory({ open, handleClose, categoriesList }: CreateCategoryProps) {
+
+  console.log("categoriesList-->",categoriesList);
+  
 
   const [categoryName, setCategoryName] = useState('');
   const createCategory = usePostAddCategory({success: handleClose});
 
-  const handleCreateCategory = async (event : any) => {
+  const handleCreateCategory = async (event: any) => {
     event.preventDefault();
+    const isDuplicate = categoriesList?.data?.some((category : any) => category.name === categoryName);
+    if (isDuplicate) {
+      alert('Category already exists!');
+      return;
+    }
     createCategory.mutate(categoryName);
   };
 

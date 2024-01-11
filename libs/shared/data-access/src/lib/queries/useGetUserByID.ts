@@ -14,7 +14,7 @@ const getUserByID = async (id: string) => {
 
 const QUERY_KEY = ["getUserByID"];
 
-export const useGetUserByID = (id: string) => {
+export const useGetUserByID : any= (id: string) => {
   return useQuery({
     queryKey: QUERY_KEY,
     queryFn: () => getUserByID(id),
