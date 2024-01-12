@@ -36,7 +36,7 @@ export function ManageRoles({ tableData }: ManageRoles) {
   };
 
   const [openDeletePopup, setOpenDeletePopup] = useState(false);
-  const [deleteRoleId, setDeleteRoleId] = useState(null);
+  const [deleteRoleId, setDeleteRoleId] = useState('');
   const deletePopupOpenHandler = (index: number, data: any) => {
     setOpenDeletePopup(true);
     setDeleteRoleId(data.roleId);

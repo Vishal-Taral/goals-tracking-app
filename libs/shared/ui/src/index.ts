@@ -18,4 +18,5 @@ export * from './lib/components/DeleteRole/DeleteRole';
 export * from './lib/components/Login/Login';
 export * from './lib/components/Loader/Loader';
 export * from './lib/components/ErrorHandler/ErrorHandler';
+export * from './lib/components/Account/Account';
 
