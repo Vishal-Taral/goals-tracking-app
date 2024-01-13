@@ -34,16 +34,6 @@ export function UpdateCategory({ open, handleClose, selctedId , categoriesList,}
 
   const ID = 1;
 
-  // const handleUpdate = (event : any) => {
-  //   event.preventDefault();
-  //   try {
-  //     updateCategory.mutate();
-  //     console.log('Category updated successfully');
-  //   } catch (error) {
-  //     console.error('Error updating category:', error);
-  //   }
-  // };
-
     const handleUpdate = (event : any) => {
       event.preventDefault();
       const isDuplicate = categoriesList?.data?.some((category : any) => category.name === categoryName && category.categoryId !== selctedId);

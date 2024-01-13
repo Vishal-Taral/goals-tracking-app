@@ -10,11 +10,15 @@ import { useDeleteRole } from '@goal-tracker/data-access';
 export interface DeleteRoleProps {
   open: boolean;
   handleClose: () => void;
-  deleteRoleId: string; 
+  deleteRoleId: any; 
+  rolesList:any;
 }
 
-export function DeleteRole({ open, handleClose, deleteRoleId }: DeleteRoleProps) {
+export function DeleteRole({ open, handleClose, deleteRoleId, rolesList }: DeleteRoleProps) {
 
+  const role = rolesList?.data?.find((category : any) => category.roleId === deleteRoleId);
+  const roleName = role ? role.name : '';
+  
   const deleteRole = useDeleteRole({success : handleClose});
   const handleDelete = () => {
     deleteRole.mutate(deleteRoleId);
@@ -46,7 +50,7 @@ export function DeleteRole({ open, handleClose, deleteRoleId }: DeleteRoleProps)
                 <span className={styles.warning_icon}>
                   <WarningIcon />
                 </span>
-                <span>You'll permanently lose this user</span>
+                <span>{`You'll permanently lose this "${roleName}" Role`}</span>
               </div>
             </div>
 

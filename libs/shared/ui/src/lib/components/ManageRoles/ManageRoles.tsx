@@ -36,7 +36,7 @@ export function ManageRoles({ tableData }: ManageRoles) {
   };
 
   const [openDeletePopup, setOpenDeletePopup] = useState(false);
-  const [deleteRoleId, setDeleteRoleId] = useState('');
+  const [deleteRoleId, setDeleteRoleId] = useState<any>(null);
   const deletePopupOpenHandler = (index: number, data: any) => {
     setOpenDeletePopup(true);
     setDeleteRoleId(data.roleId);
@@ -175,11 +175,12 @@ export function ManageRoles({ tableData }: ManageRoles) {
           handleClose={handleCloseUpdatePopup}
           updateRoleId={updateRoleId}
           prefilledInputData={prefilledInputData}
+          rolesList={rolesList}
         />
       )}
 
       {openCreatePopup && (
-        <AddRole open={true} handleClose={handleCloseCreatePopup} />
+        <AddRole open={true} handleClose={handleCloseCreatePopup} rolesList={rolesList}/>
       )}
 
       {openDeletePopup && (
@@ -187,6 +188,7 @@ export function ManageRoles({ tableData }: ManageRoles) {
           open={true}
           handleClose={handleCloseDeletePopup}
           deleteRoleId={deleteRoleId}
+          rolesList={rolesList}
         />
       )}
     </div>

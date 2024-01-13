@@ -14,7 +14,7 @@ const getRoleByID = async (id: string) => {
 
 const QUERY_KEY = ["getRoleByID"];
 
-export const useGetRoleByID = (id: string) => {
+export const useGetRoleByID : any = (id: string) => {
   return useQuery({
     queryKey: QUERY_KEY,
     queryFn: () => getRoleByID(id),

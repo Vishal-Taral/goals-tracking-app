@@ -16,11 +16,10 @@ export interface DeleteUserProps {
 export function DeleteUser({ open, handleClose, deleteUserId }: DeleteUserProps) {
 
   console.log('deleteUserId', deleteUserId)
-  const deleteUsers = useDeleteUser(deleteUserId);
-  const handleDelete = async () => {
+  const deleteUsers = useDeleteUser(deleteUserId , {success : handleClose});
+  const handleDelete = () => {
     console.log('deleteUserId',deleteUserId,'deleteUsers',deleteUsers)
-    await deleteUsers.mutate();
-    handleClose();
+    deleteUsers.mutate();
   };
 
   return (

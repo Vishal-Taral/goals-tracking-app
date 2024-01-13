@@ -29,7 +29,8 @@ export function ManageUsers({ tableData } : ManageCategories) {
   const [searchResultDisplay, setSearchResultDisplay] = useState(false);
   const [openCreatePopup, setOpenCreatePopup] = useState(false);
 
-  const { data: roles , refetch } = useGetRoles();
+  const { data: roles } = useGetRoles();
+  const { data: usersList , refetch } = useGetUsers();
   const { data: searchResponse, refetch: refetchSearch } = useGetUserByID(searchID);
 
   // console.log("usersList" , usersList);
@@ -150,7 +151,7 @@ export function ManageUsers({ tableData } : ManageCategories) {
             </tr>
           </thead>
           <tbody>
-            {tableData?.rows?.data?.map((data: any, index: number) => (
+            {usersList?.data?.map((data: any, index: number) => (
               <tr key={index} className={styles.table_row}>
                 <td className={styles.table_data}>{data.userId}</td>
                 <td className={styles.table_data}>{data?.firstName}</td>
@@ -186,6 +187,7 @@ export function ManageUsers({ tableData } : ManageCategories) {
         handleClose={handleCloseUpdatePopup}
         prefilledInputData={prefilledInputData}
         userId={updateUserId}
+        roles={roles}
         />
       )}
       {openDeletePopup && (
