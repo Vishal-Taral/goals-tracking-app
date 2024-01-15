@@ -15,10 +15,8 @@ export interface DeleteUserProps {
 
 export function DeleteUser({ open, handleClose, deleteUserId }: DeleteUserProps) {
 
-  console.log('deleteUserId', deleteUserId)
   const deleteUsers = useDeleteUser(deleteUserId);
   const handleDelete = async () => {
-    console.log('deleteUserId',deleteUserId,'deleteUsers',deleteUsers)
     await deleteUsers.mutate();
     handleClose();
   };
@@ -48,7 +46,7 @@ export function DeleteUser({ open, handleClose, deleteUserId }: DeleteUserProps)
                 <span className={styles.warning_icon}>
                   <WarningIcon />
                 </span>
-                <span>You'll permanently lose this user</span>
+                <span>You'll permanently lose this User, UserID- {deleteUserId}</span>
               </div>
             </div>
 

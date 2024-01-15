@@ -12,7 +12,7 @@ export interface PrivateLayoutProps {
 export function PrivateLayout(props: PrivateLayoutProps) {
   const context = useContext(AppContext);
   
-  const router = useRouter()
+  const router = useRouter();
   useEffect(() => {
     if(context?.manage == 'Manage Roles'){
       router.push('http://localhost:4200/dashboard/manage/roles')
@@ -20,6 +20,8 @@ export function PrivateLayout(props: PrivateLayoutProps) {
       router.push('http://localhost:4200/dashboard/manage/categories')
     } else if(context?.manage == 'Manage Users'){
       router.push('http://localhost:4200/dashboard/manage/users')
+    } else if(context?.manage == 'Account'){
+      router.push('http://localhost:4200/Account')
     }
   }, [context.manage]);
   return (

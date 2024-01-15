@@ -10,7 +10,7 @@ import { useDeleteRole } from '@goal-tracker/data-access';
 export interface DeleteRoleProps {
   open: boolean;
   handleClose: () => void;
-  deleteRoleId: string; 
+  deleteRoleId: string;
 }
 
 export function DeleteRole({ open, handleClose, deleteRoleId }: DeleteRoleProps) {
@@ -19,7 +19,6 @@ export function DeleteRole({ open, handleClose, deleteRoleId }: DeleteRoleProps)
   const handleDelete = () => {
     deleteRole.mutate(deleteRoleId);
   };
-
 
   return (
     <div>
@@ -40,13 +39,13 @@ export function DeleteRole({ open, handleClose, deleteRoleId }: DeleteRoleProps)
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             <div className={styles.delete_confirmation_container}>
               <div className={styles.heading}>
-                <h1>Delete User ?</h1>
+                <h1>Delete Role ?</h1>
               </div>
               <div className={styles.warning}>
                 <span className={styles.warning_icon}>
                   <WarningIcon />
                 </span>
-                <span>You'll permanently lose this user</span>
+                <span>You'll permanently lose this Role, RoleID- {deleteRoleId}</span>
               </div>
             </div>
 
