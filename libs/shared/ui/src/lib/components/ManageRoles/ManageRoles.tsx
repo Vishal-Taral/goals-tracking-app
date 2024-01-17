@@ -13,8 +13,6 @@ import DeleteRole from '../DeleteRole/DeleteRole';
 
 /* eslint-disable-next-line */
 
-const options = ['story', 'upskill', 'task completing ', 'achievable'];
-
 export interface ManageRoles {
   tableData: any;
 }
@@ -36,7 +34,7 @@ export function ManageRoles({ tableData }: ManageRoles) {
   };
 
   const [openDeletePopup, setOpenDeletePopup] = useState(false);
-  const [deleteRoleId, setDeleteRoleId] = useState('');
+  const [deleteRoleId, setDeleteRoleId] = useState<any>(null);
   const deletePopupOpenHandler = (index: number, data: any) => {
     setOpenDeletePopup(true);
     setDeleteRoleId(data.roleId);
@@ -72,33 +70,6 @@ export function ManageRoles({ tableData }: ManageRoles) {
   return (
     <div className={styles.container}>
       <div className={styles.categories}>
-        <Autocomplete
-          disablePortal
-          id="combo-box-demo"
-          options={options}
-          sx={{
-            width: 150,
-            '& .MuiOutlinedInput-root': {
-              padding: 0,
-            },
-          }}
-          renderInput={(params: any) => (
-            <TextField
-              {...params}
-              id="filled-number"
-              label="categories"
-              sx={{
-                backgroundcolor: 'white',
-                width: 150,
-              }}
-              InputLabelProps={{
-                shrink: true,
-                backgroundcolor: 'white',
-              }}
-            />
-          )}
-        />
-
         <Button variant="outlined" onClick={handleOpenCreatePopup}>
           Add Role
         </Button>
@@ -175,11 +146,12 @@ export function ManageRoles({ tableData }: ManageRoles) {
           handleClose={handleCloseUpdatePopup}
           updateRoleId={updateRoleId}
           prefilledInputData={prefilledInputData}
+          rolesList={rolesList}
         />
       )}
 
       {openCreatePopup && (
-        <AddRole open={true} handleClose={handleCloseCreatePopup} />
+        <AddRole open={true} handleClose={handleCloseCreatePopup} rolesList={rolesList}/>
       )}
 
       {openDeletePopup && (
@@ -187,6 +159,7 @@ export function ManageRoles({ tableData }: ManageRoles) {
           open={true}
           handleClose={handleCloseDeletePopup}
           deleteRoleId={deleteRoleId}
+          rolesList={rolesList}
         />
       )}
     </div>
