@@ -45,24 +45,20 @@ export function UpdateCategory({
     }
   }, [categoriesList, selctedId, setValue]);
 
-  const handleUpdate: SubmitHandler<FormInput> = async (data) => {
-    const isDuplicate = categoriesList?.data?.some(
-      (category: any) => category.name === data.categoryName && category.categoryId !== selctedId
-    );
-
-    if (isDuplicate) {
-      alert('Category name already exists!');
-      return;
-    }
-
+  const handleUpdate: SubmitHandler<FormInput> = (data) => {
     try {
-      await updateCategory.mutate();
+      updateCategory.mutate();
       console.log('Category updated successfully');
       reset();
     } catch (error) {
       console.error('Error updating category:', error);
     }
   };
+
+  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setCategoryName(e.target.value);
+  //   trigger('categoryName'); // Trigger validation when input value changes
+  // };
 
   return (
     <div>
@@ -88,11 +84,21 @@ export function UpdateCategory({
                       type="text"
                       placeholder="Enter The Name"
                       className={styles.input_fields}
-                      {...register('categoryName', { required: true })}
+                      {...register('categoryName', { 
+                        required: 'Category is required',
+                        validate : value => {
+                          const lowerCaseValue = value.toLowerCase();
+                          return (
+                            !categoriesList?.data?.some((category: any) => category.name.toLowerCase() === lowerCaseValue) ||
+                            'Category already exists'
+                          );
+                        }
+                      } 
+                      )}
                       value={categoryName}
-                      onChange={(e) => setCategoryName(e.target.value)}
+                      onChange={(e) => {setCategoryName(e.target.value)}}
                     />
-                    {errors.categoryName && <p className={styles.error}>Category Name is required</p>}
+                    {errors.categoryName && <p className={styles.error} style={{ color: 'red' }}>{errors.categoryName.message}</p>}
                   </div>
                 </div>
 
