@@ -1,4 +1,6 @@
+import { validate } from 'class-validator';
 import { UserDetailsDto } from '../dto/userDto';
+import { GenericFilter } from '../models/genricClass';
 import {
   addUserService,
   getUserByIdService,
@@ -7,20 +9,43 @@ import {
   updateUserService,
 } from '../services/userService';
 
-const getPagination = (page, size) => {
-  const limit = size ? +size : 3;
-  const offset = page ? +(page - 1) * limit : 0;
+// const getPagination = (page, size) => {
+//   const limit = size ? +size : 3;
+//   const offset = page ? +(page - 1) * limit : 0;
 
-  return { limit, offset };
-};
+//   return { limit, offset };
+// };
 
 const getAllUsers = async (req, res) => {
   try {
-    const { page, size, search } = req.query;
-    const { limit, offset } = getPagination(page, size);
-    const { users, userCount } = await listOfUserService(offset, limit, search);
+    const { page, size, firstName, lastName, email, order, sortOrder } =
+      req.query;
+    const genericFilter = new GenericFilter();
+    genericFilter.page = parseInt(page);
+    genericFilter.pageSize = parseInt(size);
+    genericFilter.orderBy = order;
+    genericFilter.sortOrder = sortOrder;
+    const validationErrors = await validate(genericFilter, {
+      validationError: { target: false },
+      whitelist:true,
+      forbidNonWhitelisted: true
+    });
+    console.log("🚀 ~ getAllUsers ~ validationErrors:", validationErrors)
+    
+    
+    if (validationErrors?.length > 0) {
+      return res
+        .status(400)
+        .json({ error: 'Validation Error', details: validationErrors });
+    }
+    const { users, userCount } = await listOfUserService(
+      genericFilter,
+      firstName,
+      lastName,
+      email
+    );
     const userDto = UserDetailsDto.toDto(users);
-    const totalPages = Math.ceil(userCount / limit);
+    const totalPages = Math.ceil(userCount / genericFilter.pageSize);
     return res.json({
       statusCode: 200,
       status: 'success',
@@ -31,7 +56,8 @@ const getAllUsers = async (req, res) => {
       data: userDto,
     });
   } catch (error) {
-    throw new error();
+    console.log(error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
