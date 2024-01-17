@@ -37,7 +37,16 @@
             border-radius: 10px;
             box-shadow: -1px 3px 5px 0px rgba(204, 196, 204, 1);
         }
+
+        .select_dropdown{
+            width: 14rem;
+            height: 2rem; 
+            border: 1px solid black; 
+            border-radius: 10px;
+            box-shadow: -1px 3px 5px 0px rgba(204, 196, 204, 1); 
+        }
     }
+    
 }
 
 .duration {

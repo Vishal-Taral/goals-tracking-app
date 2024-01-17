@@ -10,9 +10,13 @@ import AppContext from '../../contexts/AppContext';
 export interface AddRoleProps {
   open: boolean;
   handleClose: () => void;
+  rolesList : any;
 }
 
-export function AddRole({ open, handleClose }: AddRoleProps) {
+export function AddRole({ open, handleClose, rolesList }: AddRoleProps) {
+
+  console.log("rolesList",rolesList);
+  
 
   const [categoryName, setCategoryName] = useState('');
   const [descName, setDescName] = useState('');
@@ -24,9 +28,17 @@ export function AddRole({ open, handleClose }: AddRoleProps) {
     roleDescription: descName
   }
 
-  // const context = useContext(AppContext)
 
-  const handleCreateCategory = () => addRole.mutate(obj);
+  // const handleCreateCategory = () => addRole.mutate(obj);
+  const handleCreateCategory = () => {
+    const isRoleExist = rolesList?.data?.some( (role : any)  => role.name === categoryName || role.description === descName);
+  
+    if (isRoleExist) {
+      alert('Error: This role already exists');
+    } else {
+      addRole.mutate(obj);
+    }
+  };
 
   return (
     <div>
@@ -57,11 +69,11 @@ export function AddRole({ open, handleClose }: AddRoleProps) {
                 </div>
                 <div className={styles.label_and_inputs}>
                   <div className={styles.field_name}>
-                    <label htmlFor="name">Role Name</label>
+                    <label htmlFor="name">Role Description</label>
                   </div>
                   <input
                     type="text"
-                    placeholder="Enter The Name"
+                    placeholder="Enter The Description"
                     className={styles.input_fields}
                     value={descName}
                     onChange={(e) => setDescName(e.target.value)}

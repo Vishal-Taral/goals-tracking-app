@@ -12,9 +12,6 @@ import { useGetUserByID, useGetUsers , useGetRoles } from '@goal-tracker/data-ac
 import UpdateUser from '../UpdateUser/UpdateUser';
 
 /* eslint-disable-next-line */
-
-const options = ['story', 'upskill', 'task completing ', 'achievable'];
-
 export interface ManageCategories {
   tableData : any;
 }
@@ -29,7 +26,8 @@ export function ManageUsers({ tableData } : ManageCategories) {
   const [searchResultDisplay, setSearchResultDisplay] = useState(false);
   const [openCreatePopup, setOpenCreatePopup] = useState(false);
 
-  const { data: roles , refetch } = useGetRoles();
+  const { data: roles } = useGetRoles();
+  const { data: usersList , refetch } = useGetUsers();
   const { data: searchResponse, refetch: refetchSearch } = useGetUserByID(searchID);
 
   // console.log("usersList" , usersList);
@@ -81,33 +79,6 @@ export function ManageUsers({ tableData } : ManageCategories) {
   return (
     <div className={styles.container}>
       <div className={styles.users}>
-        <Autocomplete
-          disablePortal
-          id="combo-box-demo"
-          options={options}
-          sx={{
-            width: 150,
-            '& .MuiOutlinedInput-root': {
-              padding: 0,
-            },
-          }}
-          renderInput={(params: any) => (
-            <TextField
-              {...params}
-              id="filled-number"
-              label="categories"
-              sx={{
-                backgroundcolor: 'white',
-                width: 150,
-              }}
-              InputLabelProps={{
-                shrink: true,
-                backgroundcolor: 'white',
-              }}
-            />
-          )}
-        />
-
         <Button variant="outlined" onClick={() => handleCreateUser()}>Add User</Button>
       </div>
 
@@ -150,7 +121,7 @@ export function ManageUsers({ tableData } : ManageCategories) {
             </tr>
           </thead>
           <tbody>
-            {tableData?.rows?.data?.map((data: any, index: number) => (
+            {usersList?.data?.map((data: any, index: number) => (
               <tr key={index} className={styles.table_row}>
                 <td className={styles.table_data}>{data.userId}</td>
                 <td className={styles.table_data}>{data?.firstName}</td>
@@ -186,6 +157,7 @@ export function ManageUsers({ tableData } : ManageCategories) {
         handleClose={handleCloseUpdatePopup}
         prefilledInputData={prefilledInputData}
         userId={updateUserId}
+        roles={roles}
         />
       )}
       {openDeletePopup && (

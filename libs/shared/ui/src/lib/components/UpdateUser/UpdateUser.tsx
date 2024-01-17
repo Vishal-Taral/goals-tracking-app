@@ -1,158 +1,51 @@
-// import styles from './UpdateUser.module.scss';
-// import Typography from '@mui/material/Typography';
-// import Modal from '@mui/material/Modal';
-// import Box from '@mui/material/Box';
-// import Button from '@mui/material/Button';
-// import {useState} from 'react'
-// import { usePutUpdateUser } from '@goal-tracker/data-access';
-// /* eslint-disable-next-line */
-// export interface UpdateUserProps {
-//   open: boolean;
-//   handleClose: () => void;
-//   prefilledInputData : any;
-// }
-
-// export function UpdateUser({ open, handleClose, prefilledInputData }: UpdateUserProps) {
-
-//   console.log("prefilledInputData-->",prefilledInputData);
-  
-//   const [formData, setFormData] = useState({
-//     firstName: '',
-//     lastName: '',
-//     email: '',
-//     mobileNumber: '',
-//     role: '',
-//   });
-
-//   const { mutate } = usePutUpdateUser();
-
-//   const handleSubmit = async (e: React.FormEvent) => {
-//     e.preventDefault();
-//     await mutate({
-//       userId: prefilledInputData?.userId, 
-//       updatedUserData: formData,
-//     });
-//     handleClose();
-//   };
- 
-//   return (
-//     <div>
-//       <div>
-//         <Modal
-//           open={open}
-//           onClose={handleClose}
-//           aria-labelledby="modal-modal-title"
-//           aria-describedby="modal-modal-description"
-//         >
-//           <Box className={styles.update_user_modal}>
-//             <Typography id="modal-modal-title" variant="h6" component="h2">
-//               <h1 className={styles.heading}>Update User</h1>
-//             </Typography>
-//             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-//               <form onSubmit={handleSubmit}>
-//                 <div className={styles.label_and_inputs}>
-//                   <div className={styles.field_name}>
-//                     <label htmlFor="name">User First Name</label>
-//                   </div>
-//                   <div >
-//                     <input type="text" placeholder='Enter The Name' className={styles.input_fields} />
-//                   </div>
-//                 </div>
- 
-//                 <div className={styles.label_and_inputs}>
-//                   <div className={styles.field_name}>
-//                     <label htmlFor="name">User Last Name</label>
-//                   </div>
-//                   <div >
-//                     <input type="text" placeholder='Enter the goal' className={styles.input_fields} />
-//                   </div>
-//                 </div>
-
-//                 <div className={styles.label_and_inputs}>
-//                   <div className={styles.field_name}>
-//                     <label htmlFor="name">Email</label>
-//                   </div>
-//                   <div >
-//                     <input type="text" placeholder='Enter The Name' className={styles.input_fields} />
-//                   </div>
-//                 </div>
-
-//                 <div className={styles.label_and_inputs}>
-//                   <div className={styles.field_name}>
-//                     <label htmlFor="name">Mobile Number</label>
-//                   </div>
-//                   <div >
-//                     <input type="text" placeholder='Enter The Name' className={styles.input_fields} />
-//                   </div>
-//                 </div>
-
-//                 <div className={styles.label_and_inputs}>
-//                   <div className={styles.field_name}>
-//                     <label htmlFor="name">Role</label>
-//                   </div>
-//                   <div >
-//                     <input type="text" placeholder='Enter The Name' className={styles.input_fields} />
-//                   </div>
-//                 </div>
-//                 <div className={styles.update_btn}>
-//                   <Button variant="contained" className={styles.cancel_button} onClick={handleClose}>Cancel</Button>
-//                   <Button variant="contained" type='submit'>Update</Button>
-//                 </div>
-//               </form>
-//             </Typography>
-//           </Box>
-//         </Modal>
-//       </div>
-//     </div>
-//   );
-// }
- 
-// export default UpdateUser;
- 
-
-
-import React, { useState , useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './UpdateUser.module.scss';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { usePutUpdateUser } from '@goal-tracker/data-access';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
 export interface UpdateUserProps {
   open: boolean;
   handleClose: () => void;
-  prefilledInputData : any;
-  userId:any;
+  prefilledInputData: any;
+  userId: any;
+  roles: any;
 }
 
-export function UpdateUser({ open, handleClose, prefilledInputData , userId}: UpdateUserProps) {
-  const createUser = usePutUpdateUser({success : handleClose});
+export function UpdateUser({ open, handleClose, prefilledInputData, userId, roles }: UpdateUserProps) {
+  const [selectedRoleId, setSelectedRoleId] = useState<string>(prefilledInputData?.role?.roleId || ""); 
+  const createUser = usePutUpdateUser({ success: handleClose });
 
-  console.log("prefilledInputData-->",prefilledInputData);
-  
+  console.log("prefilledInputData-->", prefilledInputData);
+
 
   const [formData, setFormData] = useState<any>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    mobileNo: '',
-    role: '',
-    gender: '',
+    firstName: "",
+    lastName: "",
+    email: "",
+    mobile_number: "",
+    role: selectedRoleId,
+    gender: "",
+    password: ""
   });
+  
 
   const handleInputChange = (e: any) => {
     const { name, value, type } = e.target;
 
     if (type === 'radio') {
       if (e.target.checked) {
-        setFormData((prevFormData) => ({
+        setFormData((prevFormData: any) => ({
           ...prevFormData,
           [name]: value,
         }));
       }
     } else {
-      setFormData((prevFormData) => ({
+      setFormData((prevFormData: any) => ({
         ...prevFormData,
         [name]: value,
       }));
@@ -161,7 +54,8 @@ export function UpdateUser({ open, handleClose, prefilledInputData , userId}: Up
 
   const handleUpdateUser = (e: any) => {
     e.preventDefault();
-    createUser.mutate({userId,formData});
+    console.log(formData)
+    createUser.mutate({ userId, updatedUserData: formData});
   };
 
   const renderInputField = (label: string, name: string, type: string) => (
@@ -184,13 +78,14 @@ export function UpdateUser({ open, handleClose, prefilledInputData , userId}: Up
 
   useEffect(() => {
     if (prefilledInputData) {
+      // setSelectedRoleId(prefilledInputData.role?.id);
       setFormData({
-        firstName: prefilledInputData.firstName || '',
-        lastName: prefilledInputData.lastName || '',
-        email: prefilledInputData.email || '',
-        mobileNo: prefilledInputData.mobile_number || '',
-        role: prefilledInputData.role?.name || '',
-        gender: prefilledInputData.gender || '',
+        firstName: prefilledInputData?.firstName,
+        lastName: prefilledInputData?.lastName,
+        email: prefilledInputData.email,
+        mobile_number: prefilledInputData.mobile_number,
+        role: prefilledInputData.role?.roleId,
+        gender: prefilledInputData.gender,
       });
     }
   }, [prefilledInputData]);
@@ -216,11 +111,30 @@ export function UpdateUser({ open, handleClose, prefilledInputData , userId}: Up
 
               <div className={styles.multiple_inputs}>
                 {renderInputField("Email", "email", "email")}
-                {renderInputField("User's Mobile No.", "mobileNo", "tel")}
+                {renderInputField("User's Mobile No.", "mobile_number", "tel")}
               </div>
 
               <div className={styles.multiple_inputs}>
-                {renderInputField("User's Role", "role", "text")}
+                <div className={styles.label_and_inputs}>
+                  <div className={styles.field_name}>
+                    <label>User's Role</label>
+                  </div>
+                  <Select
+                  defaultValue={prefilledInputData?.role?.id}
+                    value={selectedRoleId}
+                    onChange={(e) => setSelectedRoleId(e.target.value)}
+                    className={styles.select_dropdown}
+                  >
+                    <MenuItem value="">
+                      Select Role
+                    </MenuItem>
+                    {roles?.data?.map((role: any) => (
+                      <MenuItem key={role.roleId} value={role.roleId} >
+                        {role.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </div>
                 <div className={styles.gender}>
                   <div className={styles.field_name}>
                     <label htmlFor="name">Gender</label>
@@ -230,7 +144,7 @@ export function UpdateUser({ open, handleClose, prefilledInputData , userId}: Up
                       <input
                         type="radio"
                         name="gender"
-                        value="male"
+                        value="Male"
                         onChange={handleInputChange}
                         checked={formData.gender === 'Male'}
                       />
@@ -241,7 +155,7 @@ export function UpdateUser({ open, handleClose, prefilledInputData , userId}: Up
                       <input
                         type="radio"
                         name="gender"
-                        value="female"
+                        value="Female"
                         onChange={handleInputChange}
                         checked={formData.gender === 'Female'}
                       />
@@ -249,6 +163,10 @@ export function UpdateUser({ open, handleClose, prefilledInputData , userId}: Up
                     </div>
                   </div>
                 </div>
+              </div>
+
+              <div className={styles.multiple_inputs}>
+                {renderInputField("Password", "password", "password")}
               </div>
 
               <div className={styles.update_btn}>
@@ -263,7 +181,7 @@ export function UpdateUser({ open, handleClose, prefilledInputData , userId}: Up
                   variant="contained"
                   className={styles.create_button}
                   type="submit"
-                  
+
                 >
                   create
                 </Button>

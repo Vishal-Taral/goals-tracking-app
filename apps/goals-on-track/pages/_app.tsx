@@ -22,14 +22,14 @@ function CustomApp({ Component, pageProps }: AppProps) {
     }
     return request;
   });
-  axios.interceptors.response.use(
-    (response) => {
-      return response;
-    },
-    (error) => {
-      router.push(`/responseInterceptorErrorHandler/${error.message}`);
-    }
-  );
+  // axios.interceptors.response.use(
+  //   (response) => {
+  //     return response;
+  //   },
+  //   (error) => {
+  //     router.push(`/responseInterceptorErrorHandler/${error.message}`);
+  //   }
+  // );
 
   return (
     <>

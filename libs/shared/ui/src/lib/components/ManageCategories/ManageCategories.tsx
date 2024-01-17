@@ -1,6 +1,4 @@
 import styles from './ManageCategories.module.scss';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
@@ -17,8 +15,6 @@ import {
 
 /* eslint-disable-next-line */
 
-const options = ['story', 'upskill', 'task completing ', 'achievable'];
-
 export interface ManageCategories {
   tableData: any;
 }
@@ -26,8 +22,14 @@ export interface ManageCategories {
 export function ManageCategories({ tableData }: ManageCategories) {
   const [openUpdate, setOpenUpdate] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
-  const handleOpen = () => setOpenUpdate(true);
-  const handleOpenDelete = () => setOpenDelete(true);
+  const [selectedRowIndex, setSelectedRowIndex] = useState<string | null>(null);
+  const [openCreatePopup, setOpenCreatePopup] = useState(false);
+  const [searchID, setSearchID] = useState('');
+  const [searchResultDisplay, setSearchResultDisplay] = useState(false)
+
+  const { data: categoriesList, refetch } = useGetCategories();
+  const { data: searchResponse, refetch: refetchSearch } = useGetCategoryByID(searchID);
+
   const handleCloseUpdate = () => {
     setOpenUpdate(false);
     refetch();
@@ -36,14 +38,23 @@ export function ManageCategories({ tableData }: ManageCategories) {
     setOpenDelete(false);
     refetch();
   };
-  const [selectedRowIndex, setSelectedRowIndex] = useState<string | null>(null);
 
-  const [openCreatePopup, setOpenCreatePopup] = useState(false);
+  const cancelCrateOperation = () => {
+    setOpenCreatePopup(false);
+  }
+
+  const cancelUpdateOperation = () => {
+    setOpenUpdate(false);
+  }
+
+  const cancelDeleteOperation = () => {
+    setOpenDelete(false);
+  }
+  
   const handleCloseCreatePopup = () => {
     setOpenCreatePopup(false);
     refetch();
   };
-  const handleOpenCreatePopup = () => setOpenCreatePopup(true);
 
   const handleOpenUpdate = (index: string) => {
     setSelectedRowIndex(index);
@@ -59,14 +70,7 @@ export function ManageCategories({ tableData }: ManageCategories) {
     setOpenCreatePopup(true);
   };
 
-  const { data: categoriesList, refetch } = useGetCategories();
-
-  const [searchID, setSearchID] = useState('');
-  const [searchResultDisplay, setSearchResultDisplay] = useState(false)
-  const { data: searchResponse, refetch: refetchSearch } =
-    useGetCategoryByID(searchID);
-
-  const searchInputChangeHandler = (e : any) => {
+  const searchInputChangeHandler = (e: any) => {
     setSearchID(e.target.value);
   };
 
@@ -81,33 +85,6 @@ export function ManageCategories({ tableData }: ManageCategories) {
   return (
     <div className={styles.container}>
       <div className={styles.categories}>
-        <Autocomplete
-          disablePortal
-          id="combo-box-demo"
-          options={options}
-          sx={{
-            width: 150,
-            '& .MuiOutlinedInput-root': {
-              padding: 0,
-            },
-          }}
-          renderInput={(params: any) => (
-            <TextField
-              {...params}
-              id="filled-number"
-              label="categories"
-              sx={{
-                backgroundcolor: 'white',
-                width: 150,
-              }}
-              InputLabelProps={{
-                shrink: true,
-                backgroundcolor: 'white',
-              }}
-            />
-          )}
-        />
-
         <Button variant="outlined" onClick={() => handleCreateCategory()}>
           Add Category
         </Button>
@@ -127,7 +104,7 @@ export function ManageCategories({ tableData }: ManageCategories) {
           <b>Search Result</b>
           <div>ID- {searchResponse?.data?.categoryId}</div>
           <div>Name- {searchResponse?.data?.name}</div>
-          <button className={styles.searchResultCloseButton} onClick={()=>setSearchResultDisplay(false)}>Close</button>
+          <button className={styles.searchResultCloseButton} onClick={() => setSearchResultDisplay(false)}>Close</button>
         </div>
       ) : (
         ''
@@ -177,6 +154,7 @@ export function ManageCategories({ tableData }: ManageCategories) {
           handleClose={handleCloseUpdate}
           selctedId={selectedRowIndex}
           categoriesList={categoriesList}
+          cancelUpdateOperation={cancelUpdateOperation}
         />
       )}
 
@@ -186,11 +164,12 @@ export function ManageCategories({ tableData }: ManageCategories) {
           handleClose={handleCloseDelete}
           categoryId={selectedRowIndex}
           categories={categoriesList}
+          cancelDeleteOperation={cancelDeleteOperation}
         />
       )}
 
       {openCreatePopup && (
-        <CreateCategory open={true} handleClose={handleCloseCreatePopup} categoriesList={categoriesList} />
+        <CreateCategory open={true} handleClose={handleCloseCreatePopup} categoriesList={categoriesList} cancelCrateOperation={cancelCrateOperation}/>
       )}
     </div>
   );

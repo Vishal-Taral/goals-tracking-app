@@ -105,7 +105,7 @@ export function CreateUsers({ open, handleClose, roles }: UpdateCategoryProps) {
                     onChange={(e) => setSelectedRoleId(e.target.value)}
                     className={styles.select_dropdown}
                   >
-                    <MenuItem value="" disabled>
+                    <MenuItem value="">
                       Select Role
                     </MenuItem>
                     {roles?.data?.map((role: any) => (
@@ -125,7 +125,7 @@ export function CreateUsers({ open, handleClose, roles }: UpdateCategoryProps) {
                       <input
                         type="radio"
                         name="gender"
-                        value="male"
+                        value="Male"
                         onChange={handleInputChange}
                       />
                       <label>Male</label>
@@ -135,7 +135,7 @@ export function CreateUsers({ open, handleClose, roles }: UpdateCategoryProps) {
                       <input
                         type="radio"
                         name="gender"
-                        value="female"
+                        value="Female"
                         onChange={handleInputChange}
                       />
                       <label>Female</label>
