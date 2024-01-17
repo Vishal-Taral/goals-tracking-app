@@ -1,40 +1,36 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './create-category.module.scss';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { usePostAddCategory } from '@goal-tracker/data-access';
+import { useForm, SubmitHandler } from 'react-hook-form';
+
+interface FormData {
+  categoryName: string;
+}
 
 export interface CreateCategoryProps {
   open: boolean;
   handleClose: () => void;
   categoriesList: any;
+  cancelCrateOperation: () => void;
 }
 
-export function CreateCategory({ open, handleClose, categoriesList }: CreateCategoryProps) {
+export function CreateCategory({ open, handleClose, categoriesList, cancelCrateOperation }: CreateCategoryProps) {
+  const { register, handleSubmit, setValue, formState: { errors, isSubmitting } } = useForm<FormData>();
+  const createCategory = usePostAddCategory({ success: handleClose });
 
-  console.log("categoriesList-->",categoriesList);
-  
-
-  const [categoryName, setCategoryName] = useState('');
-  const createCategory = usePostAddCategory({success: handleClose});
-
-  const handleCreateCategory = async (event: any) => {
-    event.preventDefault();
-    const isDuplicate = categoriesList?.data?.some((category : any) => category.name === categoryName);
-    if (isDuplicate) {
-      alert('Category already exists!');
-      return;
-    }
-    createCategory.mutate(categoryName);
+  const handleCreateCategory: SubmitHandler<FormData> = async (data) => {
+    createCategory.mutate(data.categoryName);
   };
 
   return (
     <div>
       <Modal
         open={open}
-        onClose={handleClose}
+        onClose={cancelCrateOperation}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -43,31 +39,41 @@ export function CreateCategory({ open, handleClose, categoriesList }: CreateCate
             <div className={styles.heading}>Create Category</div>
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <form onSubmit={handleCreateCategory}>
+            <form onSubmit={handleSubmit(handleCreateCategory)}>
               <div className={styles.label_and_inputs}>
                 <div className={styles.field_name}>
-                  <label htmlFor="name">Category Name</label>
+                  <label htmlFor="categoryName">Category Name*</label>
                 </div>
                 <div>
                   <input
                     type="text"
                     placeholder="Enter The Name"
                     className={styles.input_fields}
-                    value={categoryName}
-                    onChange={(e) => setCategoryName(e.target.value)}
+                    {...register('categoryName', {
+                      required: 'Category Name is required',
+                      validate: value => {
+                        const lowerCaseValue = value.toLowerCase();
+                        return (
+                          !categoriesList?.data?.some((category: any) => category.name.toLowerCase() === lowerCaseValue) ||
+                          'Category already exists'
+                        );
+                      },
+                    })}
                   />
+                  {errors.categoryName && <p className={styles.error} style={{ color: 'red' }}>{errors.categoryName.message}</p>}
                 </div>
               </div>
 
               <div className={styles.update_btn}>
                 <Button
                   variant="contained"
-                  onClick={handleClose}
+                  onClick={cancelCrateOperation}
                   className={styles.cancel_button}
+                  disabled={isSubmitting}
                 >
                   Cancel
                 </Button>
-                <Button variant="contained" className={styles.create_button} type="submit">
+                <Button variant="contained" className={styles.create_button} type="submit" disabled={isSubmitting}>
                   Create
                 </Button>
               </div>

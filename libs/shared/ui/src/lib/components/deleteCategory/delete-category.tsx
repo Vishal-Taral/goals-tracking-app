@@ -13,9 +13,10 @@ export interface DeleteProps {
   handleClose: (action: any) => void;
   categoryId: string;
   categories: any;
+  cancelDeleteOperation: (action : string)=> void;
 }
 
-export function DeleteCategory({ open, handleClose, categoryId, categories }: DeleteProps) {
+export function DeleteCategory({ open, handleClose, categoryId, categories, cancelDeleteOperation }: DeleteProps) {
   const deleteCategory = useDeleteCategory({success : handleClose});
   
   const category = categories?.data?.find((category : any) => category.categoryId === categoryId);
@@ -29,7 +30,7 @@ export function DeleteCategory({ open, handleClose, categoryId, categories }: De
     <div>
       <Modal
         open={open}
-        onClose={() => handleClose('cancel')}
+        onClose={() => cancelDeleteOperation('cancel')}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -57,7 +58,7 @@ export function DeleteCategory({ open, handleClose, categoryId, categories }: De
             <div className={styles.delete_btn}>
               <Button
                 variant="contained"
-                onClick={() => handleClose('cancel')}
+                onClick={() => cancelDeleteOperation('cancel')}
                 className={styles.cancel_button}
               >
                 Cancel

@@ -12,9 +12,6 @@ import { useGetUserByID, useGetUsers , useGetRoles } from '@goal-tracker/data-ac
 import UpdateUser from '../UpdateUser/UpdateUser';
 
 /* eslint-disable-next-line */
-
-const options = ['story', 'upskill', 'task completing ', 'achievable'];
-
 export interface ManageCategories {
   tableData : any;
 }
@@ -82,33 +79,6 @@ export function ManageUsers({ tableData } : ManageCategories) {
   return (
     <div className={styles.container}>
       <div className={styles.users}>
-        <Autocomplete
-          disablePortal
-          id="combo-box-demo"
-          options={options}
-          sx={{
-            width: 150,
-            '& .MuiOutlinedInput-root': {
-              padding: 0,
-            },
-          }}
-          renderInput={(params: any) => (
-            <TextField
-              {...params}
-              id="filled-number"
-              label="categories"
-              sx={{
-                backgroundcolor: 'white',
-                width: 150,
-              }}
-              InputLabelProps={{
-                shrink: true,
-                backgroundcolor: 'white',
-              }}
-            />
-          )}
-        />
-
         <Button variant="outlined" onClick={() => handleCreateUser()}>Add User</Button>
       </div>
 

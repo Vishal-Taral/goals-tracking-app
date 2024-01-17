@@ -13,8 +13,6 @@ import DeleteRole from '../DeleteRole/DeleteRole';
 
 /* eslint-disable-next-line */
 
-const options = ['story', 'upskill', 'task completing ', 'achievable'];
-
 export interface ManageRoles {
   tableData: any;
 }
@@ -72,33 +70,6 @@ export function ManageRoles({ tableData }: ManageRoles) {
   return (
     <div className={styles.container}>
       <div className={styles.categories}>
-        <Autocomplete
-          disablePortal
-          id="combo-box-demo"
-          options={options}
-          sx={{
-            width: 150,
-            '& .MuiOutlinedInput-root': {
-              padding: 0,
-            },
-          }}
-          renderInput={(params: any) => (
-            <TextField
-              {...params}
-              id="filled-number"
-              label="categories"
-              sx={{
-                backgroundcolor: 'white',
-                width: 150,
-              }}
-              InputLabelProps={{
-                shrink: true,
-                backgroundcolor: 'white',
-              }}
-            />
-          )}
-        />
-
         <Button variant="outlined" onClick={handleOpenCreatePopup}>
           Add Role
         </Button>

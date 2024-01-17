@@ -17,7 +17,7 @@ export interface UpdateUserProps {
 }
 
 export function UpdateUser({ open, handleClose, prefilledInputData, userId, roles }: UpdateUserProps) {
-  const [selectedRoleId, setSelectedRoleId] = useState<string>("");
+  const [selectedRoleId, setSelectedRoleId] = useState<string>(prefilledInputData?.role?.roleId || ""); 
   const createUser = usePutUpdateUser({ success: handleClose });
 
   console.log("prefilledInputData-->", prefilledInputData);
@@ -28,7 +28,7 @@ export function UpdateUser({ open, handleClose, prefilledInputData, userId, role
     lastName: "",
     email: "",
     mobile_number: "",
-    role: "",
+    role: selectedRoleId,
     gender: "",
     password: ""
   });
@@ -55,7 +55,7 @@ export function UpdateUser({ open, handleClose, prefilledInputData, userId, role
   const handleUpdateUser = (e: any) => {
     e.preventDefault();
     console.log(formData)
-    createUser.mutate({ userId, formData });
+    createUser.mutate({ userId, updatedUserData: formData});
   };
 
   const renderInputField = (label: string, name: string, type: string) => (

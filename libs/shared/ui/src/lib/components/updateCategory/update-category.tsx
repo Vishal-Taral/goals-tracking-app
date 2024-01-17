@@ -1,4 +1,5 @@
-import React, { useState , useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useForm, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
 import styles from './update-category.module.scss';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -11,52 +12,63 @@ export interface UpdateCategoryProps {
   handleClose: () => void;
   selctedId: string;
   categoriesList: any;
+  cancelUpdateOperation: () => void;
 }
 
-export function UpdateCategory({ open, handleClose, selctedId , categoriesList,}: UpdateCategoryProps) {
+interface FormInput {
+  categoryName: string;
+}
 
+export function UpdateCategory({
+  open,
+  handleClose,
+  selctedId,
+  categoriesList,
+  cancelUpdateOperation,
+}: UpdateCategoryProps) {
   const [categoryName, setCategoryName] = useState('');
 
-  const payLoad = {
+  const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm<FormInput>();
+
+  const updateCategory = usePutUpdateCategory({
     categoryId: selctedId,
     categoryName: categoryName,
-  };
-
-  const updateCategory = usePutUpdateCategory({...payLoad, success: handleClose});
+    success: handleClose,
+  });
 
   useEffect(() => {
-    const selectedCategory = categoriesList?.data?.find((category : any) => category.categoryId === selctedId);
-    
+    const selectedCategory = categoriesList?.data?.find((category: any) => category.categoryId === selctedId);
+
     if (selectedCategory) {
       setCategoryName(selectedCategory.name);
+      setValue('categoryName', selectedCategory.name);
     }
-  }, [categoriesList, selctedId]);
+  }, [categoriesList, selctedId, setValue]);
 
-  const ID = 1;
+  const handleUpdate: SubmitHandler<FormInput> = async (data) => {
+    const isDuplicate = categoriesList?.data?.some(
+      (category: any) => category.name === data.categoryName && category.categoryId !== selctedId
+    );
 
-    const handleUpdate = (event : any) => {
-      event.preventDefault();
-      const isDuplicate = categoriesList?.data?.some((category : any) => category.name === categoryName && category.categoryId !== selctedId);
+    if (isDuplicate) {
+      alert('Category name already exists!');
+      return;
+    }
 
-      if (isDuplicate) {
-        alert('Category name already exists!');
-        return;
-      }
-      try {
-        updateCategory.mutate();
-        console.log('Category updated successfully');
-      } catch (error) {
-        console.error('Error updating category:', error);
-      }
-    };
-
-  
+    try {
+      await updateCategory.mutate();
+      console.log('Category updated successfully');
+      reset();
+    } catch (error) {
+      console.error('Error updating category:', error);
+    }
+  };
 
   return (
     <div>
       <Modal
         open={open}
-        onClose={handleClose}
+        onClose={cancelUpdateOperation}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -65,7 +77,7 @@ export function UpdateCategory({ open, handleClose, selctedId , categoriesList,}
             <div className={styles.heading}>Update Category</div>
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <form onSubmit={handleUpdate}>
+            <form onSubmit={handleSubmit(handleUpdate)}>
               <div>
                 <div className={styles.label_and_inputs}>
                   <div className={styles.field_name}>
@@ -76,21 +88,19 @@ export function UpdateCategory({ open, handleClose, selctedId , categoriesList,}
                       type="text"
                       placeholder="Enter The Name"
                       className={styles.input_fields}
+                      {...register('categoryName', { required: true })}
                       value={categoryName}
                       onChange={(e) => setCategoryName(e.target.value)}
                     />
+                    {errors.categoryName && <p className={styles.error}>Category Name is required</p>}
                   </div>
                 </div>
 
                 <div className={styles.update_btn}>
-                  <Button
-                    variant="contained"
-                    onClick={handleClose}
-                    className={styles.cancel_button}
-                  >
+                  <Button variant="contained" onClick={cancelUpdateOperation} className={styles.cancel_button}>
                     Cancel
                   </Button>
-                  <Button variant="contained"  type="submit">
+                  <Button variant="contained" type="submit">
                     Update
                   </Button>
                 </div>
