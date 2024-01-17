@@ -10,16 +10,19 @@ import { useDeleteRole } from '@goal-tracker/data-access';
 export interface DeleteRoleProps {
   open: boolean;
   handleClose: () => void;
-  deleteRoleId: string; 
+  deleteRoleId: any; 
+  rolesList:any;
 }
 
-export function DeleteRole({ open, handleClose, deleteRoleId }: DeleteRoleProps) {
+export function DeleteRole({ open, handleClose, deleteRoleId, rolesList }: DeleteRoleProps) {
 
+  const role = rolesList?.data?.find((category : any) => category.roleId === deleteRoleId);
+  const roleName = role ? role.name : '';
+  
   const deleteRole = useDeleteRole({success : handleClose});
   const handleDelete = () => {
     deleteRole.mutate(deleteRoleId);
   };
-
 
   return (
     <div>
@@ -40,13 +43,13 @@ export function DeleteRole({ open, handleClose, deleteRoleId }: DeleteRoleProps)
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             <div className={styles.delete_confirmation_container}>
               <div className={styles.heading}>
-                <h1>Delete User ?</h1>
+                <h1>Delete Role ?</h1>
               </div>
               <div className={styles.warning}>
                 <span className={styles.warning_icon}>
                   <WarningIcon />
                 </span>
-                <span>You'll permanently lose this user</span>
+                <span>{`You'll permanently lose this "${roleName}" Role`}</span>
               </div>
             </div>
 

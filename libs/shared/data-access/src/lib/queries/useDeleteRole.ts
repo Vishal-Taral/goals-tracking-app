@@ -9,7 +9,7 @@ const deleteRoles = async(data: any) => {
 
 const QUERY_KEY = ['deleteRoles']
 export const useDeleteRole = (payload: any) => {
-    return useMutation({mutationKey: QUERY_KEY, mutationFn: ()=>deleteRoles(payload),onSuccess: ()=>payload.success()})
+    return useMutation({mutationKey: QUERY_KEY, mutationFn: (id)=>deleteRoles(id),onSuccess: ()=>payload.success()})
 }
 
 

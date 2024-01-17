@@ -11,9 +11,11 @@ export interface UpdateRoleProps {
   handleClose: () => void;
   updateRoleId: string | null;
   prefilledInputData : any;
+  rolesList:any;
 }
  
-export function UpdateRole({ open, handleClose, updateRoleId, prefilledInputData }: UpdateRoleProps) {
+export function UpdateRole({ open, handleClose, updateRoleId, prefilledInputData, rolesList }: UpdateRoleProps) {
+  
   const [updatePopupData, setUpdatePopupData] = useState({
     name: prefilledInputData?.name ,description: prefilledInputData?.description
   })
@@ -22,7 +24,17 @@ export function UpdateRole({ open, handleClose, updateRoleId, prefilledInputData
     setUpdatePopupData(updatedData);
   }
   const updateRole = usePutUpdateRole({...updatePopupData, id: updateRoleId, success: handleClose});
-  const handleUpdate = () => updateRole.mutate();    
+  const handleUpdate = () => {
+    const isRoleExist = rolesList?.data?.some( (role : any)  => role.name === updatePopupData.name || role.description === updatePopupData.description);
+    if (isRoleExist) {
+      alert('Error: This role already exists');
+    } else {
+      updateRole.mutate();   
+    }
+
+    // updateRole.mutate();   
+    
+  } 
 
   return (
     <div>

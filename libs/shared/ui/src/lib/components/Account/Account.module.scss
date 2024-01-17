@@ -1,0 +1,14 @@
+.account {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: auto;
+  .row {
+    display: flex;
+    flex-direction: row;
+    .heading {
+      font-weight: 600;
+      text-align: left;
+    }
+  }
+}

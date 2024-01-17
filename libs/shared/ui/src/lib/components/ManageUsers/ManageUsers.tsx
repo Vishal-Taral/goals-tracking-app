@@ -8,28 +8,37 @@ import Button from '@mui/material/Button';
 import { useState } from 'react';
 import CreateUsers from '../CreateUsers/CreateUsers';
 import DeleteUser from '../DeleteUser/DeleteUser';
-import { useGetUserByID, useGetUsers } from '@goal-tracker/data-access';
+import { useGetUserByID, useGetUsers , useGetRoles } from '@goal-tracker/data-access';
 import UpdateUser from '../UpdateUser/UpdateUser';
 
 /* eslint-disable-next-line */
-
-const options = ['story', 'upskill', 'task completing ', 'achievable'];
-
 export interface ManageCategories {
   tableData : any;
 }
 
 export function ManageUsers({ tableData } : ManageCategories) {
-  const { data: usersList , refetch } = useGetUsers();
-  console.log("usersList" , usersList);
-  
+  const [updateUserId, setUpdateUserId] = useState(null);
+  const [prefilledInputData, setPrefilledInputData] = useState();
+  const [openUpdatePopup, setOpenUpdatePopup] = useState(false);
+  const [openDeletePopup, setOpenDeletePopup] = useState(false);
+  const [deleteUserId, setDeleteUserId] = useState(null);
+  const [searchID, setSearchID] = useState('');
+  const [searchResultDisplay, setSearchResultDisplay] = useState(false);
   const [openCreatePopup, setOpenCreatePopup] = useState(false);
+
+  const { data: roles } = useGetRoles();
+  const { data: usersList , refetch } = useGetUsers();
+  const { data: searchResponse, refetch: refetchSearch } = useGetUserByID(searchID);
+
+  // console.log("usersList" , usersList);
+  
+  
   const handleCloseCreatePopup = () => {
+    setOpenCreatePopup(false);
     refetch();
-    setOpenCreatePopup(false)
   }
 
-  const handleCreateCategory = () => {
+  const handleCreateUser = () => {
     // setSelectedRowIndex(index);
     setOpenCreatePopup(true);
   };
@@ -37,34 +46,24 @@ export function ManageUsers({ tableData } : ManageCategories) {
     setOpenDeletePopup(false);
     refetch();
   };
-  const [openDeletePopup, setOpenDeletePopup] = useState(false);
-
-  const [deleteUserId, setDeleteUserId] = useState(null);
+ 
   const deletePopupOpenHandler = (index: number, data: any) => {
     console.log('data delete', data)
     setOpenDeletePopup(true);
     setDeleteUserId(data?.userId);
     console.log('data.id',data)
   };
-  const [updateRoleId, setUpdateRoleId] = useState(null);
-  const [prefilledInputData, setPrefilledInputData] = useState();
-  const [openUpdatePopup, setOpenUpdatePopup] = useState(false);
 
   const handleCloseUpdatePopup = () => {
-    refetch();
     setOpenUpdatePopup(false);
+    refetch();
   }
   const updatePopupOpenHandler = (index: number, data: any) => {
     setOpenUpdatePopup(true);
-    setUpdateRoleId(data?.userId);
+    setUpdateUserId(data?.userId);
     console.log("data?.userId",data?.userId)
     setPrefilledInputData(data);
   };
-
-  const [searchID, setSearchID] = useState('');
-  const [searchResultDisplay, setSearchResultDisplay] = useState(false)
-  const { data: searchResponse, refetch: refetchSearch } =
-    useGetUserByID(searchID);
 
   const searchInputChangeHandler = (e: any) => {
     setSearchID(e.target.value);
@@ -79,35 +78,8 @@ export function ManageUsers({ tableData } : ManageCategories) {
   };
   return (
     <div className={styles.container}>
-      <div className={styles.categories}>
-        <Autocomplete
-          disablePortal
-          id="combo-box-demo"
-          options={options}
-          sx={{
-            width: 150,
-            '& .MuiOutlinedInput-root': {
-              padding: 0,
-            },
-          }}
-          renderInput={(params: any) => (
-            <TextField
-              {...params}
-              id="filled-number"
-              label="categories"
-              sx={{
-                backgroundcolor: 'white',
-                width: 150,
-              }}
-              InputLabelProps={{
-                shrink: true,
-                backgroundcolor: 'white',
-              }}
-            />
-          )}
-        />
-
-        <Button variant="outlined" onClick={() => handleCreateCategory()}>Add User</Button>
+      <div className={styles.users}>
+        <Button variant="outlined" onClick={() => handleCreateUser()}>Add User</Button>
       </div>
 
       <div className={styles.searchBlock}>
@@ -149,7 +121,7 @@ export function ManageUsers({ tableData } : ManageCategories) {
             </tr>
           </thead>
           <tbody>
-            {tableData?.rows?.data?.map((data: any, index: number) => (
+            {usersList?.data?.map((data: any, index: number) => (
               <tr key={index} className={styles.table_row}>
                 <td className={styles.table_data}>{data.userId}</td>
                 <td className={styles.table_data}>{data?.firstName}</td>
@@ -184,7 +156,8 @@ export function ManageUsers({ tableData } : ManageCategories) {
         open={true}
         handleClose={handleCloseUpdatePopup}
         prefilledInputData={prefilledInputData}
-        userId={updateRoleId}
+        userId={updateUserId}
+        roles={roles}
         />
       )}
       {openDeletePopup && (
@@ -199,6 +172,7 @@ export function ManageUsers({ tableData } : ManageCategories) {
         <CreateUsers 
           open={true}
           handleClose={handleCloseCreatePopup}
+          roles={roles}
         />
       )}
     </div>
