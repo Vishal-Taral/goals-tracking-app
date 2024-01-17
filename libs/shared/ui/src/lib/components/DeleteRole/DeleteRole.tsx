@@ -24,7 +24,6 @@ export function DeleteRole({ open, handleClose, deleteRoleId, rolesList }: Delet
     deleteRole.mutate(deleteRoleId);
   };
 
-
   return (
     <div>
       <Modal
@@ -44,7 +43,7 @@ export function DeleteRole({ open, handleClose, deleteRoleId, rolesList }: Delet
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             <div className={styles.delete_confirmation_container}>
               <div className={styles.heading}>
-                <h1>Delete User ?</h1>
+                <h1>Delete Role ?</h1>
               </div>
               <div className={styles.warning}>
                 <span className={styles.warning_icon}>

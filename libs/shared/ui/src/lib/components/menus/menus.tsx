@@ -56,8 +56,7 @@ export function Menus(props: MenusProps) {
   ];
 
   const manageClickHandler = (titleObj : any , event : any) => {
-    event.stopPropagation(); 
-    console.log(titleObj.title)
+    event.stopPropagation();
     context.setManage(titleObj?.title)
   }
 
@@ -82,14 +81,11 @@ export function Menus(props: MenusProps) {
                 <Typography onClick={(event) => manageClickHandler(titles , event)} style={{cursor:'pointer'}}>{titles.title}</Typography>
               </AccordionDetails>
             ))}
-
           </Accordion>
         ))}
-
       </div>
     </div>
   );
 }
 
 export default Menus;
-

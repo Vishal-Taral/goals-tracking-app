@@ -47,7 +47,7 @@ export function DeleteUser({ open, handleClose, deleteUserId }: DeleteUserProps)
                 <span className={styles.warning_icon}>
                   <WarningIcon />
                 </span>
-                <span>You'll permanently lose this user</span>
+                <span>You'll permanently lose this User, UserID- {deleteUserId}</span>
               </div>
             </div>
 
