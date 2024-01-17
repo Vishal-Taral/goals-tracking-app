@@ -45,11 +45,9 @@ export function Login(props: LoginProps) {
   const onSubmit: SubmitHandler<FormData> = async (data: any) => {
     setLoginCredentials({ email: data.email, password: data.password });
     const response = await responseData.mutateAsync();
-    console.log('response', response, 'data',data)
-    console.log('userAuthorization', userAuthorization);
-    if (response.data) {
-      if (response.data.success == true) {
-        localStorage.setItem('AUTHORIZATION',response.data.data)
+    if (response?.data) {
+      if (response?.data?.success == true) {
+        localStorage.setItem('AUTHORIZATION',response?.data?.data)
         setLoginError(null);
         routFunction();
         setSuccessSnackbar(true);

@@ -1,14 +1,12 @@
 import styles from './header.module.scss';
 import { useRouter } from 'next/router';
-import Avatar from '@mui/material/Avatar';
-import logo from '../../assets/goal_tracker_logo.jpg';
-import Image from 'next/image';
 import Button from '@mui/material/Button';
 import { useGetUserAuthorization } from '@goal-tracker/data-access';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Popper } from '@mui/material';
 
 /* eslint-disable-next-line */
-export interface HeaderProps { }
+export interface HeaderProps {}
 
 export function Header(props: HeaderProps) {
   const router = useRouter();
@@ -17,39 +15,83 @@ export function Header(props: HeaderProps) {
 
   const openLoginPage = () => {
     router.push('./login');
-  }
-
+  };
   const goToHome = () => {
-    router.push('/tracker')
-  }
-  console.log('x', router.pathname.includes('/'))
-  const {data: userAuthorization, refetch: refetchUserAuthorization} = useGetUserAuthorization()
+    router.push('/tracker');
+  };
+  const { data: userAuthorization, refetch: refetchUserAuthorization } =
+    useGetUserAuthorization();
 
-  useEffect(()=>{refetchUserAuthorization()},[])
+  useEffect(() => {
+    refetchUserAuthorization();
+  }, []);
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const accountHandler = (event) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+  };
+  const popoverOpen = Boolean(anchorEl);
+  const popoverCloseHandler = () => {
+    setAnchorEl(null);
+  };
+  const accountClickHandler = () => {
+    router.push('/Account')
+  }
+  const logoutClickHandler = () => {
+    localStorage.removeItem('AUTHORIZATION')
+    router.push('/login')
+  }
+
   return (
     <div className={styles.container}>
-      {
-        isLandingPage ? (
-          <div className={styles.header_container}>
-            {/* <Image src={logo} alt='logo' width={100} height={50} /> */}
+      {isLandingPage ? (
+        <div className={styles.header_container}>
+          GoalsOnTrack
+          <div>
+            <Button
+              variant="outlined"
+              onClick={openLoginPage}
+              style={{ color: 'white', borderColor: 'white' }}
+            >
+              Login
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <div className={styles.profile_container}>
+          <div style={{ fontSize: '2rem', color: 'white', fontWeight: '600' }}>
             GoalsOnTrack
-            <div>
-            {/* <button onClick={openLoginPage} className={styles.login_btn}>login</button> */}
-              <Button variant="outlined" onClick={openLoginPage} style={{color: 'white',borderColor: 'white'}}>Login</Button>
-            </div>
           </div>
-        ) : (
-          <div className={styles.profile_container}>
-            <div style={{fontSize: '2rem',color: 'white',fontWeight: '600'}}>
-              GoalsOnTrack
-            </div>            
-            <div className={styles.use_name_and_profile_pic}>
-            <h1 style={{backgroundColor: 'skyblue',borderRadius: '100%',padding: '0.7rem 1rem',fontWeight: '600',color: 'white'}}>{userAuthorization?.response?.firstName[0]}</h1>
-              <h1 className={styles.userName} style={{color: 'white'}}>{userAuthorization?.response?.firstName}</h1>
-            </div>
+          <div
+            onClick={accountHandler}
+            className={styles.use_name_and_profile_pic}
+          >
+            <h1
+              style={{
+                backgroundColor: 'skyblue',
+                borderRadius: '100%',
+                padding: '0.7rem 1rem',
+                fontWeight: '600',
+                color: 'white',
+              }}
+            >
+              {userAuthorization?.response?.firstName[0]}
+            </h1>
+            <h1 className={styles.userName} style={{ color: 'white' }}>
+              {userAuthorization?.response?.firstName}
+            </h1>
           </div>
-        )
-      }
+          <Popper
+            anchorEl={anchorEl}
+            open={popoverOpen}
+            handleClose={popoverCloseHandler}
+            style={{backgroundColor: 'white',padding: '0.5rem 0.5rem'}}
+          >
+            <div onClick={accountClickHandler} style={{borderBottom: '1px solid lightgray', padding: '0.4rem'}}>Account</div>
+            <div onClick={logoutClickHandler} style={{ padding: '0.4rem'}}>Logout</div>
+          </Popper>
+        </div>
+      )}
     </div>
   );
 }
