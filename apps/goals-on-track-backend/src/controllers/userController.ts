@@ -1,3 +1,4 @@
+import { validate } from 'class-validator';
 import { UserDetailsDto } from '../dto/userDto';
 import { UserQuery } from '../models/genricClass';
 import {
@@ -25,6 +26,16 @@ const getAllUsers = async (req, res) => {
       return res.status(400).json({ error: 'Bad request' });
     }
     const userQuery = new UserQuery(req.query);
+    const validationErrors = await validate(userQuery, {
+      validationError: { target: false },
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    });
+    if (validationErrors?.length > 0) {
+      return res
+        .status(400)
+        .json({ error: 'Validation Error', details: validationErrors });
+    }
     const { users, userCount } = await listOfUserService(userQuery);
     const userDto = UserDetailsDto.toDto(users);
     const totalPages = Math.ceil(userCount / userQuery.pageSize);
