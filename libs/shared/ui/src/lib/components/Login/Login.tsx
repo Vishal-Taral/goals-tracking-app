@@ -41,7 +41,6 @@ export function Login(props: LoginProps) {
   const responseData = usePostLogin(loginCredentials);
   const {data: userAuthorization, refetch: refetchUserAuthorization} = useGetUserAuthorization()
 
-
   const onSubmit: SubmitHandler<FormData> = async (data: any) => {
     setLoginCredentials({ email: data.email, password: data.password });
     const response = await responseData.mutateAsync();

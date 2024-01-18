@@ -10,6 +10,7 @@ import AddRole from '../AddRole/AddRole';
 import { useGetRoleByID, useGetRoles } from '@goal-tracker/data-access';
 import UpdateRole from '../UpdateRole/UpdateRole';
 import DeleteRole from '../DeleteRole/DeleteRole';
+import PageNumberContainer from '../PageNumberContainer/PageNumberContainer';
 
 /* eslint-disable-next-line */
 
@@ -138,6 +139,7 @@ export function ManageRoles({ tableData }: ManageRoles) {
             ))}
           </tbody>
         </table>
+        <PageNumberContainer />
       </div>
 
       {openUpdatePopup && (
@@ -151,7 +153,11 @@ export function ManageRoles({ tableData }: ManageRoles) {
       )}
 
       {openCreatePopup && (
-        <AddRole open={true} handleClose={handleCloseCreatePopup} rolesList={rolesList}/>
+        <AddRole
+          open={true}
+          handleClose={handleCloseCreatePopup}
+          rolesList={rolesList}
+        />
       )}
 
       {openDeletePopup && (
