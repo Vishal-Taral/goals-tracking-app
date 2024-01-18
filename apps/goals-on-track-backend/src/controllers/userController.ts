@@ -1,6 +1,5 @@
-import { validate } from 'class-validator';
 import { UserDetailsDto } from '../dto/userDto';
-import { GenericFilter } from '../models/genricClass';
+import { UserQuery } from '../models/genricClass';
 import {
   addUserService,
   getUserByIdService,
@@ -8,51 +7,34 @@ import {
   removeUserService,
   updateUserService,
 } from '../services/userService';
-
-// const getPagination = (page, size) => {
-//   const limit = size ? +size : 3;
-//   const offset = page ? +(page - 1) * limit : 0;
-
-//   return { limit, offset };
-// };
+import invalidParameters from '../utils/invalidParams';
 
 const getAllUsers = async (req, res) => {
   try {
-    const { page, size, firstName, lastName, email, order, sortOrder } =
-      req.query;
-    const genericFilter = new GenericFilter();
-    genericFilter.page = parseInt(page);
-    genericFilter.pageSize = parseInt(size);
-    genericFilter.orderBy = order;
-    genericFilter.sortOrder = sortOrder;
-    const validationErrors = await validate(genericFilter, {
-      validationError: { target: false },
-      whitelist:true,
-      forbidNonWhitelisted: true
-    });
-    console.log("🚀 ~ getAllUsers ~ validationErrors:", validationErrors)
-    
-    
-    if (validationErrors?.length > 0) {
-      return res
-        .status(400)
-        .json({ error: 'Validation Error', details: validationErrors });
+    const expectedParams = [
+      'page',
+      'pageSize',
+      'firstName',
+      'lastName',
+      'email',
+      'order',
+      'sortOrder',
+    ];
+    const invalidQuery = invalidParameters(req.query, expectedParams);
+    if (!invalidQuery?.isValid) {
+      return res.status(400).json({ error: 'Bad request' });
     }
-    const { users, userCount } = await listOfUserService(
-      genericFilter,
-      firstName,
-      lastName,
-      email
-    );
+    const userQuery = new UserQuery(req.query);
+    const { users, userCount } = await listOfUserService(userQuery);
     const userDto = UserDetailsDto.toDto(users);
-    const totalPages = Math.ceil(userCount / genericFilter.pageSize);
+    const totalPages = Math.ceil(userCount / userQuery.pageSize);
     return res.json({
       statusCode: 200,
       status: 'success',
-      message: 'users fetched successfully.',
+      message: userCount ? 'User list fetched successfully.' : 'no user found',
       totalCount: userCount,
       totalPages,
-      currentPage: parseInt(page),
+      currentPage: userQuery.page,
       data: userDto,
     });
   } catch (error) {
@@ -135,7 +117,5 @@ const deleteUser = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
-// const userLogin = async();
 
 export { getAllUsers, updateUser, addUser, deleteUser, getUserById };

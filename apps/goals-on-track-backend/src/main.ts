@@ -13,7 +13,6 @@ import { RoleRouter } from './routes/role';
 import cors from 'cors';
 import { LoginRouter } from './routes/login';
 import { AuthorizeRouter } from './routes/authorization';
-
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -28,7 +27,7 @@ const appDataSource = new DataSource({
   type: 'postgres',
   host: process.env.HOST,
   port: Number.parseInt(process.env.DB_PORT, 10),
-  username: process.env.USERNAME,
+  username: process.env.USER,
   password: process.env.PASSWORD,
   database: process.env.DATABASE,
   entities: [User, Role, Category, Goal, OrgTree],
@@ -41,7 +40,7 @@ const appDataSource = new DataSource({
 appDataSource
   .initialize()
   .then(() => {
-    console.log('mySql connected');
+    console.log(`${process.env.DATABASE} connected`);
   })
   .catch((error) => console.log(error));
 

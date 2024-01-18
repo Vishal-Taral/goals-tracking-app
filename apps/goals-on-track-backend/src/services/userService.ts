@@ -1,6 +1,5 @@
 import { User } from '../entities/user';
 import { PageService, SearchUser } from '../models/pageService';
-// const bcrypt = require('bcrypt');
 import bcrypt from 'bcrypt';
 const removeUserService = async (userId: string) => {
   try {
@@ -55,61 +54,30 @@ const getUserByIdService = async (userId: string) => {
   }
 };
 
-// const listOfUserService = async (offset, limit, search) => {
-//   try {
-//     // const users = await User.find({
-//     //   skip: 0,
-//     //   take: 0,
-//     //   order: { createdAt: 'desc' },
-//     // });
-//     const users = await User.find({
-//       skip: offset,
-//       take: limit,
-//       order: { createdAt: 'ASC' },
-//       // where: {
-//       //   firstName: Like(`%${search}%`),
-//       // },
-//     });
-//     const userCount = await User.count();
-//     return { users, userCount };
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
-const listOfUserService = async (filter, firstName, lastName, email) => {
+const listOfUserService = async (userQuery) => {
   try {
-    // Create an object representing the WHERE clause based on the search term
-    // const where = search ? { firstName: ILike(`%${search}%`), } : {};
+    const { firstName, lastName, email } = userQuery;
     const where: any = SearchUser.createWhereQuery({
       firstName,
       lastName,
       email,
     });
 
-    // Use the paginate method from PageService to get paginated user data
     const users = await PageService.paginate(
       User.getRepository(),
-      filter,
+      userQuery,
       where
     );
     return { users: users[0], userCount: users[1] };
   } catch (error) {
     console.error(error);
-    throw error; // Propagate the error to the caller
+    throw error;
   }
 };
 
 const updateUserService = async (userId, body) => {
   try {
-    const {
-      firstName,
-      lastName,
-      gender,
-      mobile_number,
-      email,
-      role,
-    } = body;
+    const { firstName, lastName, gender, mobile_number, email, role } = body;
     const existingUser = await User.findOne({ where: { userId } });
     existingUser.firstName = firstName;
     existingUser.lastName = lastName;

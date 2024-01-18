@@ -6,6 +6,7 @@ import {
   IsOptional,
   IsPositive,
   IsString,
+  validate,
 } from 'class-validator';
 
 export enum SortOrder {
@@ -34,7 +35,6 @@ export class GenericFilter {
   public sortOrder?: SortOrder = SortOrder.DESC;
 }
 
-// export  , PageService };
 export class UserQuery extends GenericFilter {
   @IsOptional()
   @IsString({ message: 'firstName should be a string' })
@@ -48,7 +48,7 @@ export class UserQuery extends GenericFilter {
   @IsEmail({}, { message: 'firstName should be a number' })
   public email: string;
 
-  constructor(userQuery) {
+  constructor(userQuery: any) {
     super();
     (this.email = userQuery.email),
       (this.firstName = userQuery.firstName),
