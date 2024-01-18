@@ -18,7 +18,7 @@ const getAllUsers = async (req, res) => {
       'firstName',
       'lastName',
       'email',
-      'order',
+      'sortBy',
       'sortOrder',
     ];
     const invalidQuery = invalidParameters(req.query, expectedParams);
