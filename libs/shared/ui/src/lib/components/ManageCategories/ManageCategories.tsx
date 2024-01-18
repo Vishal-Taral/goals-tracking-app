@@ -7,6 +7,7 @@ import {
   UpdateCategory,
   DeleteCategory,
   CreateCategory,
+  PageNumberContainer,
 } from '@goal-tracker/ui';
 import {
   useGetCategories,
@@ -147,6 +148,7 @@ export function ManageCategories({ tableData }: ManageCategories) {
             ))}
           </tbody>
         </table>
+        <PageNumberContainer />
       </div>
       {openUpdate && selectedRowIndex !== null && (
         <UpdateCategory

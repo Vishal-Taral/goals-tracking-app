@@ -1,5 +1,5 @@
 import { useGetRoles } from '@goal-tracker/data-access';
-import { ErrorHandler, ManageRoles } from '@goal-tracker/ui';
+import { ErrorHandler, FilterContainer, ManageRoles } from '@goal-tracker/ui';
 import PrivateLayout from 'apps/goals-on-track/component/common/privateLayout/private-layout';
 import HOCAuth from 'libs/shared/ui/src/lib/components/HOCAuth/HOCAuth';
 import React from 'react';
@@ -16,6 +16,7 @@ const Roles = () => {
       <PrivateLayout>
         <div className={styles.dashboard_page_container}>
           <div className={styles.header_and_user_detail_section}>
+            <FilterContainer />
             <ErrorHandler>
               <ManageRoles tableData={roles} />
             </ErrorHandler>
