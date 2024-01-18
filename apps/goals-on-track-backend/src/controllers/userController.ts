@@ -1,4 +1,6 @@
+import { validate } from 'class-validator';
 import { UserDetailsDto } from '../dto/userDto';
+import { UserQuery } from '../models/genricClass';
 import {
   addUserService,
   getUserByIdService,
@@ -6,19 +8,49 @@ import {
   removeUserService,
   updateUserService,
 } from '../services/userService';
+import invalidParameters from '../utils/invalidParams';
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await listOfUserService();
+    const expectedParams = [
+      'page',
+      'pageSize',
+      'firstName',
+      'lastName',
+      'email',
+      'order',
+      'sortOrder',
+    ];
+    const invalidQuery = invalidParameters(req.query, expectedParams);
+    if (!invalidQuery?.isValid) {
+      return res.status(400).json({ error: 'Bad request' });
+    }
+    const userQuery = new UserQuery(req.query);
+    const validationErrors = await validate(userQuery, {
+      validationError: { target: false },
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    });
+    if (validationErrors?.length > 0) {
+      return res
+        .status(400)
+        .json({ error: 'Validation Error', details: validationErrors });
+    }
+    const { users, userCount } = await listOfUserService(userQuery);
     const userDto = UserDetailsDto.toDto(users);
+    const totalPages = Math.ceil(userCount / userQuery.pageSize);
     return res.json({
       statusCode: 200,
       status: 'success',
-      message: 'users fetched successfully.',
+      message: userCount ? 'User list fetched successfully.' : 'no user found',
+      totalCount: userCount,
+      totalPages,
+      currentPage: userQuery.page,
       data: userDto,
     });
   } catch (error) {
-    throw new error();
+    console.log(error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
@@ -41,7 +73,7 @@ const getUserById = async (req, res) => {
   try {
     const userId = req.params.id;
     const existingUser = await getUserByIdService(userId);
-    
+
     if (!existingUser) {
       return res.status(404).json({ error: 'User not found' });
     }
@@ -96,7 +128,5 @@ const deleteUser = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
-// const userLogin = async();
 
 export { getAllUsers, updateUser, addUser, deleteUser, getUserById };
