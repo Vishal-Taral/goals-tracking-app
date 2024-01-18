@@ -10,6 +10,7 @@ import CreateUsers from '../CreateUsers/CreateUsers';
 import DeleteUser from '../DeleteUser/DeleteUser';
 import { useGetUserByID, useGetUsers , useGetRoles } from '@goal-tracker/data-access';
 import UpdateUser from '../UpdateUser/UpdateUser';
+import PageNumberContainer from '../PageNumberContainer/PageNumberContainer';
 
 /* eslint-disable-next-line */
 export interface ManageCategories {
@@ -150,6 +151,7 @@ export function ManageUsers({ tableData } : ManageCategories) {
             ))}
           </tbody>
         </table>
+        <PageNumberContainer />
       </div>
       {openUpdatePopup && (
         <UpdateUser

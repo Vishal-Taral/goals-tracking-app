@@ -19,4 +19,5 @@ export * from './lib/components/Login/Login';
 export * from './lib/components/Loader/Loader';
 export * from './lib/components/ErrorHandler/ErrorHandler';
 export * from './lib/components/Account/Account';
-
+export * from './lib/components/PageNumberContainer/PageNumberContainer';
+export * from './lib/components/FilterContainer/FilterContainer';

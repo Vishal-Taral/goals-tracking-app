@@ -22,14 +22,14 @@ function CustomApp({ Component, pageProps }: AppProps) {
     }
     return request;
   });
-  // axios.interceptors.response.use(
-  //   (response) => {
-  //     return response;
-  //   },
-  //   (error) => {
-  //     router.push(`/responseInterceptorErrorHandler/${error.message}`);
-  //   }
-  // );
+  axios.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    (error) => {
+      router.push(`/responseInterceptorErrorHandler/${error.message}`);
+    }
+  );
 
   return (
     <>
@@ -40,6 +40,7 @@ function CustomApp({ Component, pageProps }: AppProps) {
           </Head>
           <main className="app">
             <HOCAuth Component={Component} {...pageProps} />
+            {/* <Component {...pageProps} /> */}
           </main>
           <ReactQueryDevtools
             initialIsOpen={false}

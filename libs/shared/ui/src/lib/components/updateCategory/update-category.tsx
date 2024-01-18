@@ -28,7 +28,13 @@ export function UpdateCategory({
 }: UpdateCategoryProps) {
   const [categoryName, setCategoryName] = useState('');
 
-  const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm<FormInput>();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    reset,
+    formState: { errors },
+  } = useForm<FormInput>();
 
   const updateCategory = usePutUpdateCategory({
     categoryId: selctedId,
@@ -37,7 +43,9 @@ export function UpdateCategory({
   });
 
   useEffect(() => {
-    const selectedCategory = categoriesList?.data?.find((category: any) => category.categoryId === selctedId);
+    const selectedCategory = categoriesList?.data?.find(
+      (category: any) => category.categoryId === selctedId
+    );
 
     if (selectedCategory) {
       setCategoryName(selectedCategory.name);
@@ -84,26 +92,37 @@ export function UpdateCategory({
                       type="text"
                       placeholder="Enter The Name"
                       className={styles.input_fields}
-                      {...register('categoryName', { 
+                      {...register('categoryName', {
                         required: 'Category is required',
-                        validate : value => {
+                        validate: (value) => {
                           const lowerCaseValue = value.toLowerCase();
                           return (
-                            !categoriesList?.data?.some((category: any) => category.name.toLowerCase() === lowerCaseValue) ||
-                            'Category already exists'
+                            !categoriesList?.data?.some(
+                              (category: any) =>
+                                category.name.toLowerCase() === lowerCaseValue
+                            ) || 'Category already exists'
                           );
-                        }
-                      } 
-                      )}
+                        },
+                      })}
                       value={categoryName}
-                      onChange={(e) => {setCategoryName(e.target.value)}}
+                      onChange={(e) => {
+                        setCategoryName(e.target.value);
+                      }}
                     />
-                    {errors.categoryName && <p className={styles.error} style={{ color: 'red' }}>{errors.categoryName.message}</p>}
+                    {errors.categoryName && (
+                      <p className={styles.error} style={{ color: 'red' }}>
+                        {errors.categoryName.message}
+                      </p>
+                    )}
                   </div>
                 </div>
 
                 <div className={styles.update_btn}>
-                  <Button variant="contained" onClick={cancelUpdateOperation} className={styles.cancel_button}>
+                  <Button
+                    variant="contained"
+                    onClick={cancelUpdateOperation}
+                    className={styles.cancel_button}
+                  >
                     Cancel
                   </Button>
                   <Button variant="contained" type="submit">
