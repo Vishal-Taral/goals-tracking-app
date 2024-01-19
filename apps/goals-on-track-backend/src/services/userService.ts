@@ -21,7 +21,11 @@ const addUserService = async (body) => {
       password,
       role,
     } = body;
-
+    const existingUser = await User.findOne({ where: { email } });
+    if (existingUser) {
+      return { isUserExist: true, addedUser: {} };
+    } else {
+    }
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
 
@@ -39,9 +43,10 @@ const addUserService = async (body) => {
       updatedAt: new Date(),
     });
     const addedUser = await User.save(newUser);
-    return addedUser;
+    return { isUserExist: false, addedUser };
   } catch (error) {
     console.log(error);
+    throw error;
   }
 };
 

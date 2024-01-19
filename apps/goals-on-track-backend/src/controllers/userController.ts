@@ -56,8 +56,15 @@ const getAllUsers = async (req, res) => {
 
 const addUser = async (req, res) => {
   try {
-    const addedUser = await addUserService(req.body);
-    return res.json({
+    const { isUserExist, addedUser } = await addUserService(req.body);
+    if (isUserExist) {
+      return res.status(400).json({
+        statusCode: 400,
+        status: 'Validation error',
+        message: 'user with this email is already exist.',
+      });
+    }
+    return res.status(200).json({
       statusCode: 200,
       status: 'success',
       message: 'user added successfully.',
