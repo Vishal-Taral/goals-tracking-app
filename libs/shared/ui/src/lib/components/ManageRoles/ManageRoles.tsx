@@ -19,10 +19,16 @@ export interface ManageRoles {
 
 export function ManageRoles({ tableData }: ManageRoles) {
   const { data: rolesList, refetch } = useGetRoles();
-
   const [openUpdatePopup, setOpenUpdatePopup] = useState(false);
   const [updateRoleId, setUpdateRoleId] = useState(null);
   const [prefilledInputData, setPrefilledInputData] = useState();
+  const [openDeletePopup, setOpenDeletePopup] = useState(false);
+  const [deleteRoleId, setDeleteRoleId] = useState<any>(null);
+  const [openCreatePopup, setOpenCreatePopup] = useState(false);
+  const handleOpenCreatePopup = () => setOpenCreatePopup(true);
+  const [searchID, setSearchID] = useState('');
+  const [searchResultDisplay, setSearchResultDisplay] = useState(false);
+
   const updatePopupOpenHandler = (index: number, data: any) => {
     setOpenUpdatePopup(true);
     setUpdateRoleId(data.roleId);
@@ -33,8 +39,6 @@ export function ManageRoles({ tableData }: ManageRoles) {
     refetch();
   };
 
-  const [openDeletePopup, setOpenDeletePopup] = useState(false);
-  const [deleteRoleId, setDeleteRoleId] = useState<any>(null);
   const deletePopupOpenHandler = (index: number, data: any) => {
     setOpenDeletePopup(true);
     setDeleteRoleId(data.roleId);
@@ -44,15 +48,12 @@ export function ManageRoles({ tableData }: ManageRoles) {
     setOpenDeletePopup(false);
     refetch();
   };
-  const [openCreatePopup, setOpenCreatePopup] = useState(false);
-  const handleOpenCreatePopup = () => setOpenCreatePopup(true);
+  
   const handleCloseCreatePopup = () => {
     setOpenCreatePopup(false);
     refetch();
   };
 
-  const [searchID, setSearchID] = useState('');
-  const [searchResultDisplay, setSearchResultDisplay] = useState(false);
   const { data: searchResponse, refetch: refetchSearch } =
     useGetRoleByID(searchID);
 
@@ -66,6 +67,18 @@ export function ManageRoles({ tableData }: ManageRoles) {
     console.log('searchResponse', searchResponse);
     setSearchResultDisplay(true);
   };
+
+  const cancelUpdateOperation = () => {
+    setOpenUpdatePopup(false);
+  }
+
+  const cancelCreateOperation = () => {
+    setOpenCreatePopup(false);
+  }
+
+  const cancelDeleteOperation = () => {
+    setOpenDeletePopup(false);
+  }
 
   return (
     <div className={styles.container}>
@@ -147,11 +160,12 @@ export function ManageRoles({ tableData }: ManageRoles) {
           updateRoleId={updateRoleId}
           prefilledInputData={prefilledInputData}
           rolesList={rolesList}
+          cancelUpdateOperation={cancelUpdateOperation}
         />
       )}
 
       {openCreatePopup && (
-        <AddRole open={true} handleClose={handleCloseCreatePopup} rolesList={rolesList}/>
+        <AddRole open={true} handleClose={handleCloseCreatePopup} rolesList={rolesList} cancelCreateOperation={cancelCreateOperation}/>
       )}
 
       {openDeletePopup && (
@@ -160,6 +174,7 @@ export function ManageRoles({ tableData }: ManageRoles) {
           handleClose={handleCloseDeletePopup}
           deleteRoleId={deleteRoleId}
           rolesList={rolesList}
+          cancelDeleteOperation={cancelDeleteOperation}
         />
       )}
     </div>

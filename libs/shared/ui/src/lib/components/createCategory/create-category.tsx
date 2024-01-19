@@ -60,7 +60,7 @@ export function CreateCategory({ open, handleClose, categoriesList, cancelCrateO
                       },
                     })}
                   />
-                  {errors.categoryName && <p className={styles.error} style={{ color: 'red' }}>{errors.categoryName.message}</p>}
+                  {errors.categoryName && <p className={styles.error}>{errors.categoryName.message}</p>}
                 </div>
               </div>
 
