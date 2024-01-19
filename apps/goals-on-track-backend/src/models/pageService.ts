@@ -35,12 +35,12 @@ export interface SearchUserQueryInterface {
 }
 
 export interface SearchRoleQueryInterface {
-  roleName: string;
-  roleDescription: string;
+  name: string;
+  description: string;
 }
 
 export interface CategoryQueryInterface {
-  categoryName: string;
+  name: string;
 }
 
 export class SearchUser extends PageService {
@@ -66,15 +66,15 @@ export class SearchUser extends PageService {
 
 export class SearchRole extends PageService {
   static createWhereQuery(params: SearchRoleQueryInterface) {
-    const { roleName, roleDescription } = params;
+    const { name, description } = params;
     const where: any = {};
 
-    if (roleName) {
-      where.roleName = ILike(`%${roleName}%`);
+    if (name) {
+      where.name = ILike(`%${name}%`);
     }
 
-    if (roleDescription) {
-      where.roleDescription = ILike(`%${roleDescription}%`);
+    if (description) {
+      where.description = ILike(`%${description}%`);
     }
 
     return where;
@@ -83,11 +83,11 @@ export class SearchRole extends PageService {
 
 export class SearchCategory extends PageService {
   static createWhereQuery(params: CategoryQueryInterface) {
-    const { categoryName } = params;
+    const { name } = params;
     const where: any = {};
 
-    if (categoryName) {
-      where.categoryName = ILike(`%${categoryName}%`);
+    if (name) {
+      where.name = ILike(`%${name}%`);
     }
 
     return where;
