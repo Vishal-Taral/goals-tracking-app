@@ -4,6 +4,8 @@
 
         .header_and_user_detail_section{
             width: 100%;
+            display: flex;
+            flex-direction: row;
         }
     }
 }

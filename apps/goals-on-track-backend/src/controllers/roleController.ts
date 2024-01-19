@@ -1,4 +1,6 @@
+import { validate } from 'class-validator';
 import { RoleDto } from '../dto/roleDto';
+import { RoleQuery } from '../models/genricClass';
 import {
   addRoleService,
   getRoleByIdService,
@@ -6,18 +8,49 @@ import {
   removeRoleService,
   updateRoleService,
 } from '../services/rollService';
+import invalidParameters from '../utils/invalidParams';
 
 const getAllRoles = async (req, res) => {
   try {
-    const roles = await listOfRoleService();
+    const expectedParams = [
+      'page',
+      'pageSize',
+      'roleDescription',
+      'roleName',
+      'sortBy',
+      'sortOrder',
+    ];
+    const invalidQuery = invalidParameters(req.query, expectedParams);
+    if (!invalidQuery?.isValid) {
+      return res.status(400).json({ error: 'Bad request' });
+    }
+    const roleQuery = new RoleQuery(req.query);
+    const validationErrors = await validate(roleQuery, {
+      validationError: { target: false },
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    });
+    if (validationErrors?.length > 0) {
+      return res
+        .status(400)
+        .json({ error: 'Validation Error', details: validationErrors });
+    }
+    const { roles, roleCount } = await listOfRoleService(roleQuery);
+    const totalPages = Math.ceil(roleCount / roleQuery.pageSize);
     return res.json({
       statusCode: 200,
       status: 'success',
-      message: 'roles fetched successfully.',
+      message: roleCount
+        ? 'role list fetched successfully.'
+        : 'no role is found',
+      totalCount: roleCount,
+      totalPages,
+      currentPage: roleQuery.page,
       data: RoleDto.toDto(roles),
     });
   } catch (error) {
-    throw new error();
+    console.log(error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
@@ -63,7 +96,6 @@ const updateRole = async (req, res) => {
       return res.status(404).json({ error: 'Role not found' });
     }
 
-    // Save the updated user
     return res.json({
       statusCode: 200,
       status: 'success',

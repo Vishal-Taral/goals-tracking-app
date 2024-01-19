@@ -77,7 +77,7 @@ export function Header(props: HeaderProps) {
             >
               {userAuthorization?.response?.firstName[0]}
             </h1>
-            <h1 className={styles.userName} style={{ color: 'white' }}>
+            <h1 style={{color: 'white'}}>
               {userAuthorization?.response?.firstName}
             </h1>
           </div>

@@ -1,4 +1,5 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
+import bcrypt from 'bcrypt';
 
 export class SeedData1701843207086 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -50,6 +51,8 @@ export class SeedData1701843207086 implements MigrationInterface {
     );
 
     if (!adminUserExists.length) {
+      const salt = bcrypt.genSaltSync(10);
+      const hash = bcrypt.hashSync('admin@1494', salt);
       await queryRunner.query(
         'INSERT INTO "user" (user_id, first_name, last_name, email, password, mobile_number, gender, role_id, created_at, created_by, updated_at, updated_by) VALUES ($1, $2, $3, $4, $5, $6, $7,$8, $9, $10, $11, $12)',
         [
@@ -57,7 +60,7 @@ export class SeedData1701843207086 implements MigrationInterface {
           'Hrishikesh',
           'Gore',
           'hrishikesh.gore@polyglots.io',
-          'admin@1494',
+          hash,
           '9158551076',
           'Male',
           'b9063d46-98cf-11ee-8263-04e56e7607c1', // Use the actual role ID here

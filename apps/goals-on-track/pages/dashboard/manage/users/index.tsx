@@ -1,4 +1,4 @@
-import { ErrorHandler } from '@goal-tracker/ui';
+import { ErrorHandler, FilterContainer } from '@goal-tracker/ui';
 import styles from './index.module.scss';
 import { useGetUsers } from '@goal-tracker/data-access';
 import PrivateLayout from 'apps/goals-on-track/component/common/privateLayout/private-layout';
@@ -31,6 +31,7 @@ export function Users(props: UsersProps) {
       <PrivateLayout>
         <div className={styles.dashboard_page_container}>
           <div className={styles.header_and_user_detail_section}>
+            <FilterContainer />
             <ErrorHandler>
               <ManageUsers tableData={users} />
             </ErrorHandler>
