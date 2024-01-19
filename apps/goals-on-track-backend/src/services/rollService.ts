@@ -1,4 +1,5 @@
 import { Role } from '../entities/role';
+import { PageService, SearchRole } from '../models/pageService';
 
 const removeRoleService = async (roleId: string) => {
   try {
@@ -36,12 +37,23 @@ const getRoleByIdService = async (roleId: string) => {
   }
 };
 
-const listOfRoleService = async () => {
+const listOfRoleService = async (roleQuery) => {
   try {
-    const roles = await Role.find();
-    return roles;
+    const { roleName, roleDescription } = roleQuery;
+    const where: any = SearchRole.createWhereQuery({
+      roleName,
+      roleDescription,
+    });
+
+    const roles = await PageService.paginate(
+      Role.getRepository(),
+      roleQuery,
+      where
+    );
+    return { roles: roles[0], roleCount: roles[1] };
   } catch (error) {
     console.log(error);
+    throw error;
   }
 };
 

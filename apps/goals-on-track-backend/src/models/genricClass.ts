@@ -6,7 +6,6 @@ import {
   IsOptional,
   IsPositive,
   IsString,
-  validate,
 } from 'class-validator';
 
 export enum SortOrder {
@@ -57,5 +56,40 @@ export class UserQuery extends GenericFilter {
       (this.page = parseInt(userQuery.page)),
       (this.pageSize = parseInt(userQuery.pageSize)),
       (this.sortOrder = userQuery.sortOrder);
+  }
+}
+
+export class RoleQuery extends GenericFilter {
+  @IsOptional()
+  @IsString({ message: 'name must be a string' })
+  public name: string;
+
+  @IsOptional()
+  @IsString({ message: 'description must be a string' })
+  public description: string;
+
+  constructor(roleQuery: any) {
+    super();
+    (this.orderBy = roleQuery.sortBy),
+      (this.page = parseInt(roleQuery.page)),
+      (this.pageSize = parseInt(roleQuery.pageSize)),
+      (this.sortOrder = roleQuery.sortOrder),
+      (this.name = roleQuery.roleName),
+      (this.description = roleQuery.roleDescription);
+  }
+}
+
+export class CategoryQuery extends GenericFilter {
+  @IsOptional()
+  @IsString({ message: 'Category must be a string' })
+  public name: string;
+
+  constructor(categoryQuery: any) {
+    super();
+    (this.orderBy = categoryQuery.sortBy),
+      (this.page = parseInt(categoryQuery.page)),
+      (this.pageSize = parseInt(categoryQuery.pageSize)),
+      (this.sortOrder = categoryQuery.sortOrder),
+      (this.name = categoryQuery.categoryName);
   }
 }
