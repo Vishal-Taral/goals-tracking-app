@@ -77,6 +77,18 @@ export function ManageUsers({ tableData } : ManageCategories) {
     setSearchResultDisplay(true)
 
   };
+
+  const cancelUpdateOperation = () => {
+    setOpenUpdatePopup(false);
+  }
+
+  const cancelCreateOperation = () => {
+    setOpenCreatePopup(false);
+  }
+
+  const cancelDeleteOperation = () => {
+    setOpenDeletePopup(false);
+  }
   return (
     <div className={styles.container}>
       <div className={styles.users}>
@@ -155,11 +167,12 @@ export function ManageUsers({ tableData } : ManageCategories) {
       </div>
       {openUpdatePopup && (
         <UpdateUser
-        open={true}
-        handleClose={handleCloseUpdatePopup}
-        prefilledInputData={prefilledInputData}
-        userId={updateUserId}
-        roles={roles}
+          open={true}
+          handleClose={handleCloseUpdatePopup}
+          prefilledInputData={prefilledInputData}
+          userId={updateUserId}
+          roles={roles}
+          cancelUpdateOperation={cancelUpdateOperation}
         />
       )}
       {openDeletePopup && (
@@ -167,6 +180,7 @@ export function ManageUsers({ tableData } : ManageCategories) {
         open={true}
         handleClose={handleCloseDeletePopup}
         deleteUserId={deleteUserId}
+        cancelDeleteOperation={cancelDeleteOperation}
       />
       )}
 
@@ -175,6 +189,7 @@ export function ManageUsers({ tableData } : ManageCategories) {
           open={true}
           handleClose={handleCloseCreatePopup}
           roles={roles}
+          cancelCreateOperation={cancelCreateOperation}
         />
       )}
     </div>

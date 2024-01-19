@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useForm, SubmitHandler, SubmitErrorHandler } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import styles from './update-category.module.scss';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -28,19 +28,19 @@ export function UpdateCategory({
 }: UpdateCategoryProps) {
   const [categoryName, setCategoryName] = useState('');
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    reset,
-    formState: { errors },
-  } = useForm<FormInput>();
-
-  const updateCategory = usePutUpdateCategory({
-    categoryId: selctedId,
-    categoryName: categoryName,
-    success: handleClose,
+  const { register, handleSubmit, setValue, watch, getValues, formState: { errors } } = useForm<FormInput>({
+    defaultValues : {
+      categoryName :''
+    }
   });
+
+  const obj = {
+    categoryId: selctedId,
+    categoryName: watch('categoryName'),
+    success: handleClose,
+  }
+
+  const updateCategory = usePutUpdateCategory(obj);
 
   useEffect(() => {
     const selectedCategory = categoriesList?.data?.find(
@@ -54,19 +54,8 @@ export function UpdateCategory({
   }, [categoriesList, selctedId, setValue]);
 
   const handleUpdate: SubmitHandler<FormInput> = (data) => {
-    try {
       updateCategory.mutate();
-      console.log('Category updated successfully');
-      reset();
-    } catch (error) {
-      console.error('Error updating category:', error);
-    }
   };
-
-  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setCategoryName(e.target.value);
-  //   trigger('categoryName'); // Trigger validation when input value changes
-  // };
 
   return (
     <div>
@@ -85,7 +74,7 @@ export function UpdateCategory({
               <div>
                 <div className={styles.label_and_inputs}>
                   <div className={styles.field_name}>
-                    <label htmlFor="name">Category Name</label>
+                    <label htmlFor="name">Category Name*</label>
                   </div>
                   <div>
                     <input
@@ -97,23 +86,14 @@ export function UpdateCategory({
                         validate: (value) => {
                           const lowerCaseValue = value.toLowerCase();
                           return (
-                            !categoriesList?.data?.some(
-                              (category: any) =>
-                                category.name.toLowerCase() === lowerCaseValue
-                            ) || 'Category already exists'
+                            !categoriesList?.data?.some((category: any) => category.name.toLowerCase() === lowerCaseValue) || 'Category already exists'
                           );
-                        },
-                      })}
-                      value={categoryName}
-                      onChange={(e) => {
-                        setCategoryName(e.target.value);
-                      }}
+                        }
+                      } 
+                      )}
+                      defaultValue={getValues("categoryName")}
                     />
-                    {errors.categoryName && (
-                      <p className={styles.error} style={{ color: 'red' }}>
-                        {errors.categoryName.message}
-                      </p>
-                    )}
+                    {errors.categoryName && <p className={styles.error}>{errors.categoryName.message}</p>}
                   </div>
                 </div>
 
@@ -139,3 +119,4 @@ export function UpdateCategory({
 }
 
 export default UpdateCategory;
+

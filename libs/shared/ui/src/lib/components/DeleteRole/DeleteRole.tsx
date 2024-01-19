@@ -12,9 +12,10 @@ export interface DeleteRoleProps {
   handleClose: () => void;
   deleteRoleId: any; 
   rolesList:any;
+  cancelDeleteOperation: () => void;
 }
 
-export function DeleteRole({ open, handleClose, deleteRoleId, rolesList }: DeleteRoleProps) {
+export function DeleteRole({ open, handleClose, deleteRoleId, rolesList, cancelDeleteOperation }: DeleteRoleProps) {
 
   const role = rolesList?.data?.find((category : any) => category.roleId === deleteRoleId);
   const roleName = role ? role.name : '';
@@ -28,7 +29,7 @@ export function DeleteRole({ open, handleClose, deleteRoleId, rolesList }: Delet
     <div>
       <Modal
         open={open}
-        onClose={() => handleClose()}
+        onClose={cancelDeleteOperation}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -56,7 +57,7 @@ export function DeleteRole({ open, handleClose, deleteRoleId, rolesList }: Delet
             <div className={styles.delete_btn}>
               <Button
                 variant="contained"
-                onClick={() => handleClose()}
+                onClick={cancelDeleteOperation}
                 className={styles.cancel_button}
               >
                 Cancel
