@@ -39,10 +39,10 @@ const getRoleByIdService = async (roleId: string) => {
 
 const listOfRoleService = async (roleQuery) => {
   try {
-    const { roleName, roleDescription } = roleQuery;
+    const { name, description } = roleQuery;
     const where: any = SearchRole.createWhereQuery({
-      roleName,
-      roleDescription,
+      name,
+      description,
     });
 
     const roles = await PageService.paginate(
