@@ -39,9 +39,9 @@ const getCategoryByIdService = async (categoryId: string) => {
 
 const listOfCategoryService = async (categoryQuery) => {
   try {
-    const { categoryName } = categoryQuery;
+    const { name } = categoryQuery;
     const where: any = SearchCategory.createWhereQuery({
-      categoryName,
+      name,
     });
     const categories = await PageService.paginate(
       Category.getRepository(),

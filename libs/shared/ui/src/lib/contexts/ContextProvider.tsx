@@ -4,18 +4,11 @@ import {QueryParamsObj} from '@goal-tracker/data-access'
 
 const ContextProvider = (props: any) => {
     const [manage, setManage] = useState('');
-    
-    const [queryParamsObj , setQueryParamsObj] = useState<QueryParamsObj>({
-      page : 2,
-      pageSize : 4,
-      sortBy : 'firstName',
-      sortOrder : 'asc'
-    });
-
-    
+    const [pageNumber, setPageNumber] = useState(1);
+    const [pageSize, setPageSize] = useState(1)
 
     return (
-    <AppContext.Provider value={{manage, setManage , queryParamsObj , setQueryParamsObj}}>
+    <AppContext.Provider value={{manage, setManage, pageNumber, setPageNumber,pageSize, setPageSize}}>
       {props.children}
     </AppContext.Provider>
   )

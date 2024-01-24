@@ -3,20 +3,23 @@ import styles from './ManageUsers.module.scss';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-import { useState , useContext , useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import CreateUsers from '../CreateUsers/CreateUsers';
 import DeleteUser from '../DeleteUser/DeleteUser';
-import { useGetUserByID, useGetUsers , useGetRoles , InterfaceForContext } from '@goal-tracker/data-access';
+import {
+  useGetUserByID,
+  useGetUsers,
+} from '@goal-tracker/data-access';
 import UpdateUser from '../UpdateUser/UpdateUser';
 import PageNumberContainer from '../PageNumberContainer/PageNumberContainer';
 import AppContext from '../../contexts/AppContext';
 
 /* eslint-disable-next-line */
 export interface ManageCategories {
-  tableData : any;
+  tableData: any;
 }
 
-export function ManageUsers({ tableData } : ManageCategories) {
+export function ManageUsers({ tableData }: ManageCategories) {
   const [updateUserId, setUpdateUserId] = useState(null);
   const [prefilledInputData, setPrefilledInputData] = useState();
   const [openUpdatePopup, setOpenUpdatePopup] = useState(false);
@@ -26,46 +29,43 @@ export function ManageUsers({ tableData } : ManageCategories) {
   const [searchResultDisplay, setSearchResultDisplay] = useState(false);
   const [openCreatePopup, setOpenCreatePopup] = useState(false);
 
-  const { data: roles } = useGetRoles();  
-  const { data: searchResponse, refetch: refetchSearch } = useGetUserByID(searchID);
+  const context = useContext(AppContext);
+  const [entriesPerPage, setEntriesPerPage] = useState(5);
 
-  const context = useContext<InterfaceForContext>(AppContext);
-  console.log("context",context.queryParamsObj);
-  
-  const { data: usersList , refetch } = useGetUsers(context.queryParamsObj);
+  const { data: usersList, refetch } = useGetUsers(
+    context.pageNumber,
+    entriesPerPage
+  );
+  const { data: searchResponse, refetch: refetchSearch } =
+    useGetUserByID(searchID);
 
-  useEffect(() => {
-    refetch();
-  }, [context.queryParamsObj.sortBy, context.queryParamsObj.sortOrder]);
+  useEffect(()=>{refetch()},[context.pageNumber])
+
   const handleCloseCreatePopup = () => {
     setOpenCreatePopup(false);
     refetch();
-  }
+  };
 
   const handleCreateUser = () => {
-    // setSelectedRowIndex(index);
     setOpenCreatePopup(true);
   };
   const handleCloseDeletePopup = () => {
     setOpenDeletePopup(false);
     refetch();
   };
- 
+
   const deletePopupOpenHandler = (index: number, data: any) => {
-    console.log('data delete', data)
     setOpenDeletePopup(true);
     setDeleteUserId(data?.userId);
-    console.log('data.id',data)
   };
 
   const handleCloseUpdatePopup = () => {
     setOpenUpdatePopup(false);
     refetch();
-  }
+  };
   const updatePopupOpenHandler = (index: number, data: any) => {
     setOpenUpdatePopup(true);
     setUpdateUserId(data?.userId);
-    console.log("data?.userId",data?.userId)
     setPrefilledInputData(data);
   };
 
@@ -74,11 +74,15 @@ export function ManageUsers({ tableData } : ManageCategories) {
   };
 
   const searchHandler = () => {
-    console.log('searchID', searchID);
     refetchSearch();
-    console.log('searchResponse', searchResponse);
-    setSearchResultDisplay(true)
+    setSearchResultDisplay(true);
+  };
 
+  const entriesPerPageChangeHandler = (e) => {
+    setEntriesPerPage(e.target.value);
+  };
+  const entriesPerPageClickHandler = () => {
+    refetch();
   };
 
   const cancelUpdateOperation = () => {
@@ -95,7 +99,9 @@ export function ManageUsers({ tableData } : ManageCategories) {
   return (
     <div className={styles.container}>
       <div className={styles.users}>
-        <Button variant="outlined" onClick={() => handleCreateUser()}>Add User</Button>
+        <Button variant="outlined" onClick={() => handleCreateUser()}>
+          Add User
+        </Button>
       </div>
 
       <div className={styles.searchBlock}>
@@ -106,6 +112,23 @@ export function ManageUsers({ tableData } : ManageCategories) {
         />
         <button className={styles.searchButton} onClick={searchHandler}>
           Search
+        </button>
+      </div>
+      <div className={styles.entriesPerPageBlock}>
+        <div className={styles.entriesPerPage}>Entries per page-</div>
+        <input
+          className={styles.entriesPerPageInput}
+          onChange={entriesPerPageChangeHandler}
+          value={entriesPerPage}
+          type="number"
+          min={1}
+          max={10}
+        />
+        <button
+          onClick={entriesPerPageClickHandler}
+          className={styles.entriesButton}
+        >
+          Click
         </button>
       </div>
       {searchResultDisplay ? (
@@ -120,7 +143,12 @@ export function ManageUsers({ tableData } : ManageCategories) {
           <div>Role Name- {searchResponse?.data?.role.name}</div>
           <div>Role Description- {searchResponse?.data?.role.description}</div>
 
-          <button className={styles.searchResultCloseButton} onClick={()=>setSearchResultDisplay(false)}>Close</button>
+          <button
+            className={styles.searchResultCloseButton}
+            onClick={() => setSearchResultDisplay(false)}
+          >
+            Close
+          </button>
         </div>
       ) : (
         ''
@@ -166,7 +194,7 @@ export function ManageUsers({ tableData } : ManageCategories) {
             ))}
           </tbody>
         </table>
-        <PageNumberContainer />
+        <PageNumberContainer totalPages={usersList?.totalPages} />
       </div>
       {openUpdatePopup && (
         <UpdateUser
@@ -189,7 +217,7 @@ export function ManageUsers({ tableData } : ManageCategories) {
       )}
 
       {openCreatePopup && (
-        <CreateUsers 
+        <CreateUsers
           open={true}
           handleClose={handleCloseCreatePopup}
           roles={roles}
