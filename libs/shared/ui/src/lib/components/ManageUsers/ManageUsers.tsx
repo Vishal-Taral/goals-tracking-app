@@ -34,12 +34,14 @@ export function ManageUsers({ tableData }: ManageCategories) {
 
   const { data: usersList, refetch } = useGetUsers(
     context.pageNumber,
-    entriesPerPage
+    entriesPerPage,
+    context.sortBy,
+    context.sortOrder
   );
   const { data: searchResponse, refetch: refetchSearch } =
     useGetUserByID(searchID);
 
-  useEffect(()=>{refetch()},[context.pageNumber])
+  useEffect(()=>{refetch()},[context.pageNumber,context.sortBy,context.sortOrder])
 
   const handleCloseCreatePopup = () => {
     setOpenCreatePopup(false);

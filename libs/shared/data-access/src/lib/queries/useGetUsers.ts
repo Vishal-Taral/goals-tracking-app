@@ -1,29 +1,21 @@
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '../api-client';
 import { apiUrlObject } from '../api-end-points';
-import {QueryParamsObj} from '@goal-tracker/data-access'
+import { QueryParamsObj } from '@goal-tracker/data-access';
 
-const getAllUsers = async (page,pageSize): Promise<any> => {
-  const response = await apiClient.get(`${apiUrlObject.getAllUsers}?page=${page}&pageSize=${pageSize}`);
-  console.log('in api page check',page,pageSize)
-  // const response = await apiClient.get(`http://192.168.1.115:3333/api/users?page=${page}&pageSize=${pageSize}`);
-  // const response = await apiClient.get(`http://192.168.1.115:3333/api/users`);
+const getAllUsers = async (page, pageSize, sortBy, sortOrder): Promise<any> => {
+  const response = await apiClient.get(
+    `${apiUrlObject.getAllUsers}?page=${page}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}`
+  );
+  console.log('in api page check', page, pageSize);
   return response.data;
 };
 
-const QUERY_KEY = ['users']; 
+const QUERY_KEY = ['users'];
 
-export const useGetUsers = (page,pageSize) => {
+export const useGetUsers = (page, pageSize, sortBy, sortOrder) => {
   return useQuery<any>({
     queryKey: QUERY_KEY,
-    queryFn: () => getAllUsers(page,pageSize),
-    // onSuccess: pageSize.success()
+    queryFn: () => getAllUsers(page, pageSize, sortBy, sortOrder),
   });
 };
-
-// export const useGetUsers = () => {
-//   return useQuery<any>({
-//     queryKey: QUERY_KEY,
-//     queryFn: () => getAllUsers()
-//   });
-// };
