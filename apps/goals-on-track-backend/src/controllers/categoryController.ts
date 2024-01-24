@@ -1,4 +1,6 @@
+import { validate } from 'class-validator';
 import { CategoryDto } from '../dto/categoryDto';
+import { CategoryQuery } from '../models/genricClass';
 import {
   addCategoryService,
   getCategoryByIdService,
@@ -6,18 +8,50 @@ import {
   removeCategoryService,
   updateCategoryService,
 } from '../services/catagoryService';
+import invalidParameters from '../utils/invalidParams';
 
 const getAllCategories = async (req, res) => {
   try {
-    const category = await listOfCategoryService();
+    const expectedParams = [
+      'page',
+      'pageSize',
+      'categoryName',
+      'sortBy',
+      'sortOrder',
+    ];
+    const invalidQuery = invalidParameters(req.query, expectedParams);
+    if (!invalidQuery?.isValid) {
+      return res.status(400).json({ error: 'Bad request' });
+    }
+    const categoryQuery = new CategoryQuery(req.query);
+    const validationErrors = await validate(categoryQuery, {
+      validationError: { target: false },
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    });
+    if (validationErrors?.length > 0) {
+      return res
+        .status(400)
+        .json({ error: 'Validation Error', details: validationErrors });
+    }
+    const { categories, categoryCount } = await listOfCategoryService(
+      categoryQuery
+    );
+    const totalPages = Math.ceil(categoryCount / categoryQuery.pageSize);
     return res.json({
       statusCode: 200,
       status: 'success',
-      message: 'categories fetched successfully.',
-      data: CategoryDto.toDto(category),
+      message: categoryCount
+        ? 'category list fetched successfully.'
+        : 'no category is found',
+      totalCount: categoryCount,
+      totalPages,
+      currentPage: categoryQuery.page,
+      data: CategoryDto.toDto(categories),
     });
   } catch (error) {
-    throw new error();
+    console.log(error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 

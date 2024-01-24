@@ -1,4 +1,5 @@
 import { Category } from '../entities/category';
+import { PageService, SearchCategory } from '../models/pageService';
 
 const removeCategoryService = async (categoryId: string) => {
   try {
@@ -36,12 +37,21 @@ const getCategoryByIdService = async (categoryId: string) => {
   }
 };
 
-const listOfCategoryService = async () => {
+const listOfCategoryService = async (categoryQuery) => {
   try {
-    const categories = await Category.find();
-    return categories;
+    const { name } = categoryQuery;
+    const where: any = SearchCategory.createWhereQuery({
+      name,
+    });
+    const categories = await PageService.paginate(
+      Category.getRepository(),
+      categoryQuery,
+      where
+    );
+    return { categories: categories[0], categoryCount: categories[1] };
   } catch (error) {
     console.log(error);
+    throw error;
   }
 };
 

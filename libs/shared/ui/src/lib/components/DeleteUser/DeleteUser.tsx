@@ -11,9 +11,10 @@ export interface DeleteUserProps {
   open: boolean;
   handleClose: () => void;
   deleteUserId: number | null; 
+  cancelDeleteOperation: () => void;
 }
 
-export function DeleteUser({ open, handleClose, deleteUserId }: DeleteUserProps) {
+export function DeleteUser({ open, handleClose, deleteUserId, cancelDeleteOperation }: DeleteUserProps) {
 
   console.log('deleteUserId', deleteUserId)
   const deleteUsers = useDeleteUser(deleteUserId , {success : handleClose});
@@ -26,7 +27,7 @@ export function DeleteUser({ open, handleClose, deleteUserId }: DeleteUserProps)
     <div>
       <Modal
         open={open}
-        onClose={() => handleClose()}
+        onClose={cancelDeleteOperation}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -54,7 +55,7 @@ export function DeleteUser({ open, handleClose, deleteUserId }: DeleteUserProps)
             <div className={styles.delete_btn}>
               <Button
                 variant="contained"
-                onClick={() => handleClose()}
+                onClick={cancelDeleteOperation}
                 className={styles.cancel_button}
               >
                 Cancel

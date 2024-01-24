@@ -34,6 +34,15 @@ export interface SearchUserQueryInterface {
   email: string;
 }
 
+export interface SearchRoleQueryInterface {
+  name: string;
+  description: string;
+}
+
+export interface CategoryQueryInterface {
+  name: string;
+}
+
 export class SearchUser extends PageService {
   static createWhereQuery(params: SearchUserQueryInterface) {
     const { firstName, lastName, email } = params;
@@ -49,6 +58,36 @@ export class SearchUser extends PageService {
 
     if (email) {
       where.email = ILike(`%${email}%`);
+    }
+
+    return where;
+  }
+}
+
+export class SearchRole extends PageService {
+  static createWhereQuery(params: SearchRoleQueryInterface) {
+    const { name, description } = params;
+    const where: any = {};
+
+    if (name) {
+      where.name = ILike(`%${name}%`);
+    }
+
+    if (description) {
+      where.description = ILike(`%${description}%`);
+    }
+
+    return where;
+  }
+}
+
+export class SearchCategory extends PageService {
+  static createWhereQuery(params: CategoryQueryInterface) {
+    const { name } = params;
+    const where: any = {};
+
+    if (name) {
+      where.name = ILike(`%${name}%`);
     }
 
     return where;

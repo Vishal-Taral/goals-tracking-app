@@ -85,6 +85,17 @@ export function ManageUsers({ tableData }: ManageCategories) {
     refetch();
   };
 
+  const cancelUpdateOperation = () => {
+    setOpenUpdatePopup(false);
+  }
+
+  const cancelCreateOperation = () => {
+    setOpenCreatePopup(false);
+  }
+
+  const cancelDeleteOperation = () => {
+    setOpenDeletePopup(false);
+  }
   return (
     <div className={styles.container}>
       <div className={styles.users}>
@@ -192,14 +203,16 @@ export function ManageUsers({ tableData }: ManageCategories) {
           prefilledInputData={prefilledInputData}
           userId={updateUserId}
           roles={roles}
+          cancelUpdateOperation={cancelUpdateOperation}
         />
       )}
       {openDeletePopup && (
         <DeleteUser
-          open={true}
-          handleClose={handleCloseDeletePopup}
-          deleteUserId={deleteUserId}
-        />
+        open={true}
+        handleClose={handleCloseDeletePopup}
+        deleteUserId={deleteUserId}
+        cancelDeleteOperation={cancelDeleteOperation}
+      />
       )}
 
       {openCreatePopup && (
@@ -207,6 +220,7 @@ export function ManageUsers({ tableData }: ManageCategories) {
           open={true}
           handleClose={handleCloseCreatePopup}
           roles={roles}
+          cancelCreateOperation={cancelCreateOperation}
         />
       )}
     </div>

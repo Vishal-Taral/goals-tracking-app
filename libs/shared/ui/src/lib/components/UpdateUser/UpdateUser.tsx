@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import { usePutUpdateUser } from '@goal-tracker/data-access';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
 export interface UpdateUserProps {
   open: boolean;
@@ -14,87 +15,47 @@ export interface UpdateUserProps {
   prefilledInputData: any;
   userId: any;
   roles: any;
+  cancelUpdateOperation: () => void;
 }
 
-export function UpdateUser({ open, handleClose, prefilledInputData, userId, roles }: UpdateUserProps) {
-  const [selectedRoleId, setSelectedRoleId] = useState<string>(prefilledInputData?.role?.roleId || ""); 
+export function UpdateUser({ open, handleClose, prefilledInputData, userId, roles, cancelUpdateOperation }: UpdateUserProps) {
   const createUser = usePutUpdateUser({ success: handleClose });
+
+  const { register, handleSubmit, watch, setValue, control, formState: { errors } } = useForm({
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      mobile_number: "",
+      role: "", 
+      gender: "",
+      password: ""
+    }
+  });
 
   console.log("prefilledInputData-->", prefilledInputData);
 
-
-  const [formData, setFormData] = useState<any>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    mobile_number: "",
-    role: selectedRoleId,
-    gender: "",
-    password: ""
-  });
-  
-
-  const handleInputChange = (e: any) => {
-    const { name, value, type } = e.target;
-
-    if (type === 'radio') {
-      if (e.target.checked) {
-        setFormData((prevFormData: any) => ({
-          ...prevFormData,
-          [name]: value,
-        }));
-      }
-    } else {
-      setFormData((prevFormData: any) => ({
-        ...prevFormData,
-        [name]: value,
-      }));
-    }
+  const handleUpdateUser: SubmitHandler<any> = (data: any) => {
+    console.log(data)
+    createUser.mutate({ userId, updatedUserData: data });
   };
-
-  const handleUpdateUser = (e: any) => {
-    e.preventDefault();
-    console.log(formData)
-    createUser.mutate({ userId, updatedUserData: formData});
-  };
-
-  const renderInputField = (label: string, name: string, type: string) => (
-    <div className={styles.label_and_inputs}>
-      <div className={styles.field_name}>
-        <label htmlFor={name}>{label}</label>
-      </div>
-      <div>
-        <input
-          type={type}
-          placeholder={`Enter the ${name}`}
-          className={styles.input_fields}
-          name={name}
-          value={formData[name]}
-          onChange={handleInputChange}
-        />
-      </div>
-    </div>
-  );
 
   useEffect(() => {
     if (prefilledInputData) {
-      // setSelectedRoleId(prefilledInputData.role?.id);
-      setFormData({
-        firstName: prefilledInputData?.firstName,
-        lastName: prefilledInputData?.lastName,
-        email: prefilledInputData.email,
-        mobile_number: prefilledInputData.mobile_number,
-        role: prefilledInputData.role?.roleId,
-        gender: prefilledInputData.gender,
-      });
+      setValue('firstName', prefilledInputData?.firstName || '');
+      setValue('lastName', prefilledInputData?.lastName || '');
+      setValue('email', prefilledInputData?.email || '');
+      setValue('mobile_number', prefilledInputData?.mobile_number || '');
+      setValue('role', prefilledInputData?.role?.roleId || ''); 
+      setValue('gender', prefilledInputData?.gender || '');
     }
-  }, [prefilledInputData]);
+  }, [prefilledInputData, setValue]);
 
   return (
     <div>
       <Modal
         open={open}
-        onClose={handleClose}
+        onClose={cancelUpdateOperation}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -103,50 +64,162 @@ export function UpdateUser({ open, handleClose, prefilledInputData, userId, role
             <div className={styles.heading}>Update User</div>
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <form onSubmit={handleUpdateUser}>
+            <form onSubmit={handleSubmit(handleUpdateUser)}>
               <div className={styles.multiple_inputs}>
-                {renderInputField("User's First Name", "firstName", "text")}
-                {renderInputField("User's Last Name", "lastName", "text")}
+              <div className={styles.label_and_inputs}>
+                  <div className={styles.field_name}>
+                    <label htmlFor="firstName">User's First Name *</label>
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      placeholder="Enter the First Name"
+                      className={styles.input_fields}
+                      {...register('firstName', { 
+                        required: 'First Name is required',
+                        pattern: {
+                          value: /^[a-zA-Z]+$/,
+                          message: "That's not a valid first name"
+                        },
+                        maxLength: {
+                          value: 15,
+                          message: "first name is too long"
+                       } 
+                      })}
+                    />
+                    {errors.firstName && (
+                      <p className={styles.error}>{errors.firstName.message}</p>
+                    )}
+                  </div>
+                </div>
+                <div className={styles.label_and_inputs}>
+                  <div className={styles.field_name}>
+                    <label htmlFor="lastName">User's Last Name *</label>
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      placeholder="Enter the Last Name"
+                      className={styles.input_fields}
+                      {...register('lastName', { 
+                        required: 'Last Name is required',
+                        pattern: {
+                          value: /^[a-zA-Z]+$/,
+                          message: "That's not a valid last name"
+                        },
+                        maxLength: {
+                          value: 15,
+                          message: "last name is too long"
+                       }  
+                      })}
+                    />
+                    {errors.lastName && (
+                      <p className={styles.error}>{errors.lastName.message}</p>
+                    )}
+                  </div>
+                </div>
               </div>
 
               <div className={styles.multiple_inputs}>
-                {renderInputField("Email", "email", "email")}
-                {renderInputField("User's Mobile No.", "mobile_number", "tel")}
+              <div className={styles.label_and_inputs}>
+                  <div className={styles.field_name}>
+                    <label htmlFor="email">User's Email *</label>
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      placeholder="Enter the Email"
+                      className={styles.input_fields}
+                      {...register('email', { 
+                        required: 'Email is required',
+                        pattern: {
+                          value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                          message: "Invalid email format",
+                        }, 
+                      })}
+                    />
+                    {errors.email && (
+                      <p className={styles.error}>{errors.email.message}</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className={styles.label_and_inputs}>
+                  <div className={styles.field_name}>
+                    <label htmlFor="mobile_number">User's Mobile No. *</label>
+                  </div>
+                  <div>
+                    <input
+                      type="tel"
+                      placeholder="Enter the Mobile No."
+                      className={styles.input_fields}
+                      {...register('mobile_number', { 
+                        required: 'Mobile No. is required',
+                        pattern: {
+                          value: /^(?:\+?91)?[6-9]\d{9}$/,
+                          message: "Invalid mobile number format",
+                        }, 
+                        minLength: {
+                          value: 10,
+                          message: "This number is too short"
+                        }, 
+                        maxLength: {
+                          value: 12,
+                          message: "...And now it's too long"
+                        } 
+                      })}
+                      onInput={(e) => {
+                        const inputElement = e.target as HTMLInputElement;
+                        inputElement.value = inputElement.value.replace(/[^0-9]/g, '');
+                      }}
+                    />
+                    {errors.mobile_number && (
+                      <p className={styles.error}>{errors.mobile_number.message}</p>
+                    )}
+                  </div>
+                </div>
               </div>
 
               <div className={styles.multiple_inputs}>
                 <div className={styles.label_and_inputs}>
                   <div className={styles.field_name}>
-                    <label>User's Role</label>
+                    <label>User's Role *</label>
                   </div>
-                  <Select
-                  defaultValue={prefilledInputData?.role?.id}
-                    value={selectedRoleId}
-                    onChange={(e) => setSelectedRoleId(e.target.value)}
-                    className={styles.select_dropdown}
-                  >
-                    <MenuItem value="">
-                      Select Role
-                    </MenuItem>
-                    {roles?.data?.map((role: any) => (
-                      <MenuItem key={role.roleId} value={role.roleId} >
-                        {role.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
+                  <Controller
+                    name="role"
+                    control={control}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        className={styles.select_dropdown}
+                      >
+                        <MenuItem value="">
+                          Select Role
+                        </MenuItem>
+                        {roles?.data?.map((role: any) => (
+                          <MenuItem key={role.roleId} value={role.roleId}>
+                            {role.name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    )}
+                    rules={{ required: 'Please select a role' }}
+                  />
+                  {errors.role && (
+                    <p className={styles.error}>{errors.role.message}</p>
+                  )}
                 </div>
+
                 <div className={styles.gender}>
                   <div className={styles.field_name}>
-                    <label htmlFor="name">Gender</label>
+                    <label>Gender *</label>
                   </div>
                   <div className={styles.gender_selection_section}>
                     <div className={styles.input_and_label}>
                       <input
                         type="radio"
-                        name="gender"
                         value="Male"
-                        onChange={handleInputChange}
-                        checked={formData.gender === 'Male'}
+                        {...register('gender', { required: 'Please select a gender' })}
                       />
                       <label>Male</label>
                     </div>
@@ -154,25 +227,41 @@ export function UpdateUser({ open, handleClose, prefilledInputData, userId, role
                     <div className={styles.input_and_label}>
                       <input
                         type="radio"
-                        name="gender"
                         value="Female"
-                        onChange={handleInputChange}
-                        checked={formData.gender === 'Female'}
+                        {...register('gender', { required: 'Please select a gender' })}
                       />
                       <label>Female</label>
                     </div>
                   </div>
+                  {errors.gender && (
+                    <p className={styles.error}>{errors.gender.message}</p>
+                  )}
                 </div>
               </div>
 
               <div className={styles.multiple_inputs}>
-                {renderInputField("Password", "password", "password")}
+                <div className={styles.label_and_inputs}>
+                  <div className={styles.field_name}>
+                    <label htmlFor="password">User's Password *</label>
+                  </div>
+                  <div>
+                    <input
+                      type="password"
+                      placeholder="Enter the Password"
+                      className={styles.input_fields}
+                      {...register('password', { required: 'Password is required' })}
+                    />
+                    {errors.password && (
+                      <p className={styles.error}>{errors.password.message}</p>
+                    )}
+                  </div>
+                </div>
               </div>
 
               <div className={styles.update_btn}>
                 <Button
                   variant="contained"
-                  onClick={handleClose}
+                  onClick={cancelUpdateOperation}
                   className={styles.cancel_button}
                 >
                   Cancel
