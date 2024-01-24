@@ -16,12 +16,13 @@ export interface UpdateUserProps {
   userId: any;
   roles: any;
   cancelUpdateOperation: () => void;
+  usersList : any
 }
 
-export function UpdateUser({ open, handleClose, prefilledInputData, userId, roles, cancelUpdateOperation }: UpdateUserProps) {
+export function UpdateUser({ open, handleClose, prefilledInputData, userId, roles, cancelUpdateOperation , usersList}: UpdateUserProps) {
   const createUser = usePutUpdateUser({ success: handleClose });
 
-  const { register, handleSubmit, watch, setValue, control, formState: { errors } } = useForm({
+  const { register, handleSubmit, setError, setValue, control, formState: { errors } } = useForm({
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -37,7 +38,16 @@ export function UpdateUser({ open, handleClose, prefilledInputData, userId, role
 
   const handleUpdateUser: SubmitHandler<any> = (data: any) => {
     console.log(data)
-    createUser.mutate({ userId, updatedUserData: data });
+    const isEmailExist = usersList?.data?.some((user : any) => user.email === data.email);
+    if (isEmailExist) {
+      setError('email', {
+        type: 'manual',
+        message: 'This email is already exists.',
+      });
+      // alert('this user is already exist! ')
+    } else {
+      createUser.mutate({ userId, updatedUserData: data });
+    }
   };
 
   useEffect(() => {

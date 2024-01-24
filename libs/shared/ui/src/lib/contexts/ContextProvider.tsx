@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import AppContext from './AppContext'
+import {QueryParamsObj} from '@goal-tracker/data-access'
 
 const ContextProvider = (props: any) => {
     const [manage, setManage] = useState('');

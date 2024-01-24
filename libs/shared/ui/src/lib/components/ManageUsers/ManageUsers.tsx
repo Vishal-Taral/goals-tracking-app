@@ -204,6 +204,7 @@ export function ManageUsers({ tableData }: ManageCategories) {
           userId={updateUserId}
           roles={roles}
           cancelUpdateOperation={cancelUpdateOperation}
+          usersList={usersList}
         />
       )}
       {openDeletePopup && (
@@ -221,6 +222,7 @@ export function ManageUsers({ tableData }: ManageCategories) {
           handleClose={handleCloseCreatePopup}
           roles={roles}
           cancelCreateOperation={cancelCreateOperation}
+          usersList={usersList}
         />
       )}
     </div>

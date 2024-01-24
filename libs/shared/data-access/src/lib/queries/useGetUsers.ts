@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '../api-client';
 import { apiUrlObject } from '../api-end-points';
+import {QueryParamsObj} from '@goal-tracker/data-access'
 
 const getAllUsers = async (page,pageSize): Promise<any> => {
   const response = await apiClient.get(`${apiUrlObject.getAllUsers}?page=${page}&pageSize=${pageSize}`);
@@ -10,7 +11,7 @@ const getAllUsers = async (page,pageSize): Promise<any> => {
   return response.data;
 };
 
-const QUERY_KEY = ['users'];
+const QUERY_KEY = ['users']; 
 
 export const useGetUsers = (page,pageSize) => {
   return useQuery<any>({
