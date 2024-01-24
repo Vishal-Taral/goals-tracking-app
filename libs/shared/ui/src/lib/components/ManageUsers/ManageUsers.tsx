@@ -9,6 +9,7 @@ import DeleteUser from '../DeleteUser/DeleteUser';
 import {
   useGetUserByID,
   useGetUsers,
+  useGetRoles
 } from '@goal-tracker/data-access';
 import UpdateUser from '../UpdateUser/UpdateUser';
 import PageNumberContainer from '../PageNumberContainer/PageNumberContainer';
@@ -40,6 +41,8 @@ export function ManageUsers({ tableData }: ManageCategories) {
   );
   const { data: searchResponse, refetch: refetchSearch } =
     useGetUserByID(searchID);
+
+    const { data: roles } = useGetRoles();
 
   useEffect(()=>{refetch()},[context.pageNumber,context.sortBy,context.sortOrder])
 
