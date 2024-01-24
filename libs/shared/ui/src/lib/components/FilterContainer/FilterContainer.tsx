@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import AppContext from '../../contexts/AppContext';
 import styles from './FilterContainer.module.scss';
-import {InterfaceForContext} from '@goal-tracker/data-access'
 
 export interface FilterContainerProps {}
 
@@ -9,17 +8,11 @@ export function FilterContainer(props: FilterContainerProps) {
   const context = useContext(AppContext);
 
   const handleSortingChange = (value: string) => {
-    context.setQueryParamsObj((prevParams : any) => ({
-      ...prevParams,
-      sortBy: value,
-    }));
+    context.setSortBy(value);
   };
 
   const handleOrderChange = (value: string) => {
-    context.setQueryParamsObj((prevParams : any) => ({
-      ...prevParams,
-      sortOrder: value,
-    }));
+    context.setSortOrder(value);
   };
 
   return (
@@ -32,7 +25,7 @@ export function FilterContainer(props: FilterContainerProps) {
             type="radio"
             name="sorting"
             value="firstName"
-            checked={context.queryParamsObj.sortBy === 'firstName'}
+            checked={context.sortBy === 'firstName'}
             onChange={() => handleSortingChange('firstName')}
           />
         </div>
@@ -43,7 +36,7 @@ export function FilterContainer(props: FilterContainerProps) {
             type="radio"
             name="sorting"
             value="lastName"
-            checked={context.queryParamsObj.sortBy === 'lastName'}
+            checked={context.sortBy === 'lastName'}
             onChange={() => handleSortingChange('lastName')}
           />
         </div>
@@ -57,7 +50,7 @@ export function FilterContainer(props: FilterContainerProps) {
             type="radio"
             name="order"
             value="asc"
-            checked={context.queryParamsObj.sortOrder === 'asc'}
+            checked={context.sortOrder === 'asc'}
             onChange={() => handleOrderChange('asc')}
           />
         </div>
@@ -68,7 +61,7 @@ export function FilterContainer(props: FilterContainerProps) {
             type="radio"
             name="order"
             value="desc"
-            checked={context.queryParamsObj.sortOrder === 'desc'}
+            checked={context.sortOrder === 'desc'}
             onChange={() => handleOrderChange('desc')}
           />
         </div>
