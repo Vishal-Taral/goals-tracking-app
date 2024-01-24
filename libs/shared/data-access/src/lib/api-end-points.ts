@@ -1,7 +1,9 @@
 const serverUrl = 'http://164.52.214.199:9696/api';
+const firstName = 'v';
+const sortOrder = 'desc';
  
 export const apiUrlObject = {
-    getAllCategories : `${serverUrl}/categories`,
+    getAllCategories : `${serverUrl}/categories?page=${1}&pageSize=${4}&categoryName=&sortOrder=${sortOrder}`,
     updateCategory : `${serverUrl}/updateCategory`,
     addCategory : `${serverUrl}/addCategory`,
     deleteCategory : `${serverUrl}/deleteCategory`,
@@ -14,7 +16,7 @@ export const apiUrlObject = {
     // deleteCategory : 'http://localhost:8000/data',
  
     // getAllRoles : 'http://localhost:8001/data',
-    getAllRoles : `${serverUrl}/roles`,
+    getAllRoles : `${serverUrl}/roles?page=${1}&pageSize=${4}&sortOrder=${sortOrder}`,
     addRole : `${serverUrl}/addRole`,
     deleteRole : `${serverUrl}/deleteRole`,
     updateRole : `${serverUrl}/updateRole`,

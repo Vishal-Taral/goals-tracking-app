@@ -3,4 +3,15 @@
     padding: 1rem;
     border: 1px solid lightgray;
     width: 20%;
+
+    .headings{
+        color: rgb(131, 131, 235);
+        font-weight: 600;
+    }
+
+    .label_and_inputs{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 }

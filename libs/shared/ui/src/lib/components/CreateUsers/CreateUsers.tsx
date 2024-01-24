@@ -14,12 +14,14 @@ export interface UpdateCategoryProps {
   handleClose: () => void;
   roles: any;
   cancelCreateOperation: () => void;
+  usersList: any;
 }
 
-export function CreateUsers({ open, handleClose, roles, cancelCreateOperation }: UpdateCategoryProps) {
+export function CreateUsers({ open, handleClose, roles, cancelCreateOperation , usersList }: UpdateCategoryProps) {
+  console.log("usersList",usersList)
   const createUser = usePostAddUser({ success: handleClose });
 
-  const { register, handleSubmit, watch, control, formState: { errors } } = useForm({
+  const { register, handleSubmit, watch, control, setError, formState: { errors } } = useForm({
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -32,7 +34,17 @@ export function CreateUsers({ open, handleClose, roles, cancelCreateOperation }:
   });
 
   const handleCreateUser: SubmitHandler<any> = (data) => {
-    createUser.mutate(data);
+    console.log(data);    
+    const isEmailExist = usersList?.data?.some((user : any) => user.email === data.email);
+    if (isEmailExist) {
+      setError('email', {
+        type: 'manual',
+        message: 'This email is already exists.',
+      });
+      // alert('this user is already exist! ')
+    } else {
+      createUser.mutate(data);
+    }
   };
 
   return (
@@ -120,7 +132,13 @@ export function CreateUsers({ open, handleClose, roles, cancelCreateOperation }:
                         pattern: {
                           value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                           message: "Invalid email format",
-                        }, 
+                        },
+                        // validate: value => {
+                        //   const isEmailExist = usersList.some((user : any) => user.email === value);
+                        //   if (isEmailExist) {
+                        //     throw new Error('this user is already exist ');
+                        //   }
+                        // },
                       })}
                     />
                     {errors.email && (
@@ -150,7 +168,7 @@ export function CreateUsers({ open, handleClose, roles, cancelCreateOperation }:
                         }, 
                         maxLength: {
                           value: 12,
-                          message: "...And now it's too long"
+                          message: "This number it's too long"
                         } 
                       })}
                       onInput={(e) => {

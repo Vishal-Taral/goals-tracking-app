@@ -1,16 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import styles from './ManageUsers.module.scss';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-import { useState } from 'react';
+import { useState , useContext , useEffect } from 'react';
 import CreateUsers from '../CreateUsers/CreateUsers';
 import DeleteUser from '../DeleteUser/DeleteUser';
-import { useGetUserByID, useGetUsers , useGetRoles } from '@goal-tracker/data-access';
+import { useGetUserByID, useGetUsers , useGetRoles , InterfaceForContext } from '@goal-tracker/data-access';
 import UpdateUser from '../UpdateUser/UpdateUser';
 import PageNumberContainer from '../PageNumberContainer/PageNumberContainer';
+import AppContext from '../../contexts/AppContext';
 
 /* eslint-disable-next-line */
 export interface ManageCategories {
@@ -27,13 +26,17 @@ export function ManageUsers({ tableData } : ManageCategories) {
   const [searchResultDisplay, setSearchResultDisplay] = useState(false);
   const [openCreatePopup, setOpenCreatePopup] = useState(false);
 
-  const { data: roles } = useGetRoles();
-  const { data: usersList , refetch } = useGetUsers();
+  const { data: roles } = useGetRoles();  
   const { data: searchResponse, refetch: refetchSearch } = useGetUserByID(searchID);
 
-  // console.log("usersList" , usersList);
+  const context = useContext<InterfaceForContext>(AppContext);
+  console.log("context",context.queryParamsObj);
   
-  
+  const { data: usersList , refetch } = useGetUsers(context.queryParamsObj);
+
+  useEffect(() => {
+    refetch();
+  }, [context.queryParamsObj.sortBy, context.queryParamsObj.sortOrder]);
   const handleCloseCreatePopup = () => {
     setOpenCreatePopup(false);
     refetch();
@@ -173,6 +176,7 @@ export function ManageUsers({ tableData } : ManageCategories) {
           userId={updateUserId}
           roles={roles}
           cancelUpdateOperation={cancelUpdateOperation}
+          usersList={usersList}
         />
       )}
       {openDeletePopup && (
@@ -190,6 +194,7 @@ export function ManageUsers({ tableData } : ManageCategories) {
           handleClose={handleCloseCreatePopup}
           roles={roles}
           cancelCreateOperation={cancelCreateOperation}
+          usersList={usersList}
         />
       )}
     </div>
