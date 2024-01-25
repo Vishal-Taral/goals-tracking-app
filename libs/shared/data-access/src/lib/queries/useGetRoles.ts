@@ -3,24 +3,16 @@ import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '../api-client';
 import { apiUrlObject } from '../api-end-points';
 
-// const getAllRoles = async (page, pageSize): Promise<any> => {
-  // const response = await apiClient.get(`${apiUrlObject.getAllRoles}?page=${page}&pageSize=${pageSize}`);
-  // return response.data;
-  const getAllRoles = async (): Promise<any> => {
-  const response = await apiClient.get(`${apiUrlObject.getAllRoles}`);
+const getAllRoles = async (page, pageSize, sortBy, sortOrder): Promise<any> => {
+  const response = await apiClient.get(`${apiUrlObject.getAllRoles}?page=${page}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}`);
+  console.log('api roles','sortBy', sortBy)
   return response.data;
 };
 
 const QUERY_KEY = ['roles'];
-// export const useGetRoles = (page, pageSize) => {
-//   return useQuery({
-//     queryKey: QUERY_KEY,
-//     queryFn: () => getAllRoles(page, pageSize),
-//   });
-// };
-export const useGetRoles = () => {
+export const useGetRoles = (page, pageSize, sortBy, sortOrder) => {
   return useQuery({
     queryKey: QUERY_KEY,
-    queryFn: () => getAllRoles(),
+    queryFn: () => getAllRoles(page, pageSize, sortBy, sortOrder),
   });
 };

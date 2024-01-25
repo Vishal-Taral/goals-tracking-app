@@ -25,13 +25,15 @@ export function Users(props: UsersProps) {
     ],
     rows: usersList,
   };
+  const labelValue1={label: 'First name',value: 'firstName'}
+  const labelValue2={label: 'Last name',value: 'lastName'}
 
   return (
     <div className={styles.container}>
       <PrivateLayout>
         <div className={styles.dashboard_page_container}>
           <div className={styles.header_and_user_detail_section}>
-            <FilterContainer />
+            <FilterContainer labelValue1={labelValue1} labelValue2={labelValue2} />
             <ErrorHandler>
               <ManageUsers tableData={users} />
             </ErrorHandler>

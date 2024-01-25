@@ -1,43 +1,59 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import AppContext from '../../contexts/AppContext';
 import styles from './FilterContainer.module.scss';
+import { useRouter } from 'next/router';
 
-export interface FilterContainerProps {}
+export interface FilterContainerProps {
+  labelValue1: any;
+  labelValue2: any;
+}
 
-export function FilterContainer(props: FilterContainerProps) {
+export function FilterContainer({labelValue1, labelValue2}) {
+  const router = useRouter()
+
   const context = useContext(AppContext);
 
   const handleSortingChange = (value: string) => {
-    context.setSortBy(value);
+    if (router.pathname.split('/')[3] == 'users') {
+      context.setSortBy(value);
+    } else if (router.pathname.split('/')[3] == 'roles') {
+      context.setSortByRole(value);
+    }
   };
 
   const handleOrderChange = (value: string) => {
     context.setSortOrder(value);
   };
 
+  // useEffect(()=>{
+  //   context.setSortBy(labelValue1?.value)
+  // },[labelValue1?.value,labelValue2?.value])
+
+  // console.log('filter component updated','context.sortBy',context.sortBy)
+
   return (
     <div className={styles.filterContainer}>
       <div>
         <h1 className={styles.headings}>Sort By</h1>
         <div className={styles.label_and_inputs}>
-          <label>First name</label>
+          <label>{labelValue1?.label}</label>
           <input
             type="radio"
             name="sorting"
-            value="firstName"
-            checked={context.sortBy === 'firstName'}
-            onChange={() => handleSortingChange('firstName')}
+            value={labelValue1?.value}
+            checked={context.sortByRole == labelValue1?.value}
+            onChange={() => handleSortingChange(labelValue1?.value)}
           />
         </div>
 
         <div className={styles.label_and_inputs}>
-          <label>Last name</label>
+          <label>{labelValue2?.label}</label>
           <input
             type="radio"
             name="sorting"
-            value="lastName"
-            checked={context.sortBy === 'lastName'}
-            onChange={() => handleSortingChange('lastName')}
+            value={labelValue2?.value}
+            checked={context.sortByRole === labelValue2?.value}
+            onChange={() => handleSortingChange(labelValue2?.value)}
           />
         </div>
       </div>

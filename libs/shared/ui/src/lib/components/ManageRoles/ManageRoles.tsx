@@ -5,7 +5,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import AddRole from '../AddRole/AddRole';
 import { useGetRoleByID, useGetRoles } from '@goal-tracker/data-access';
 import UpdateRole from '../UpdateRole/UpdateRole';
@@ -20,7 +20,26 @@ export interface ManageRoles {
 }
 
 export function ManageRoles({ tableData }: ManageRoles) {
-  const { data: rolesList, refetch } = useGetRoles();
+  const [entriesPerPage, setEntriesPerPage] = useState(5);
+  const context = useContext(AppContext);
+  const { data: rolesList, refetch } = useGetRoles(
+    context.pageNumber,
+    entriesPerPage,
+    context.sortByRole,
+    context.sortOrder
+  );
+  const entriesPerPageChangeHandler = (e) => {
+    setEntriesPerPage(e.target.value);
+  };
+  const entriesPerPageClickHandler = () => {
+    refetch();
+  };
+  useEffect(() => {
+    refetch();
+    // console.log('manage role component','context.sortBy',context.sortBy)
+
+  }, [context.pageNumber, context.sortBy, context.sortOrder, context.sortByRole]);
+
   const [openUpdatePopup, setOpenUpdatePopup] = useState(false);
   const [updateRoleId, setUpdateRoleId] = useState(null);
   const [prefilledInputData, setPrefilledInputData] = useState();
@@ -50,7 +69,7 @@ export function ManageRoles({ tableData }: ManageRoles) {
     setOpenDeletePopup(false);
     refetch();
   };
-  
+
   const handleCloseCreatePopup = () => {
     setOpenCreatePopup(false);
     refetch();
@@ -72,15 +91,15 @@ export function ManageRoles({ tableData }: ManageRoles) {
 
   const cancelUpdateOperation = () => {
     setOpenUpdatePopup(false);
-  }
+  };
 
   const cancelCreateOperation = () => {
     setOpenCreatePopup(false);
-  }
+  };
 
   const cancelDeleteOperation = () => {
     setOpenDeletePopup(false);
-  }
+  };
 
   return (
     <div className={styles.container}>
@@ -97,6 +116,23 @@ export function ManageRoles({ tableData }: ManageRoles) {
         />
         <button className={styles.searchButton} onClick={searchHandler}>
           Search
+        </button>
+      </div>
+      <div className={styles.entriesPerPageBlock}>
+        <div className={styles.entriesPerPage}>Entries per page-</div>
+        <input
+          className={styles.entriesPerPageInput}
+          onChange={entriesPerPageChangeHandler}
+          value={entriesPerPage}
+          type="number"
+          min={1}
+          max={10}
+        />
+        <button
+          onClick={entriesPerPageClickHandler}
+          className={styles.entriesButton}
+        >
+          Click
         </button>
       </div>
       {searchResultDisplay ? (
@@ -153,7 +189,7 @@ export function ManageRoles({ tableData }: ManageRoles) {
             ))}
           </tbody>
         </table>
-        <PageNumberContainer />
+        <PageNumberContainer totalPages={rolesList?.totalPages} />
       </div>
 
       {openUpdatePopup && (
@@ -168,7 +204,12 @@ export function ManageRoles({ tableData }: ManageRoles) {
       )}
 
       {openCreatePopup && (
-        <AddRole open={true} handleClose={handleCloseCreatePopup} rolesList={rolesList} cancelCreateOperation={cancelCreateOperation}/>
+        <AddRole
+          open={true}
+          handleClose={handleCloseCreatePopup}
+          rolesList={rolesList}
+          cancelCreateOperation={cancelCreateOperation}
+        />
       )}
 
       {openDeletePopup && (

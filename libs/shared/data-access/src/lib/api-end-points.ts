@@ -3,7 +3,7 @@ const firstName = 'v';
 const sortOrder = 'desc';
  
 export const apiUrlObject = {
-    getAllCategories : `${serverUrl}/categories?page=${1}&pageSize=${4}&categoryName=&sortOrder=${sortOrder}`,
+    getAllCategories : `${serverUrl}/categories`,
     updateCategory : `${serverUrl}/updateCategory`,
     addCategory : `${serverUrl}/addCategory`,
     deleteCategory : `${serverUrl}/deleteCategory`,
@@ -16,7 +16,7 @@ export const apiUrlObject = {
     // deleteCategory : 'http://localhost:8000/data',
  
     // getAllRoles : 'http://localhost:8001/data',
-    getAllRoles : `${serverUrl}/roles?page=${1}&pageSize=${4}&sortOrder=${sortOrder}`,
+    getAllRoles : `${serverUrl}/roles`,
     addRole : `${serverUrl}/addRole`,
     deleteRole : `${serverUrl}/deleteRole`,
     updateRole : `${serverUrl}/updateRole`,
