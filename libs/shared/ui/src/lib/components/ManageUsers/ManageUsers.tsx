@@ -7,6 +7,7 @@ import { useContext, useEffect, useState } from 'react';
 import CreateUsers from '../CreateUsers/CreateUsers';
 import DeleteUser from '../DeleteUser/DeleteUser';
 import {
+  useGetRoles,
   useGetUserByID,
   useGetUsers,
 } from '@goal-tracker/data-access';
@@ -32,20 +33,32 @@ export function ManageUsers({ tableData }: ManageCategories) {
   const context = useContext(AppContext);
   const [entriesPerPage, setEntriesPerPage] = useState(5);
 
-  const { data: usersList, refetch } = useGetUsers(
+  const queryParamObject = {
+    page : context.pageNumber,
+    pageSize : entriesPerPage,
+    lastName: context.lastNameSearch || null,
+    firstName: context.firstNameSearch || null,
+    email: context.emailSearch || null, 
+    sortBy : context.sortBy,
+    sortOrder : context.sortOrder
+  }
+
+  const { data: usersList, refetch } = useGetUsers(queryParamObject);
+
+  const { data: roles } = useGetRoles(
     context.pageNumber,
     entriesPerPage,
-    context.sortBy,
+    context.sortByRole,
     context.sortOrder
   );
   const { data: searchResponse, refetch: refetchSearch } =
     useGetUserByID(searchID);
 
-  useEffect(()=>{
+  useEffect(() => {
     refetch()
-      console.log('manage user component','context.sortBy',context.sortBy)
+    console.log('manage user component', 'context.sortBy', context.sortBy)
 
-  },[context.pageNumber,context.sortBy,context.sortOrder])
+  }, [context.pageNumber, context.sortBy, context.sortOrder , context.lastNameSearch , context.firstNameSearch , context.emailSearch])
 
   const handleCloseCreatePopup = () => {
     setOpenCreatePopup(false);
@@ -120,23 +133,24 @@ export function ManageUsers({ tableData }: ManageCategories) {
           Search
         </button>
       </div>
-      <div className={styles.entriesPerPageBlock}>
-        <div className={styles.entriesPerPage}>Entries per page-</div>
-        <input
-          className={styles.entriesPerPageInput}
-          onChange={entriesPerPageChangeHandler}
-          value={entriesPerPage}
-          type="number"
-          min={1}
-          max={10}
-        />
-        <button
-          onClick={entriesPerPageClickHandler}
-          className={styles.entriesButton}
-        >
-          Click
-        </button>
-      </div>
+
+        <div className={styles.entriesPerPageBlock}>
+          <div className={styles.entriesPerPage}>Entries per page-</div>
+          <input
+            className={styles.entriesPerPageInput}
+            onChange={entriesPerPageChangeHandler}
+            value={entriesPerPage}
+            type="number"
+            min={1}
+            max={10}
+          />
+          <button
+            onClick={entriesPerPageClickHandler}
+            className={styles.entriesButton}
+          >
+            Click
+          </button>
+        </div>
       {searchResultDisplay ? (
         <div className={styles.searchResultBlock}>
           <b>Search Result</b>
@@ -215,11 +229,11 @@ export function ManageUsers({ tableData }: ManageCategories) {
       )}
       {openDeletePopup && (
         <DeleteUser
-        open={true}
-        handleClose={handleCloseDeletePopup}
-        deleteUserId={deleteUserId}
-        cancelDeleteOperation={cancelDeleteOperation}
-      />
+          open={true}
+          handleClose={handleCloseDeletePopup}
+          deleteUserId={deleteUserId}
+          cancelDeleteOperation={cancelDeleteOperation}
+        />
       )}
 
       {openCreatePopup && (

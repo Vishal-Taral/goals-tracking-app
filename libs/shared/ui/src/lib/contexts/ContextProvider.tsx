@@ -18,6 +18,9 @@ const ContextProvider = (props: any) => {
   const [sortOrder, setSortOrder] = useState('asc');
   const [sortBy, setSortBy] = useState('firstName');
   const [sortByRole, setSortByRole] = useState('name');
+  const [firstNameSearch, setFirstNameSearch] = useState('');
+  const [lastNameSearch, setLastNameSearch] = useState('');
+  const [emailSearch, setEmailSearch] = useState('');
 
   // console.log('in context component','sortBy',sortBy)
   const [sortOrderOfCategory, setSortOrderOfCategory] = useState('asc');
@@ -39,7 +42,13 @@ const ContextProvider = (props: any) => {
         sortByRole,
         setSortByRole,
         sortOrderOfCategory,
-        setSortOrderOfCategory
+        setSortOrderOfCategory,
+        firstNameSearch,
+        setFirstNameSearch,
+        lastNameSearch,
+        setLastNameSearch,
+        emailSearch,
+        setEmailSearch
       }}
     >
       {props.children}

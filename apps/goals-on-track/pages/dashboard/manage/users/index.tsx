@@ -52,13 +52,13 @@ export function Users(props: UsersProps) {
     context.setSortOrder(value);
   };
 
-  const valueToChecked = context.sortOrder;
+  const valueToChecked = context.sortBy;
   return (
     <div className={styles.container}>
       <PrivateLayout>
         <div className={styles.dashboard_page_container}>
           <div className={styles.header_and_user_detail_section}>
-            <FilterContainer labelValue1={labelValue1} labelValue2={labelValue2} />
+            <FilterContainer labelValue1={labelValue1} labelValue2={labelValue2} valueToChecked={valueToChecked} />
             <ErrorHandler>
               <ManageUsers tableData={users} />
             </ErrorHandler>
