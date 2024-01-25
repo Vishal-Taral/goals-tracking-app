@@ -7,6 +7,8 @@ const ContextProvider = (props: any) => {
   const [pageSize, setPageSize] = useState(1);
   const [sortOrder, setSortOrder] = useState('asc');
   const [sortBy, setSortBy] = useState('firstName');
+  const [sortOrderOfCategory, setSortOrderOfCategory] = useState('asc');
+  // const [sortByOfCategory, setSortByOfCategory] = useState('firstName');
 
   return (
     <AppContext.Provider
@@ -21,6 +23,8 @@ const ContextProvider = (props: any) => {
         setSortOrder,
         sortBy,
         setSortBy,
+        sortOrderOfCategory,
+        setSortOrderOfCategory
       }}
     >
       {props.children}

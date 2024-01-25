@@ -2,7 +2,7 @@ import styles from './ManageCategories.module.scss';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import {
   UpdateCategory,
   DeleteCategory,
@@ -13,6 +13,7 @@ import {
   useGetCategories,
   useGetCategoryByID,
 } from '@goal-tracker/data-access';
+import AppContext from '../../contexts/AppContext';
 
 /* eslint-disable-next-line */
 
@@ -26,10 +27,24 @@ export function ManageCategories({ tableData }: ManageCategories) {
   const [selectedRowIndex, setSelectedRowIndex] = useState<string | null>(null);
   const [openCreatePopup, setOpenCreatePopup] = useState(false);
   const [searchID, setSearchID] = useState('');
-  const [searchResultDisplay, setSearchResultDisplay] = useState(false)
+  const [searchResultDisplay, setSearchResultDisplay] = useState(false);
+  const [entriesPerPage, setEntriesPerPage] = useState(5);
 
-  const { data: categoriesList, refetch } = useGetCategories();
+  const context = useContext(AppContext);
+
+  const queryParamObj = {
+    sortOrder: context.sortOrderOfCategory,
+    pageSize : entriesPerPage,
+    page : context.pageNumber,
+    sortBy : 'name'
+  }
+
+  const { data: categoriesList, refetch } = useGetCategories(queryParamObj);
   const { data: searchResponse, refetch: refetchSearch } = useGetCategoryByID(searchID);
+
+  useEffect(()=>{
+    refetch();
+  },[context.sortOrderOfCategory , context.pageNumber,])
 
   const handleCloseUpdate = () => {
     setOpenUpdate(false);
@@ -83,6 +98,14 @@ export function ManageCategories({ tableData }: ManageCategories) {
 
   };
 
+  const entriesPerPageClickHandler = () => {
+    refetch();
+  };
+
+  const entriesPerPageChangeHandler = (e) => {
+    setEntriesPerPage(e.target.value);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.categories}>
@@ -100,6 +123,25 @@ export function ManageCategories({ tableData }: ManageCategories) {
           Search
         </button>
       </div>
+
+      <div className={styles.entriesPerPageBlock}>
+        <div className={styles.entriesPerPage}>Entries per page-</div>
+        <input
+          className={styles.entriesPerPageInput}
+          onChange={entriesPerPageChangeHandler}
+          value={entriesPerPage}
+          type="number"
+          min={1}
+          max={10}
+        />
+        <button
+          onClick={entriesPerPageClickHandler}
+          className={styles.entriesButton}
+        >
+          Click
+        </button>
+      </div>
+
       {searchResultDisplay ? (
         <div className={styles.searchResultBlock}>
           <b>Search Result</b>
@@ -148,7 +190,7 @@ export function ManageCategories({ tableData }: ManageCategories) {
             ))}
           </tbody>
         </table>
-        <PageNumberContainer />
+        <PageNumberContainer totalPages={categoriesList?.totalPages} />
       </div>
       {openUpdate && selectedRowIndex !== null && (
         <UpdateCategory

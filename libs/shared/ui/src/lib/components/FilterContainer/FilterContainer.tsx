@@ -1,46 +1,37 @@
 import React, { useContext } from 'react';
 import AppContext from '../../contexts/AppContext';
 import styles from './FilterContainer.module.scss';
+import { SortByObj } from '@goal-tracker/data-access';
 
-export interface FilterContainerProps {}
+export interface FilterContainerProps {
+  sortByObj?: SortByObj[];
+  onSortingChange?: (value: string) => void;
+  onOrderChange?: (value: string) => void;
+  valueToChecked: string;
+}
 
-export function FilterContainer(props: FilterContainerProps) {
+export function FilterContainer({sortByObj, onSortingChange, onOrderChange ,valueToChecked }: FilterContainerProps) {
   const context = useContext(AppContext);
-
-  const handleSortingChange = (value: string) => {
-    context.setSortBy(value);
-  };
-
-  const handleOrderChange = (value: string) => {
-    context.setSortOrder(value);
-  };
 
   return (
     <div className={styles.filterContainer}>
-      <div>
-        <h1 className={styles.headings}>Sort By</h1>
-        <div className={styles.label_and_inputs}>
-          <label>First name</label>
-          <input
-            type="radio"
-            name="sorting"
-            value="firstName"
-            checked={context.sortBy === 'firstName'}
-            onChange={() => handleSortingChange('firstName')}
-          />
+       {sortByObj && sortByObj.length > 0 && (
+        <div>
+          <h1 className={styles.headings}>Sort By</h1>
+          {sortByObj.map((sortOption : any , index : number) => (
+            <div key={index} className={styles.label_and_inputs}>
+              <label>{sortOption.label}</label>
+              <input
+                type="radio"
+                name={sortOption.name}
+                value={sortOption.value}
+                checked={context.sortBy === sortOption.value}
+                onChange={() => onSortingChange(sortOption.value)}
+              />
+            </div>
+          ))}
         </div>
-
-        <div className={styles.label_and_inputs}>
-          <label>Last name</label>
-          <input
-            type="radio"
-            name="sorting"
-            value="lastName"
-            checked={context.sortBy === 'lastName'}
-            onChange={() => handleSortingChange('lastName')}
-          />
-        </div>
-      </div>
+      )}
 
       <div>
         <h1 className={styles.headings}>Order By</h1>
@@ -50,8 +41,8 @@ export function FilterContainer(props: FilterContainerProps) {
             type="radio"
             name="order"
             value="asc"
-            checked={context.sortOrder === 'asc'}
-            onChange={() => handleOrderChange('asc')}
+            checked={valueToChecked === 'asc'}
+            onChange={() => onOrderChange('asc')}
           />
         </div>
 
@@ -61,8 +52,8 @@ export function FilterContainer(props: FilterContainerProps) {
             type="radio"
             name="order"
             value="desc"
-            checked={context.sortOrder === 'desc'}
-            onChange={() => handleOrderChange('desc')}
+            checked={valueToChecked === 'desc'}
+            onChange={() => onOrderChange('desc')}
           />
         </div>
       </div>
