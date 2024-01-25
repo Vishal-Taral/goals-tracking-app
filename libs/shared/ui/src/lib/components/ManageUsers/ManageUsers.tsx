@@ -33,12 +33,16 @@ export function ManageUsers({ tableData }: ManageCategories) {
   const context = useContext(AppContext);
   const [entriesPerPage, setEntriesPerPage] = useState(5);
 
-  const { data: usersList, refetch } = useGetUsers(
-    context.pageNumber,
-    entriesPerPage,
-    context.sortBy,
-    context.sortOrder
-  );
+  // ?page=${page}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}
+
+  const queryParamObject = {
+    page : context.pageNumber,
+    pageSize : entriesPerPage,
+    sortBy : context.sortBy,
+    sortOrder : context.sortOrder
+  }
+
+  const { data: usersList, refetch } = useGetUsers(queryParamObject);
   const { data: searchResponse, refetch: refetchSearch } =
     useGetUserByID(searchID);
 
@@ -101,6 +105,7 @@ export function ManageUsers({ tableData }: ManageCategories) {
   const cancelDeleteOperation = () => {
     setOpenDeletePopup(false);
   }
+
   return (
     <div className={styles.container}>
       <div className={styles.users}>

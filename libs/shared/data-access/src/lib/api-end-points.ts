@@ -3,7 +3,7 @@ const firstName = 'v';
 const sortOrder = 'desc';
  
 export const apiUrlObject = {
-    getAllCategories : `${serverUrl}/categories?page=${1}&pageSize=${4}&categoryName=&sortOrder=${sortOrder}`,
+    getAllCategories : `${serverUrl}/categories`,
     updateCategory : `${serverUrl}/updateCategory`,
     addCategory : `${serverUrl}/addCategory`,
     deleteCategory : `${serverUrl}/deleteCategory`,
