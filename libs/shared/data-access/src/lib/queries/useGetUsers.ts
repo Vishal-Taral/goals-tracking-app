@@ -18,5 +18,5 @@ export const useGetUsers = (page, pageSize, sortBy, sortOrder) => {
   return useQuery<any>({
     queryKey: QUERY_KEY,
     queryFn: () => getAllUsers(page, pageSize, sortBy, sortOrder),
-  });
+      });
 };

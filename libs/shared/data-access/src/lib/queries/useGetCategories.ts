@@ -5,18 +5,17 @@ import { useEffect } from 'react';
 
 const sortBy = 'name'
 
-const getAllCategories = async (queryparams:any): Promise<any> => {
-  const response = await apiClient.get(apiUrlObject.getAllCategories, {params:queryparams});
+const getAllCategories = async (page, pageSize, sortOrder): Promise<any> => {
+  const response = await apiClient.get(`${apiUrlObject.getAllCategories}?page=${page}&pageSize=${pageSize}&sortBy=name&sortOrder=${sortOrder}`);
   return response.data;
 };
 
 const QUERY_KEY = ['categories'];
 
-export const useGetCategories = (queryparams?: any , config?: any) => {
+export const useGetCategories = (page, pageSize, sortOrder) => {
   return useQuery<any>({
     queryKey: QUERY_KEY,
-    queryFn: () => getAllCategories(queryparams),
-    ...config,
+    queryFn: () => getAllCategories(page, pageSize, sortOrder),
   });
 };
 
