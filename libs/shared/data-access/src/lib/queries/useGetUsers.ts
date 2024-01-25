@@ -3,17 +3,20 @@ import { apiClient } from '../api-client';
 import { apiUrlObject } from '../api-end-points';
 import { QueryParamsObj } from '@goal-tracker/data-access';
 
-const getAllUsers = async (queryparams:any): Promise<any> => {
-  const response = await apiClient.get(apiUrlObject.getAllUsers, {params:queryparams});
+const getAllUsers = async (page, pageSize, sortBy, sortOrder): Promise<any> => {
+  const response = await apiClient.get(
+    `${apiUrlObject.getAllUsers}?page=${page}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}`
+  );
+  console.log('api users','sortBy', sortBy)
+
   return response.data;
 };
 
 const QUERY_KEY = ['users'];
 
-export const useGetUsers = ( queryparams?: any , config?: any) => {
+export const useGetUsers = (page, pageSize, sortBy, sortOrder) => {
   return useQuery<any>({
     queryKey: QUERY_KEY,
-    queryFn: () => getAllUsers(queryparams),
-    ...config
-  });
+    queryFn: () => getAllUsers(page, pageSize, sortBy, sortOrder),
+      });
 };

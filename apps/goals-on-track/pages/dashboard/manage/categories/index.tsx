@@ -31,8 +31,9 @@ const Categories = () => {
           <div className={styles.header_and_user_detail_section}>
           <FilterContainer 
               // onSortingChange={handleSortingChange}
-              onOrderChange={handleOrderChange}
-              valueToChecked={valueToChecked}
+              // onOrderChange={handleOrderChange}
+              // valueToChecked={valueToChecked}
+              labelValue1={undefined} labelValue2={undefined}
             />
             <ErrorHandler>
               <ManageCategories tableData={categories} />

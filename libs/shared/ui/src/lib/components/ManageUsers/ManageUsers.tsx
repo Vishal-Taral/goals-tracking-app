@@ -9,7 +9,6 @@ import DeleteUser from '../DeleteUser/DeleteUser';
 import {
   useGetUserByID,
   useGetUsers,
-  useGetRoles
 } from '@goal-tracker/data-access';
 import UpdateUser from '../UpdateUser/UpdateUser';
 import PageNumberContainer from '../PageNumberContainer/PageNumberContainer';
@@ -33,22 +32,20 @@ export function ManageUsers({ tableData }: ManageCategories) {
   const context = useContext(AppContext);
   const [entriesPerPage, setEntriesPerPage] = useState(5);
 
-  // ?page=${page}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}
-
-  const queryParamObject = {
-    page : context.pageNumber,
-    pageSize : entriesPerPage,
-    sortBy : context.sortBy,
-    sortOrder : context.sortOrder
-  }
-
-  const { data: usersList, refetch } = useGetUsers(queryParamObject);
+  const { data: usersList, refetch } = useGetUsers(
+    context.pageNumber,
+    entriesPerPage,
+    context.sortBy,
+    context.sortOrder
+  );
   const { data: searchResponse, refetch: refetchSearch } =
     useGetUserByID(searchID);
 
-    const { data: roles } = useGetRoles();
+  useEffect(()=>{
+    refetch()
+      console.log('manage user component','context.sortBy',context.sortBy)
 
-  useEffect(()=>{refetch()},[context.pageNumber,context.sortBy,context.sortOrder])
+  },[context.pageNumber,context.sortBy,context.sortOrder])
 
   const handleCloseCreatePopup = () => {
     setOpenCreatePopup(false);
@@ -105,7 +102,6 @@ export function ManageUsers({ tableData }: ManageCategories) {
   const cancelDeleteOperation = () => {
     setOpenDeletePopup(false);
   }
-
   return (
     <div className={styles.container}>
       <div className={styles.users}>

@@ -1,12 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import AppContext from './AppContext';
+import { useRouter } from 'next/router';
 
 const ContextProvider = (props: any) => {
+  // const [pathName, setpathName] = useState('');
+  // const router = useRouter();
+  // useLayoutEffect(() => {
+  //   if (router.pathname.split('/')[3] == 'roles') {
+  //     setpathName('name');
+  //   } else if (router.pathname.split('/')[3] == 'users') {
+  //     setpathName('firstName');
+  //   }
+  // }, []);
   const [manage, setManage] = useState('');
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(1);
   const [sortOrder, setSortOrder] = useState('asc');
   const [sortBy, setSortBy] = useState('firstName');
+  const [sortByRole, setSortByRole] = useState('name');
+
+  // console.log('in context component','sortBy',sortBy)
   const [sortOrderOfCategory, setSortOrderOfCategory] = useState('asc');
   // const [sortByOfCategory, setSortByOfCategory] = useState('firstName');
 
@@ -23,6 +36,8 @@ const ContextProvider = (props: any) => {
         setSortOrder,
         sortBy,
         setSortBy,
+        sortByRole,
+        setSortByRole,
         sortOrderOfCategory,
         setSortOrderOfCategory
       }}

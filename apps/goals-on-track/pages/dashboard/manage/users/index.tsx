@@ -28,6 +28,8 @@ export function Users(props: UsersProps) {
     ],
     rows: usersList,
   };
+  const labelValue1={label: 'First name',value: 'firstName'}
+  const labelValue2={label: 'Last name',value: 'lastName'}
 
   const sortByObj = [
     {
@@ -56,12 +58,7 @@ export function Users(props: UsersProps) {
       <PrivateLayout>
         <div className={styles.dashboard_page_container}>
           <div className={styles.header_and_user_detail_section}>
-            <FilterContainer 
-              sortByObj={sortByObj}
-              onSortingChange={handleSortingChange}
-              onOrderChange={handleOrderChange}
-              valueToChecked={valueToChecked}
-            />
+            <FilterContainer labelValue1={labelValue1} labelValue2={labelValue2} />
             <ErrorHandler>
               <ManageUsers tableData={users} />
             </ErrorHandler>

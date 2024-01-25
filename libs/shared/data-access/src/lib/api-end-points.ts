@@ -16,7 +16,7 @@ export const apiUrlObject = {
     // deleteCategory : 'http://localhost:8000/data',
  
     // getAllRoles : 'http://localhost:8001/data',
-    getAllRoles : `${serverUrl}/roles?page=${1}&pageSize=${4}&sortOrder=${sortOrder}`,
+    getAllRoles : `${serverUrl}/roles`,
     addRole : `${serverUrl}/addRole`,
     deleteRole : `${serverUrl}/deleteRole`,
     updateRole : `${serverUrl}/updateRole`,

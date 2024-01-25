@@ -34,17 +34,22 @@ export function ManageCategories({ tableData }: ManageCategories) {
 
   const queryParamObj = {
     sortOrder: context.sortOrderOfCategory,
-    pageSize : entriesPerPage,
-    page : context.pageNumber,
-    sortBy : 'name'
-  }
+    pageSize: entriesPerPage,
+    page: context.pageNumber,
+    sortBy: 'name',
+  };
 
-  const { data: categoriesList, refetch } = useGetCategories(queryParamObj);
-  const { data: searchResponse, refetch: refetchSearch } = useGetCategoryByID(searchID);
+  const { data: categoriesList, refetch } = useGetCategories(
+    context.pageNumber,
+    entriesPerPage,
+    context.sortOrder
+  );
+  const { data: searchResponse, refetch: refetchSearch } =
+    useGetCategoryByID(searchID);
 
-  useEffect(()=>{
+  useEffect(() => {
     refetch();
-  },[context.sortOrderOfCategory , context.pageNumber,])
+  }, [context.sortOrder, context.pageNumber]);
 
   const handleCloseUpdate = () => {
     setOpenUpdate(false);
@@ -57,16 +62,16 @@ export function ManageCategories({ tableData }: ManageCategories) {
 
   const cancelCrateOperation = () => {
     setOpenCreatePopup(false);
-  }
+  };
 
   const cancelUpdateOperation = () => {
     setOpenUpdate(false);
-  }
+  };
 
   const cancelDeleteOperation = () => {
     setOpenDelete(false);
-  }
-  
+  };
+
   const handleCloseCreatePopup = () => {
     setOpenCreatePopup(false);
     refetch();
@@ -94,8 +99,7 @@ export function ManageCategories({ tableData }: ManageCategories) {
     console.log('searchID', searchID);
     refetchSearch();
     console.log('searchResponse', searchResponse);
-    setSearchResultDisplay(true)
-
+    setSearchResultDisplay(true);
   };
 
   const entriesPerPageClickHandler = () => {
@@ -147,7 +151,12 @@ export function ManageCategories({ tableData }: ManageCategories) {
           <b>Search Result</b>
           <div>ID- {searchResponse?.data?.categoryId}</div>
           <div>Name- {searchResponse?.data?.name}</div>
-          <button className={styles.searchResultCloseButton} onClick={() => setSearchResultDisplay(false)}>Close</button>
+          <button
+            className={styles.searchResultCloseButton}
+            onClick={() => setSearchResultDisplay(false)}
+          >
+            Close
+          </button>
         </div>
       ) : (
         ''
@@ -213,7 +222,12 @@ export function ManageCategories({ tableData }: ManageCategories) {
       )}
 
       {openCreatePopup && (
-        <CreateCategory open={true} handleClose={handleCloseCreatePopup} categoriesList={categoriesList} cancelCrateOperation={cancelCrateOperation}/>
+        <CreateCategory
+          open={true}
+          handleClose={handleCloseCreatePopup}
+          categoriesList={categoriesList}
+          cancelCrateOperation={cancelCrateOperation}
+        />
       )}
     </div>
   );
