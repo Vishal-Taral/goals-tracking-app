@@ -43,7 +43,7 @@ export function ManageUsers({ tableData }: ManageCategories) {
 
   useEffect(()=>{
     refetch()
-    // console.log('manage user component','context.sortBy',context.sortBy)
+      console.log('manage user component','context.sortBy',context.sortBy)
 
   },[context.pageNumber,context.sortBy,context.sortOrder])
 

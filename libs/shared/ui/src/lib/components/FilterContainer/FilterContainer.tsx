@@ -33,7 +33,7 @@ export function FilterContainer({labelValue1, labelValue2}) {
 
   return (
     <div className={styles.filterContainer}>
-      <div>
+      {labelValue1 && labelValue2 && <div>
         <h1 className={styles.headings}>Sort By</h1>
         <div className={styles.label_and_inputs}>
           <label>{labelValue1?.label}</label>
@@ -56,7 +56,7 @@ export function FilterContainer({labelValue1, labelValue2}) {
             onChange={() => handleSortingChange(labelValue2?.value)}
           />
         </div>
-      </div>
+      </div>}
 
       <div>
         <h1 className={styles.headings}>Order By</h1>

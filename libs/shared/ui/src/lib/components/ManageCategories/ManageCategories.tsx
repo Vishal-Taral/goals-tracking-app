@@ -2,7 +2,7 @@ import styles from './ManageCategories.module.scss';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import {
   UpdateCategory,
   DeleteCategory,
@@ -13,6 +13,7 @@ import {
   useGetCategories,
   useGetCategoryByID,
 } from '@goal-tracker/data-access';
+import AppContext from '../../contexts/AppContext';
 
 /* eslint-disable-next-line */
 
@@ -26,10 +27,29 @@ export function ManageCategories({ tableData }: ManageCategories) {
   const [selectedRowIndex, setSelectedRowIndex] = useState<string | null>(null);
   const [openCreatePopup, setOpenCreatePopup] = useState(false);
   const [searchID, setSearchID] = useState('');
-  const [searchResultDisplay, setSearchResultDisplay] = useState(false)
+  const [searchResultDisplay, setSearchResultDisplay] = useState(false);
+  const [entriesPerPage, setEntriesPerPage] = useState(5);
 
-  const { data: categoriesList, refetch } = useGetCategories();
-  const { data: searchResponse, refetch: refetchSearch } = useGetCategoryByID(searchID);
+  const context = useContext(AppContext);
+
+  const queryParamObj = {
+    sortOrder: context.sortOrderOfCategory,
+    pageSize: entriesPerPage,
+    page: context.pageNumber,
+    sortBy: 'name',
+  };
+
+  const { data: categoriesList, refetch } = useGetCategories(
+    context.pageNumber,
+    entriesPerPage,
+    context.sortOrder
+  );
+  const { data: searchResponse, refetch: refetchSearch } =
+    useGetCategoryByID(searchID);
+
+  useEffect(() => {
+    refetch();
+  }, [context.sortOrder, context.pageNumber]);
 
   const handleCloseUpdate = () => {
     setOpenUpdate(false);
@@ -42,16 +62,16 @@ export function ManageCategories({ tableData }: ManageCategories) {
 
   const cancelCrateOperation = () => {
     setOpenCreatePopup(false);
-  }
+  };
 
   const cancelUpdateOperation = () => {
     setOpenUpdate(false);
-  }
+  };
 
   const cancelDeleteOperation = () => {
     setOpenDelete(false);
-  }
-  
+  };
+
   const handleCloseCreatePopup = () => {
     setOpenCreatePopup(false);
     refetch();
@@ -79,8 +99,15 @@ export function ManageCategories({ tableData }: ManageCategories) {
     console.log('searchID', searchID);
     refetchSearch();
     console.log('searchResponse', searchResponse);
-    setSearchResultDisplay(true)
+    setSearchResultDisplay(true);
+  };
 
+  const entriesPerPageClickHandler = () => {
+    refetch();
+  };
+
+  const entriesPerPageChangeHandler = (e) => {
+    setEntriesPerPage(e.target.value);
   };
 
   return (
@@ -100,12 +127,36 @@ export function ManageCategories({ tableData }: ManageCategories) {
           Search
         </button>
       </div>
+
+      <div className={styles.entriesPerPageBlock}>
+        <div className={styles.entriesPerPage}>Entries per page-</div>
+        <input
+          className={styles.entriesPerPageInput}
+          onChange={entriesPerPageChangeHandler}
+          value={entriesPerPage}
+          type="number"
+          min={1}
+          max={10}
+        />
+        <button
+          onClick={entriesPerPageClickHandler}
+          className={styles.entriesButton}
+        >
+          Click
+        </button>
+      </div>
+
       {searchResultDisplay ? (
         <div className={styles.searchResultBlock}>
           <b>Search Result</b>
           <div>ID- {searchResponse?.data?.categoryId}</div>
           <div>Name- {searchResponse?.data?.name}</div>
-          <button className={styles.searchResultCloseButton} onClick={() => setSearchResultDisplay(false)}>Close</button>
+          <button
+            className={styles.searchResultCloseButton}
+            onClick={() => setSearchResultDisplay(false)}
+          >
+            Close
+          </button>
         </div>
       ) : (
         ''
@@ -148,7 +199,7 @@ export function ManageCategories({ tableData }: ManageCategories) {
             ))}
           </tbody>
         </table>
-        <PageNumberContainer />
+        <PageNumberContainer totalPages={categoriesList?.totalPages} />
       </div>
       {openUpdate && selectedRowIndex !== null && (
         <UpdateCategory
@@ -171,7 +222,12 @@ export function ManageCategories({ tableData }: ManageCategories) {
       )}
 
       {openCreatePopup && (
-        <CreateCategory open={true} handleClose={handleCloseCreatePopup} categoriesList={categoriesList} cancelCrateOperation={cancelCrateOperation}/>
+        <CreateCategory
+          open={true}
+          handleClose={handleCloseCreatePopup}
+          categoriesList={categoriesList}
+          cancelCrateOperation={cancelCrateOperation}
+        />
       )}
     </div>
   );

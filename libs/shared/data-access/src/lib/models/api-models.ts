@@ -16,3 +16,9 @@ export interface InterfaceForContext {
     queryParamsObj : any;
     setQueryParamsObj : () => void;
 }
+
+export interface SortByObj {
+    label: string;
+    name: string;
+    value: string;
+  }

@@ -31,6 +31,30 @@
         cursor: pointer;
     }
   }
+  .entriesPerPageBlock{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .entriesPerPage{
+      margin: 0.5rem;
+      display: flex;
+      align-items: center;
+    }
+    .entriesPerPageInput{
+      margin: 0.5rem;
+      padding: 0.4rem 0.2rem;
+    }
+    .entriesButton{
+      padding: 0.4rem 0.8rem;
+      background-color: skyblue;
+      color: white;
+      border-radius: 0.4rem;
+
+      &:hover{
+        cursor: pointer;
+      }
+    }
+  }
   .searchResultBlock {
     background-color: white;
     padding: 1rem;

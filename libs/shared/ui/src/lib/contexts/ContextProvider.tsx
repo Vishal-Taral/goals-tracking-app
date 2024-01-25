@@ -20,6 +20,8 @@ const ContextProvider = (props: any) => {
   const [sortByRole, setSortByRole] = useState('name');
 
   // console.log('in context component','sortBy',sortBy)
+  const [sortOrderOfCategory, setSortOrderOfCategory] = useState('asc');
+  // const [sortByOfCategory, setSortByOfCategory] = useState('firstName');
 
   return (
     <AppContext.Provider
@@ -36,6 +38,8 @@ const ContextProvider = (props: any) => {
         setSortBy,
         sortByRole,
         setSortByRole,
+        sortOrderOfCategory,
+        setSortOrderOfCategory
       }}
     >
       {props.children}
