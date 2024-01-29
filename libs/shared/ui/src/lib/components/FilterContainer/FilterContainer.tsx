@@ -2,15 +2,18 @@ import React, { useContext, useEffect, useState } from 'react';
 import AppContext from '../../contexts/AppContext';
 import styles from './FilterContainer.module.scss';
 import { useRouter } from 'next/router';
+import Button from '@mui/material/Button';
 
 export interface FilterContainerProps {
   labelValue1: any;
   labelValue2: any;
+  valueToChecked: any;
+  inputDataForSearchField?: any;
+  onSearch: () => void; 
 }
 
-export function FilterContainer({labelValue1, labelValue2}) {
+export function FilterContainer({ labelValue1, labelValue2, valueToChecked , inputDataForSearchField, onSearch }: FilterContainerProps) {
   const router = useRouter()
-
   const context = useContext(AppContext);
 
   const handleSortingChange = (value: string) => {
@@ -25,12 +28,6 @@ export function FilterContainer({labelValue1, labelValue2}) {
     context.setSortOrder(value);
   };
 
-  // useEffect(()=>{
-  //   context.setSortBy(labelValue1?.value)
-  // },[labelValue1?.value,labelValue2?.value])
-
-  // console.log('filter component updated','context.sortBy',context.sortBy)
-
   return (
     <div className={styles.filterContainer}>
       {labelValue1 && labelValue2 && <div>
@@ -41,7 +38,7 @@ export function FilterContainer({labelValue1, labelValue2}) {
             type="radio"
             name="sorting"
             value={labelValue1?.value}
-            checked={context.sortByRole == labelValue1?.value}
+            checked={valueToChecked == labelValue1?.value}
             onChange={() => handleSortingChange(labelValue1?.value)}
           />
         </div>
@@ -52,7 +49,7 @@ export function FilterContainer({labelValue1, labelValue2}) {
             type="radio"
             name="sorting"
             value={labelValue2?.value}
-            checked={context.sortByRole === labelValue2?.value}
+            checked={valueToChecked === labelValue2?.value}
             onChange={() => handleSortingChange(labelValue2?.value)}
           />
         </div>
@@ -81,6 +78,24 @@ export function FilterContainer({labelValue1, labelValue2}) {
             onChange={() => handleOrderChange('desc')}
           />
         </div>
+      </div>
+
+      <div className={styles.searching}>
+        <h1 className={styles.headings}>Search By</h1>
+        {inputDataForSearchField.map((data: any, index: number) => (
+          <div className={styles.input_field_section} key={index}>
+            <h2>{data.label}</h2>
+            <input
+              type="text"
+              placeholder={`Enter the ${data.label}`}
+              className={styles.search_inputs}
+              onChange={(e)=>data.setSearch(e.target.value)}
+            />
+          </div>
+        ))}
+        <Button onClick={onSearch} variant="contained" size="small" sx={{ mt: 1 }}>
+          Search
+        </Button>
       </div>
     </div>
   );

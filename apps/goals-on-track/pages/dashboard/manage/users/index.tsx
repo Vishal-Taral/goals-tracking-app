@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { ErrorHandler, FilterContainer } from '@goal-tracker/ui';
 import styles from './index.module.scss';
 import { useGetUsers } from '@goal-tracker/data-access';
@@ -13,6 +13,15 @@ export interface UsersProps {}
 export function Users(props: UsersProps) {
   const { data: usersList } = useGetUsers();
   const context = useContext(AppContext);
+  const [searchFirstName, setSearchFirstName] = useState('');
+  const [searchLastName, setSearchLastName] = useState('');
+  const [searchEmail, setSearchEmail] = useState('');
+
+  const handleSearch = () => {
+    context.setFirstNameSearch(searchFirstName);
+    context.setLastNameSearch(searchLastName);
+    context.setEmailSearch(searchEmail);
+  };
 
   const users: any = {
     headings: [
@@ -31,19 +40,6 @@ export function Users(props: UsersProps) {
   const labelValue1={label: 'First name',value: 'firstName'}
   const labelValue2={label: 'Last name',value: 'lastName'}
 
-  const sortByObj = [
-    {
-      label : 'First name',
-      name : 'sorting',
-      value : 'firstName'
-    },
-    {
-      label : 'Last name',
-      name : 'sorting',
-      value : 'lastName'
-    }
-  ]
-  
   const handleSortingChange = (value: string) => {
     context.setSortBy(value);
   };
@@ -52,13 +48,39 @@ export function Users(props: UsersProps) {
     context.setSortOrder(value);
   };
 
-  const valueToChecked = context.sortOrder;
+  const valueToChecked = context.sortBy;
+
+  const inputDataForSearchField = [
+    {
+      value : 'firstName',
+      label : 'First Name',
+      setSearch: setSearchFirstName
+    },
+    {
+      value : 'lastName',
+      label : 'Last Name',
+      setSearch:setSearchLastName,
+    },
+    {
+      value : 'email',
+      label : 'Email',
+      setSearch:setSearchEmail
+    },
+  ]
+  
+
   return (
     <div className={styles.container}>
       <PrivateLayout>
         <div className={styles.dashboard_page_container}>
           <div className={styles.header_and_user_detail_section}>
-            <FilterContainer labelValue1={labelValue1} labelValue2={labelValue2} />
+            <FilterContainer 
+              labelValue1={labelValue1} 
+              labelValue2={labelValue2} 
+              valueToChecked={valueToChecked}
+              inputDataForSearchField={inputDataForSearchField} 
+              onSearch={handleSearch}
+            />
             <ErrorHandler>
               <ManageUsers tableData={users} />
             </ErrorHandler>
