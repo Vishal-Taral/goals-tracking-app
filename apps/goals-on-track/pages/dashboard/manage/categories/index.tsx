@@ -2,13 +2,14 @@ import { useGetCategories } from '@goal-tracker/data-access';
 import { ErrorHandler, FilterContainer, ManageCategories } from '@goal-tracker/ui';
 import PrivateLayout from 'apps/goals-on-track/component/common/privateLayout/private-layout';
 import HOCAuth from 'libs/shared/ui/src/lib/components/HOCAuth/HOCAuth';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import styles from './index.module.scss';
 import AppContext from 'libs/shared/ui/src/lib/contexts/AppContext';
 
 const Categories = () => {
   const { data: categoriesList, isError } = useGetCategories();
   const context = useContext(AppContext);
+  const [searchCategoryName, setCategoryName] = useState('');
 
   const categories: any = {
     headings: ['Category Id', 'Name', 'Update', 'Delete'],
@@ -24,6 +25,18 @@ const Categories = () => {
   };
 
   const valueToChecked = context.sortOrderOfCategory;
+  const inputDataForSearchField = [
+    {
+      value : 'name',
+      label : 'Category Name',
+      setSearch: setCategoryName
+    },
+  ]
+
+  const handleSearch = () => {
+    context.setCategorySearch(searchCategoryName);
+    console.log(context.categorySearch);
+  };
   return (
     <div className={styles.container}>
       <PrivateLayout>
@@ -33,7 +46,11 @@ const Categories = () => {
               // onSortingChange={handleSortingChange}
               // onOrderChange={handleOrderChange}
               // valueToChecked={valueToChecked}
-              labelValue1={undefined} labelValue2={undefined}
+              labelValue1={undefined} 
+              labelValue2={undefined}
+              inputDataForSearchField={inputDataForSearchField}
+              onSearch={handleSearch}
+              valueToChecked={undefined} 
             />
             <ErrorHandler>
               <ManageCategories tableData={categories} />

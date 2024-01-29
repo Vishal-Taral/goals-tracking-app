@@ -33,23 +33,20 @@ export function ManageCategories({ tableData }: ManageCategories) {
   const context = useContext(AppContext);
 
   const queryParamObj = {
-    sortOrder: context.sortOrderOfCategory,
     pageSize: entriesPerPage,
     page: context.pageNumber,
+    categoryName: context.categorySearch || null,
+    sortOrder: context.sortOrder,
     sortBy: 'name',
   };
 
-  const { data: categoriesList, refetch } = useGetCategories(
-    context.pageNumber,
-    entriesPerPage,
-    context.sortOrder
-  );
+  const { data: categoriesList, refetch } = useGetCategories(queryParamObj);
   const { data: searchResponse, refetch: refetchSearch } =
     useGetCategoryByID(searchID);
 
   useEffect(() => {
     refetch();
-  }, [context.sortOrder, context.pageNumber]);
+  }, [context.sortOrder, context.pageNumber , context.categorySearch]);
 
   const handleCloseUpdate = () => {
     setOpenUpdate(false);

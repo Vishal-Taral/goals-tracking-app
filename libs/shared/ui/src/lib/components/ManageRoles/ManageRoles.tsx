@@ -22,12 +22,16 @@ export interface ManageRoles {
 export function ManageRoles({ tableData }: ManageRoles) {
   const [entriesPerPage, setEntriesPerPage] = useState(5);
   const context = useContext(AppContext);
-  const { data: rolesList, refetch } = useGetRoles(
-    context.pageNumber,
-    entriesPerPage,
-    context.sortByRole,
-    context.sortOrder
-  );
+
+  const payLoadObj = {
+     page : context.pageNumber,
+     pageSize: entriesPerPage,
+     roleName: context.roleNameSearch || null,
+     roleDescription: context.descriptionSearch || null,
+     sortBy: context.sortByRole,
+     sortOrder: context.sortOrder,
+  }
+  const { data: rolesList, refetch } = useGetRoles(payLoadObj);
   const entriesPerPageChangeHandler = (e) => {
     setEntriesPerPage(e.target.value);
   };
@@ -38,7 +42,7 @@ export function ManageRoles({ tableData }: ManageRoles) {
     refetch();
     // console.log('manage role component','context.sortBy',context.sortBy)
 
-  }, [context.pageNumber, context.sortBy, context.sortOrder, context.sortByRole]);
+  }, [context.pageNumber, context.sortBy, context.sortOrder, context.sortByRole , context.roleNameSearch, context.descriptionSearch ]);
 
   const [openUpdatePopup, setOpenUpdatePopup] = useState(false);
   const [updateRoleId, setUpdateRoleId] = useState(null);

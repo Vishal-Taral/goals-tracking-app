@@ -8,15 +8,13 @@ export interface FilterContainerProps {
   labelValue1: any;
   labelValue2: any;
   valueToChecked: any;
+  inputDataForSearchField?: any;
+  onSearch: () => void; 
 }
 
-export function FilterContainer({ labelValue1, labelValue2, valueToChecked }: FilterContainerProps) {
+export function FilterContainer({ labelValue1, labelValue2, valueToChecked , inputDataForSearchField, onSearch }: FilterContainerProps) {
   const router = useRouter()
   const context = useContext(AppContext);
-  const [firstName, setFirstName] = useState(context.firstNameSearch);
-  const [lastName, setLastName] = useState(context.lastNameSearch);
-  const [email, setEmail] = useState(context.emailSearch);
-
 
   const handleSortingChange = (value: string) => {
     if (router.pathname.split('/')[3] == 'users') {
@@ -30,12 +28,6 @@ export function FilterContainer({ labelValue1, labelValue2, valueToChecked }: Fi
     context.setSortOrder(value);
   };
 
-  const handleSearch = () => {
-    // Set the context states with local state values on button click
-    context.setFirstNameSearch(firstName);
-    context.setLastNameSearch(lastName);
-    context.setEmailSearch(email);
-  };
   return (
     <div className={styles.filterContainer}>
       {labelValue1 && labelValue2 && <div>
@@ -90,39 +82,18 @@ export function FilterContainer({ labelValue1, labelValue2, valueToChecked }: Fi
 
       <div className={styles.searching}>
         <h1 className={styles.headings}>Search By</h1>
-        <div className={styles.input_field_section}>
-          <h2>First Name</h2>
-          <input
-            type="text"
-            placeholder="Enter the first name"
-            className={styles.search_inputs}
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
-        </div>
-
-        <div className={styles.input_field_section}>
-          <h2>last Name</h2>
-          <input
-            type="text"
-            placeholder="Enter the last name"
-            className={styles.search_inputs}
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-          />
-        </div>
-
-        <div className={styles.input_field_section}>
-          <h2>Email</h2>
-          <input
-            type="text"
-            placeholder="Enter the email"
-            className={styles.search_inputs}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <Button onClick={handleSearch} variant="contained" size="small" sx={{ mt: 1 }}>
+        {inputDataForSearchField.map((data: any, index: number) => (
+          <div className={styles.input_field_section} key={index}>
+            <h2>{data.label}</h2>
+            <input
+              type="text"
+              placeholder={`Enter the ${data.label}`}
+              className={styles.search_inputs}
+              onChange={(e)=>data.setSearch(e.target.value)}
+            />
+          </div>
+        ))}
+        <Button onClick={onSearch} variant="contained" size="small" sx={{ mt: 1 }}>
           Search
         </Button>
       </div>
