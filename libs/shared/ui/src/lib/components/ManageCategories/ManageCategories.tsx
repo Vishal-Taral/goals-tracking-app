@@ -3,17 +3,10 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import { useState, useContext, useEffect } from 'react';
-import {
-  UpdateCategory,
-  DeleteCategory,
-  CreateCategory,
-  PageNumberContainer,
-} from '@goal-tracker/ui';
-import {
-  useGetCategories,
-  useGetCategoryByID,
-} from '@goal-tracker/data-access';
+import { UpdateCategory, DeleteCategory, CreateCategory, PageNumberContainer } from '@goal-tracker/ui';
+import { useGetCategories, useGetCategoryByID } from '@goal-tracker/data-access';
 import AppContext from '../../contexts/AppContext';
+import NorthIcon from '@mui/icons-material/North';
 
 /* eslint-disable-next-line */
 
@@ -29,6 +22,7 @@ export function ManageCategories({ tableData }: ManageCategories) {
   const [searchID, setSearchID] = useState('');
   const [searchResultDisplay, setSearchResultDisplay] = useState(false);
   const [entriesPerPage, setEntriesPerPage] = useState(5);
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
   const context = useContext(AppContext);
 
@@ -46,7 +40,7 @@ export function ManageCategories({ tableData }: ManageCategories) {
 
   useEffect(() => {
     refetch();
-  }, [context.sortOrder, context.pageNumber , context.categorySearch]);
+  }, [context.sortOrder, context.pageNumber, context.categorySearch]);
 
   const handleCloseUpdate = () => {
     setOpenUpdate(false);
@@ -107,6 +101,17 @@ export function ManageCategories({ tableData }: ManageCategories) {
     setEntriesPerPage(e.target.value);
   };
 
+  const toggleSortOrder = () => {
+    const newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+    context.setSortOrder(newSortOrder);
+    setSortOrder(newSortOrder);
+    refetch({
+      ...queryParamObj,
+      sortOrder: newSortOrder,
+    });
+  };
+
+
   return (
     <div className={styles.container}>
       <div className={styles.categories}>
@@ -160,15 +165,29 @@ export function ManageCategories({ tableData }: ManageCategories) {
       )}
       <div className={styles.user_detail_container}>
         <table className={styles.table}>
-          <thead className={styles.table_headings_section}>
-            <tr>
-              {tableData?.headings?.map((data: any, index: number) => (
-                <th className={styles.headings} key={index}>
-                  {data}
-                </th>
-              ))}
-            </tr>
-          </thead>
+        <thead className={styles.table_headings_section}>
+        <tr>
+          {tableData?.headings?.map((data: any, index: number) => (
+            <th className={styles.headings} key={index}>
+              <div className={styles.heading_contains}>
+                <label>{data}</label>
+                {(index === 1 ) && (
+                  <NorthIcon
+                    className={`${styles.northIcon} ${
+                      index === 1
+                        ? sortOrder === 'asc'
+                          ? styles.toggle_up
+                          : styles.toggle_down
+                        : ''
+                    }`}
+                    onClick={toggleSortOrder}
+                  />
+                )}
+              </div>
+            </th>
+          ))}
+        </tr>
+      </thead>
           <tbody>
             {categoriesList?.data?.map((data: any, index: number) => (
               <tr key={index} className={styles.table_row}>

@@ -101,5 +101,33 @@
       padding: 0.5rem;
       border: 1px solid black;
     }
+    .headings{
+
+      .heading_contains{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .northIcon{
+          color: rgb(157, 81, 228);
+          cursor: pointer;
+          transition: transform 0.3s ease;
+        }
+
+        .toggle_down {
+          animation-name: toggleDown;
+          animation-delay: 0.25s;
+          animation-duration: 0.75s;
+          animation-fill-mode: forwards;
+        }
+    
+        .toggle_up {
+          animation-name: toggleUp;
+          animation-delay: 0.25s;
+          animation-duration: 0.75s;
+          animation-fill-mode: forwards;
+        }
+      }
+    }
   }
 }

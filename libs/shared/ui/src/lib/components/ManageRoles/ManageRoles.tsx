@@ -12,6 +12,7 @@ import UpdateRole from '../UpdateRole/UpdateRole';
 import DeleteRole from '../DeleteRole/DeleteRole';
 import PageNumberContainer from '../PageNumberContainer/PageNumberContainer';
 import AppContext from '../../contexts/AppContext';
+import NorthIcon from '@mui/icons-material/North';
 
 /* eslint-disable-next-line */
 
@@ -53,6 +54,8 @@ export function ManageRoles({ tableData }: ManageRoles) {
   const handleOpenCreatePopup = () => setOpenCreatePopup(true);
   const [searchID, setSearchID] = useState('');
   const [searchResultDisplay, setSearchResultDisplay] = useState(false);
+  const [RoleNameSortOrderArrow, setRoleNameSortOrderArrow] = useState(false);
+  const [descriptionSortOrderArrow, setDescriptionSortOrderArrow] = useState(false);
 
   const updatePopupOpenHandler = (index: number, data: any) => {
     setOpenUpdatePopup(true);
@@ -103,6 +106,26 @@ export function ManageRoles({ tableData }: ManageRoles) {
 
   const cancelDeleteOperation = () => {
     setOpenDeletePopup(false);
+  };
+
+  const toggleSortOrder = (sortByColumn: string) => {
+    let sortOrder;
+    switch (sortByColumn) {
+      case 'name':
+        sortOrder = !RoleNameSortOrderArrow;
+        setRoleNameSortOrderArrow(sortOrder);
+        break;
+      case 'description':
+        sortOrder = !descriptionSortOrderArrow;
+        setDescriptionSortOrderArrow(sortOrder);
+        break;
+      default:
+        sortOrder = false;
+    }
+
+    context.setSortByRole(sortByColumn);
+    context.setSortOrder(sortOrder ? 'asc' : 'desc');
+    refetch();
   };
 
   return (
@@ -158,11 +181,21 @@ export function ManageRoles({ tableData }: ManageRoles) {
 
       <div className={styles.user_detail_container}>
         <table className={styles.table}>
-          <thead className={styles.table_headings_section}>
+        <thead className={styles.table_headings_section}>
             <tr>
               {tableData?.headings?.map((data: any, index: number) => (
                 <th className={styles.headings} key={index}>
-                  {data}
+                  <div className={styles.heading_contains}>
+                    <label>{data}</label>
+                    {(index === 1 || index === 2) && (
+                      <NorthIcon
+                        className={`${styles.northIcon} ${index === 1 ? (RoleNameSortOrderArrow ? styles.toggle_up : styles.toggle_down)
+                            : (descriptionSortOrderArrow ? styles.toggle_up : styles.toggle_down)
+                          }`}
+                        onClick={() => toggleSortOrder(index === 1 ? 'name' : 'description')}
+                      />
+                    )}
+                  </div>
                 </th>
               ))}
             </tr>
