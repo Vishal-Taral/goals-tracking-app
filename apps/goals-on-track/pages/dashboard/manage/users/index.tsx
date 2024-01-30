@@ -37,18 +37,6 @@ export function Users(props: UsersProps) {
     ],
     rows: usersList,
   };
-  const labelValue1={label: 'First name',value: 'firstName'}
-  const labelValue2={label: 'Last name',value: 'lastName'}
-
-  const handleSortingChange = (value: string) => {
-    context.setSortBy(value);
-  };
-
-  const handleOrderChange = (value: string) => {
-    context.setSortOrder(value);
-  };
-
-  const valueToChecked = context.sortBy;
 
   const inputDataForSearchField = [
     {
@@ -75,9 +63,6 @@ export function Users(props: UsersProps) {
         <div className={styles.dashboard_page_container}>
           <div className={styles.header_and_user_detail_section}>
             <FilterContainer 
-              labelValue1={labelValue1} 
-              labelValue2={labelValue2} 
-              valueToChecked={valueToChecked}
               inputDataForSearchField={inputDataForSearchField} 
               onSearch={handleSearch}
             />

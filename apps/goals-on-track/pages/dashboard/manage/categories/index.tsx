@@ -16,15 +16,6 @@ const Categories = () => {
     rows: categoriesList,
   };
 
-  // const handleSortingChange = (value: string) => {
-  //   context.setSortBy(value);
-  // };
-
-  const handleOrderChange = (value: string) => {
-    context.setSortOrderOfCategory(value);
-  };
-
-  const valueToChecked = context.sortOrderOfCategory;
   const inputDataForSearchField = [
     {
       value : 'name',
@@ -43,14 +34,8 @@ const Categories = () => {
         <div className={styles.dashboard_page_container}>
           <div className={styles.header_and_user_detail_section}>
           <FilterContainer 
-              // onSortingChange={handleSortingChange}
-              // onOrderChange={handleOrderChange}
-              // valueToChecked={valueToChecked}
-              labelValue1={undefined} 
-              labelValue2={undefined}
               inputDataForSearchField={inputDataForSearchField}
               onSearch={handleSearch}
-              valueToChecked={undefined} 
             />
             <ErrorHandler>
               <ManageCategories tableData={categories} />
