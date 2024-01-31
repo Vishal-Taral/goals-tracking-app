@@ -16,13 +16,13 @@ export function PrivateLayout(props: PrivateLayoutProps) {
   const router = useRouter();
   useEffect(() => {
     if (context?.manage == 'Manage Roles') {
-      router.push('./roles');
+      router.push('http://localhost:4200/dashboard/manage/roles');
     } else if (context?.manage == 'Manage Categories') {
-      router.push('./categories');
+      router.push('http://localhost:4200/dashboard/manage/categories');
     } else if (context?.manage == 'Manage Users') {
-      router.push('./users');
+      router.push('http://localhost:4200/dashboard/manage/users');
     } else if (context?.manage == 'Account') {
-      router.push('./Account');
+      router.push('http://localhost:4200/Account');
     }
   }, [context?.manage]);
   return (
