@@ -39,30 +39,29 @@ export function Users(props: UsersProps) {
 
   const inputDataForSearchField = [
     {
-      value : 'firstName',
-      label : 'First Name',
-      setSearch: setSearchFirstName
+      value: 'firstName',
+      label: 'First Name',
+      setSearch: setSearchFirstName,
     },
     {
-      value : 'lastName',
-      label : 'Last Name',
-      setSearch:setSearchLastName,
+      value: 'lastName',
+      label: 'Last Name',
+      setSearch: setSearchLastName,
     },
     {
-      value : 'email',
-      label : 'Email',
-      setSearch:setSearchEmail
+      value: 'email',
+      label: 'Email',
+      setSearch: setSearchEmail,
     },
-  ]
-  
+  ];
 
   return (
     <div className={styles.container}>
       <PrivateLayout>
         <div className={styles.dashboard_page_container}>
           <div className={styles.header_and_user_detail_section}>
-            <FilterContainer 
-              inputDataForSearchField={inputDataForSearchField} 
+            <FilterContainer
+              inputDataForSearchField={inputDataForSearchField}
               onSearch={handleSearch}
             />
             <ErrorHandler>

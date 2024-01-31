@@ -24,7 +24,7 @@ export function PrivateLayout(props: PrivateLayoutProps) {
     } else if (context?.manage == 'Account') {
       router.push('http://localhost:4200/Account');
     }
-  }, [context?.manage,router]);
+  }, [context?.manage]);
   return (
     <div className={styles.privateLayout}>
       <div className={styles.privateLayout_left}>
