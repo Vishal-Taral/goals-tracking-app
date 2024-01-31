@@ -1,5 +1,9 @@
 import { useGetCategories } from '@goal-tracker/data-access';
-import { ErrorHandler, FilterContainer, ManageCategories } from '@goal-tracker/ui';
+import {
+  ErrorHandler,
+  FilterContainer,
+  ManageCategories,
+} from '@goal-tracker/ui';
 import PrivateLayout from 'apps/goals-on-track/component/common/privateLayout/private-layout';
 import { useContext, useState } from 'react';
 import styles from './index.module.scss';
@@ -17,11 +21,11 @@ const Categories = () => {
 
   const inputDataForSearchField = [
     {
-      value : 'name',
-      label : 'Category Name',
-      setSearch: setCategoryName
+      value: 'name',
+      label: 'Category Name',
+      setSearch: setCategoryName,
     },
-  ]
+  ];
 
   const handleSearch = () => {
     context?.setCategorySearch(searchCategoryName);
@@ -31,7 +35,7 @@ const Categories = () => {
       <PrivateLayout>
         <div className={styles.dashboard_page_container}>
           <div className={styles.header_and_user_detail_section}>
-          <FilterContainer 
+            <FilterContainer
               inputDataForSearchField={inputDataForSearchField}
               onSearch={handleSearch}
             />
