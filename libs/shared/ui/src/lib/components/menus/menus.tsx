@@ -1,5 +1,5 @@
 import styles from './menus.module.scss';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -15,8 +15,8 @@ import AppContext from '../../contexts/AppContext';
 export interface MenusProps { }
 
 export function Menus(props: MenusProps) {
-
-  const context = useContext(AppContext)
+  const [selectedMenu, setSelectedMenu] = useState<string | null>(null);
+  const context = useContext<any>(AppContext)
 
   const menusData = [
     {
@@ -55,9 +55,9 @@ export function Menus(props: MenusProps) {
     }
   ];
 
-  const manageClickHandler = (titleObj : any , event : any) => {
-    event.stopPropagation();
-    context.setManage(titleObj?.title)
+  const manageClickHandler = (titleObj: any, e: any) => {
+    e.stopPropagation();
+    context.setManage(titleObj?.title);
   }
 
   return (
@@ -77,10 +77,11 @@ export function Menus(props: MenusProps) {
             </AccordionSummary>
 
             {data?.titleArray?.map((titles, index) => (
-              <AccordionDetails key={index}>
-                <Typography onClick={(event) => manageClickHandler(titles , event)} style={{cursor:'pointer'}}>{titles.title}</Typography>
-              </AccordionDetails>
+            <AccordionDetails className={context.manage === titles.title ? styles.selected_menu : ''} key={index}>
+                <Typography key={index} onClick={(e) => manageClickHandler(titles, e)} style={{ cursor: 'pointer' }}>{titles.title}</Typography>
+            </AccordionDetails>
             ))}
+
           </Accordion>
         ))}
       </div>
