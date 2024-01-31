@@ -28,8 +28,8 @@ const Roles = () => {
   ]
 
   const handleSearch = () => {
-    context.setRoleNameSearch(searchRoleName);
-    context.setDescriptionSearch(searchDescription);
+    context?.setRoleNameSearch(searchRoleName);
+    context?.setDescriptionSearch(searchDescription);
   };
 
   return (

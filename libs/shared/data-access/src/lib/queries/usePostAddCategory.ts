@@ -1,5 +1,6 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { apiClient, apiUrlObject } from '@goal-tracker/data-access';
+import { useMutation } from '@tanstack/react-query';
+import { apiClient } from '../api-client';
+import { apiUrlObject } from '../api-end-points';
 
 const createCategory: any = async (categoryName: string): Promise<any> => {
   const url = `${apiUrlObject.addCategory}`;
@@ -9,6 +10,5 @@ const createCategory: any = async (categoryName: string): Promise<any> => {
 const QUERY_KEY = ['createCategory'];
 
 export const usePostAddCategory = (payload : any) => {
-  const queryClient = useQueryClient();
   return useMutation({ mutationKey: QUERY_KEY, mutationFn: (categoryName: string) => createCategory(categoryName) , onSuccess: () => payload.success() });
 };

@@ -12,8 +12,7 @@ export function PageNumberContainer({ totalPages } : PageNumberContainerProps) {
 
   const pageNumberHandler = (e : any) => {
     const selectedPage = parseInt(e.target.innerText, 10);
-    console.log(selectedPage);
-    context.setPageNumber(selectedPage);
+    context?.setPageNumber(selectedPage);
     setActivePage(selectedPage);
   };
 
@@ -22,7 +21,6 @@ export function PageNumberContainer({ totalPages } : PageNumberContainerProps) {
 
   return (
     <span className={styles.pageNumber_container}>
-      {/* <div className={styles.pageNumber}>Prev</div> */}
       {pages.map((data, index) => (
         <div
           className={`${styles.pageNumber} ${activePage === data ? styles.activePage : ''}`}
@@ -32,7 +30,6 @@ export function PageNumberContainer({ totalPages } : PageNumberContainerProps) {
           {data}
         </div>
       ))}
-      {/* <div className={styles.pageNumber}>Next</div> */}
     </span>
   );
 }

@@ -3,7 +3,6 @@ import { ErrorHandler, FilterContainer } from '@goal-tracker/ui';
 import styles from './index.module.scss';
 import { useGetUsers } from '@goal-tracker/data-access';
 import PrivateLayout from 'apps/goals-on-track/component/common/privateLayout/private-layout';
-import HOCAuth from 'libs/shared/ui/src/lib/components/HOCAuth/HOCAuth';
 import { ManageUsers } from 'libs/shared/ui/src/lib/components/manageUsers/ManageUsers';
 import AppContext from 'libs/shared/ui/src/lib/contexts/AppContext';
 
@@ -18,9 +17,9 @@ export function Users(props: UsersProps) {
   const [searchEmail, setSearchEmail] = useState('');
 
   const handleSearch = () => {
-    context.setFirstNameSearch(searchFirstName);
-    context.setLastNameSearch(searchLastName);
-    context.setEmailSearch(searchEmail);
+    context?.setFirstNameSearch(searchFirstName);
+    context?.setLastNameSearch(searchLastName);
+    context?.setEmailSearch(searchEmail);
   };
 
   const users: any = {
