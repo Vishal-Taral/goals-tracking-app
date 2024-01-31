@@ -114,21 +114,16 @@
         .northIcon{
           color: rgb(157, 81, 228);
           cursor: pointer;
-          transition: transform 0.3s ease;
         }
 
         .toggle_down {
-          animation-name: toggleDown;
-          animation-delay: 0.25s;
-          animation-duration: 0.75s;
-          animation-fill-mode: forwards;
+          transform: rotate(180deg);
+          transition: transform 0.50s linear;
         }
-    
+
         .toggle_up {
-          animation-name: toggleUp;
-          animation-delay: 0.25s;
-          animation-duration: 0.75s;
-          animation-fill-mode: forwards;
+          transform: rotate(0deg);
+          transition: transform 0.50s linear;
         }
       }
     }
