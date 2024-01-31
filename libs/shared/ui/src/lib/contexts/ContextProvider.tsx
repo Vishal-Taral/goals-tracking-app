@@ -1,8 +1,8 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import { useState } from 'react';
 import AppContext from './AppContext';
-import { useRouter } from 'next/router';
 
 const ContextProvider = (props: any) => {
+<<<<<<< Updated upstream
   // const [pathName, setpathName] = useState('');
   // const router = useRouter();
   // useLayoutEffect(() => {
@@ -28,6 +28,15 @@ const ContextProvider = (props: any) => {
   // console.log('in context component','sortBy',sortBy)
   const [sortOrderOfCategory, setSortOrderOfCategory] = useState('asc');
   // const [sortByOfCategory, setSortByOfCategory] = useState('firstName');
+=======
+  const [manage, setManage] = useState<string>('');
+  const [pageNumber, setPageNumber] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(1);
+  const [sortOrder, setSortOrder] = useState<string>('asc');
+  const [sortBy, setSortBy] = useState<string>('firstName');
+  const [sortByRole, setSortByRole] = useState<string>('name');
+  const [sortOrderOfCategory, setSortOrderOfCategory] = useState<string>('asc');
+>>>>>>> Stashed changes
 
   return (
     <AppContext.Provider
