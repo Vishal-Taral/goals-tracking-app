@@ -1,7 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
-import AppContext from '../../contexts/AppContext';
 import styles from './FilterContainer.module.scss';
-import { useRouter } from 'next/router';
 import Button from '@mui/material/Button';
 
 export interface FilterContainerProps {
@@ -10,21 +7,6 @@ export interface FilterContainerProps {
 }
 
 export function FilterContainer({ inputDataForSearchField, onSearch }: FilterContainerProps) {
-  const router = useRouter()
-  const context = useContext(AppContext);
-
-  const handleSortingChange = (value: string) => {
-    if (router.pathname.split('/')[3] == 'users') {
-      context.setSortBy(value);
-    } else if (router.pathname.split('/')[3] == 'roles') {
-      context.setSortByRole(value);
-    }
-  };
-
-  const handleOrderChange = (value: string) => {
-    context.setSortOrder(value);
-  };
-
   return (
     <div className={styles.filterContainer}>
       <div className={styles.searching}>

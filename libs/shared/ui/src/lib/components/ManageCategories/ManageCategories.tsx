@@ -28,9 +28,9 @@ export function ManageCategories({ tableData }: ManageCategories) {
 
   const queryParamObj = {
     pageSize: entriesPerPage,
-    page: context.pageNumber,
-    categoryName: context.categorySearch || null,
-    sortOrder: context.sortOrder,
+    page: context?.pageNumber,
+    categoryName: context?.categorySearch || null,
+    sortOrder: context?.sortOrder,
     sortBy: 'name',
   };
 
@@ -40,7 +40,7 @@ export function ManageCategories({ tableData }: ManageCategories) {
 
   useEffect(() => {
     refetch();
-  }, [context.sortOrder, context.pageNumber, context.categorySearch]);
+  }, [context?.sortOrder, context?.pageNumber, context?.categorySearch]);
 
   const handleCloseUpdate = () => {
     setOpenUpdate(false);
@@ -103,7 +103,7 @@ export function ManageCategories({ tableData }: ManageCategories) {
 
   const toggleSortOrder = () => {
     const newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
-    context.setSortOrder(newSortOrder);
+    context?.setSortOrder(newSortOrder);
     setSortOrder(newSortOrder);
     refetch({
       ...queryParamObj,

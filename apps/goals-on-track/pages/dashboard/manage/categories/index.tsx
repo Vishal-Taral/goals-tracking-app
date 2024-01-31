@@ -1,13 +1,12 @@
 import { useGetCategories } from '@goal-tracker/data-access';
 import { ErrorHandler, FilterContainer, ManageCategories } from '@goal-tracker/ui';
 import PrivateLayout from 'apps/goals-on-track/component/common/privateLayout/private-layout';
-import HOCAuth from 'libs/shared/ui/src/lib/components/HOCAuth/HOCAuth';
 import { useContext, useState } from 'react';
 import styles from './index.module.scss';
 import AppContext from 'libs/shared/ui/src/lib/contexts/AppContext';
 
 const Categories = () => {
-  const { data: categoriesList, isError } = useGetCategories();
+  const { data: categoriesList } = useGetCategories();
   const context = useContext(AppContext);
   const [searchCategoryName, setCategoryName] = useState('');
 
@@ -25,8 +24,7 @@ const Categories = () => {
   ]
 
   const handleSearch = () => {
-    context.setCategorySearch(searchCategoryName);
-    console.log(context.categorySearch);
+    context?.setCategorySearch(searchCategoryName);
   };
   return (
     <div className={styles.container}>

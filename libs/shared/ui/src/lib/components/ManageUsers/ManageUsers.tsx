@@ -43,8 +43,8 @@ export function ManageUsers({ tableData }: ManageCategories) {
         sortOrder = false;
     }
 
-    context.setSortBy(sortByColumn);
-    context.setSortOrder(sortOrder ? 'asc' : 'desc');
+    context?.setSortBy(sortByColumn);
+    context?.setSortOrder(sortOrder ? 'asc' : 'desc');
     refetch();
   };
 
@@ -52,24 +52,24 @@ export function ManageUsers({ tableData }: ManageCategories) {
   const [entriesPerPage, setEntriesPerPage] = useState(5);
 
   const queryParamObject = {
-    page: context.pageNumber,
+    page: context?.pageNumber,
     pageSize: entriesPerPage,
-    lastName: context.lastNameSearch || null,
-    firstName: context.firstNameSearch || null,
-    email: context.emailSearch || null,
-    sortBy: context.sortBy,
-    sortOrder: context.sortOrder
+    lastName: context?.lastNameSearch || null,
+    firstName: context?.firstNameSearch || null,
+    email: context?.emailSearch || null,
+    sortBy: context?.sortBy,
+    sortOrder: context?.sortOrder
   }
 
   const { data: usersList, refetch } = useGetUsers(queryParamObject);
 
   const payLoadObj = {
-    page: context.pageNumber,
+    page: context?.pageNumber,
     pageSize: entriesPerPage,
-    roleName: context.roleNameSearch || null,
-    roleDescription: context.descriptionSearch || null,
-    sortBy: context.sortByRole,
-    sortOrder: context.sortOrder,
+    roleName: context?.roleNameSearch || null,
+    roleDescription: context?.descriptionSearch || null,
+    sortBy: context?.sortByRole,
+    sortOrder: context?.sortOrder,
   }
 
   const { data: roles } = useGetRoles(payLoadObj);
@@ -78,9 +78,9 @@ export function ManageUsers({ tableData }: ManageCategories) {
 
   useEffect(() => {
     refetch()
-    console.log('manage user component', 'context.sortBy', context.sortBy)
+    console.log('manage user component', 'context?.sortBy', context?.sortBy)
 
-  }, [context.pageNumber, context.sortBy, context.sortOrder, context.lastNameSearch, context.firstNameSearch, context.emailSearch])
+  }, [context?.pageNumber, context?.sortBy, context?.sortOrder, context?.lastNameSearch, context?.firstNameSearch, context?.emailSearch])
 
   const handleCloseCreatePopup = () => {
     setOpenCreatePopup(false);

@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import styles from './ManageRoles.module.scss';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
@@ -25,12 +23,12 @@ export function ManageRoles({ tableData }: ManageRoles) {
   const context = useContext(AppContext);
 
   const payLoadObj = {
-     page : context.pageNumber,
+     page : context?.pageNumber,
      pageSize: entriesPerPage,
-     roleName: context.roleNameSearch || null,
-     roleDescription: context.descriptionSearch || null,
-     sortBy: context.sortByRole,
-     sortOrder: context.sortOrder,
+     roleName: context?.roleNameSearch || null,
+     roleDescription: context?.descriptionSearch || null,
+     sortBy: context?.sortByRole,
+     sortOrder: context?.sortOrder,
   }
   const { data: rolesList, refetch } = useGetRoles(payLoadObj);
   const entriesPerPageChangeHandler = (e) => {
@@ -41,9 +39,7 @@ export function ManageRoles({ tableData }: ManageRoles) {
   };
   useEffect(() => {
     refetch();
-    // console.log('manage role component','context.sortBy',context.sortBy)
-
-  }, [context.pageNumber, context.sortBy, context.sortOrder, context.sortByRole , context.roleNameSearch, context.descriptionSearch ]);
+  }, [context?.pageNumber, context?.sortBy, context?.sortOrder, context?.sortByRole , context?.roleNameSearch, context?.descriptionSearch ]);
 
   const [openUpdatePopup, setOpenUpdatePopup] = useState(false);
   const [updateRoleId, setUpdateRoleId] = useState(null);
@@ -123,8 +119,8 @@ export function ManageRoles({ tableData }: ManageRoles) {
         sortOrder = false;
     }
 
-    context.setSortByRole(sortByColumn);
-    context.setSortOrder(sortOrder ? 'asc' : 'desc');
+    context?.setSortByRole(sortByColumn);
+    context?.setSortOrder(sortOrder ? 'asc' : 'desc');
     refetch();
   };
 

@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '../api-client';
 import { apiUrlObject } from '../api-end-points';
-import { QueryParamsObj } from '@goal-tracker/data-access';
 
 const getAllUsers = async (queryparams:any): Promise<any> => {
   const response = await apiClient.get(apiUrlObject.getAllUsers, {params:queryparams});
