@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import styles from './ManageRoles.module.scss';
+import styles from './ManageGoals.module.scss';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
@@ -13,12 +12,11 @@ import AppContext from '../../contexts/AppContext';
 import NorthIcon from '@mui/icons-material/North';
 
 /* eslint-disable-next-line */
-
-export interface ManageRoles {
-  tableData: any;
+export interface ManageGoalsProps {
+  tableData: any
 }
 
-export function ManageRoles({ tableData }: ManageRoles) {
+export function ManageGoals({tableData}) {
   const [entriesPerPage, setEntriesPerPage] = useState(5);
   const context = useContext(AppContext);
 
@@ -121,7 +119,6 @@ export function ManageRoles({ tableData }: ManageRoles) {
     context?.setSortOrder(sortOrder ? 'asc' : 'desc');
     refetch();
   };
-
   return (
     <div className={styles.container}>
       <div className={styles.categories}>
@@ -256,4 +253,4 @@ export function ManageRoles({ tableData }: ManageRoles) {
   );
 }
 
-export default ManageRoles;
+export default ManageGoals;

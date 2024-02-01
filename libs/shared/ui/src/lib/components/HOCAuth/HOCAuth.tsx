@@ -1,6 +1,5 @@
 import React, { useState, useLayoutEffect } from 'react';
 import { useRouter } from 'next/router';
-import Footer from '../footer/footer';
 import Login from '../Login/Login';
 import Loader from '../Loader/Loader';
 
