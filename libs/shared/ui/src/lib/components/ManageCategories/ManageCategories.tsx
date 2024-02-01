@@ -10,11 +10,11 @@ import NorthIcon from '@mui/icons-material/North';
 
 /* eslint-disable-next-line */
 
-export interface ManageCategories {
+export interface ManageCategoriesProps {
   tableData: any;
 }
 
-export function ManageCategories({ tableData }: ManageCategories) {
+export function ManageCategories({ tableData }: ManageCategoriesProps) {
   const [openUpdate, setOpenUpdate] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [selectedRowIndex, setSelectedRowIndex] = useState<string | null>(null);

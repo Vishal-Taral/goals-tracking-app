@@ -1,9 +1,8 @@
 import React, { useContext, useState } from 'react';
-import { ErrorHandler, FilterContainer } from '@goal-tracker/ui';
+import { ErrorHandler, FilterContainer, ManageUsers } from '@goal-tracker/ui';
 import styles from './index.module.scss';
 import { useGetUsers } from '@goal-tracker/data-access';
 import PrivateLayout from 'apps/goals-on-track/component/common/privateLayout/private-layout';
-import { ManageUsers } from 'libs/shared/ui/src/lib/components/manageUsers/ManageUsers';
 import AppContext from 'libs/shared/ui/src/lib/contexts/AppContext';
 
 /* eslint-disable-next-line */
