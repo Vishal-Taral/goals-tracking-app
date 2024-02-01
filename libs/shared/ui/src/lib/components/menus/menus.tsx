@@ -64,7 +64,7 @@ export function Menus(props: MenusProps) {
     <div className={styles.container}>
       <div className={styles.menus_container}>
         {menusData.map((data, index) => (
-          <Accordion key={index}>
+          <Accordion key={index} defaultExpanded>
             <AccordionSummary
               expandIcon={data?.titleArray && data?.titleArray?.length > 0 && (<ExpandMoreIcon />)}
               aria-controls="panel1a-content"

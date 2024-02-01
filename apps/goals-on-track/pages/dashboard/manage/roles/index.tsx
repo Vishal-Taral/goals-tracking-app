@@ -1,6 +1,5 @@
 import { ErrorHandler, FilterContainer, ManageRoles } from '@goal-tracker/ui';
 import PrivateLayout from 'apps/goals-on-track/component/common/privateLayout/private-layout';
-import HOCAuth from 'libs/shared/ui/src/lib/components/HOCAuth/HOCAuth';
 import { useContext, useState } from 'react';
 import styles from './index.module.scss';
 import AppContext from 'libs/shared/ui/src/lib/contexts/AppContext';
