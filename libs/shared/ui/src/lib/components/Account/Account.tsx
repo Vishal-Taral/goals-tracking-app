@@ -5,7 +5,7 @@ import styles from './Account.module.scss';
 export interface AccountProps {}
 
 export function Account(props: AccountProps) {
-  const { data } = useGetUserAuthorization();
+  const { data }: any = useGetUserAuthorization();
   return (
     <div className={styles.account}>
       <div className={styles.row}>

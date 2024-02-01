@@ -35,7 +35,7 @@ export function ManageCategories({ tableData }: ManageCategoriesProps) {
   };
 
   const { data: categoriesList, refetch } = useGetCategories(queryParamObj);
-  const { data: searchResponse, refetch: refetchSearch } =
+  const { data: searchResponse, refetch: refetchSearch }:any =
     useGetCategoryByID(searchID);
 
   useEffect(() => {
@@ -97,19 +97,19 @@ export function ManageCategories({ tableData }: ManageCategoriesProps) {
     refetch();
   };
 
-  const entriesPerPageChangeHandler = (e) => {
+  const entriesPerPageChangeHandler = (e:any) => {
     setEntriesPerPage(e.target.value);
   };
 
-  const toggleSortOrder = () => {
-    const newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
-    context?.setSortOrder(newSortOrder);
-    setSortOrder(newSortOrder);
-    refetch({
-      ...queryParamObj,
-      sortOrder: newSortOrder,
-    });
-  };
+  // const toggleSortOrder = () => {
+  //   const newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+  //   context?.setSortOrder(newSortOrder);
+  //   setSortOrder(newSortOrder);
+  //   refetch({
+  //     ...queryParamObj,
+  //     sortOrder: newSortOrder,
+  //   });
+  // };
 
 
   return (
@@ -180,7 +180,7 @@ export function ManageCategories({ tableData }: ManageCategoriesProps) {
                           : styles.toggle_down
                         : ''
                     }`}
-                    onClick={toggleSortOrder}
+                    // onClick={toggleSortOrder}
                   />
                 )}
               </div>
