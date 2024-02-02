@@ -27,7 +27,7 @@ export function Header(props: HeaderProps) {
   }, []);
 
   const [anchorEl, setAnchorEl] = useState(null);
-  const accountHandler = (event) => {
+  const accountHandler = (event : any) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
   };
   const popoverOpen = Boolean(anchorEl);

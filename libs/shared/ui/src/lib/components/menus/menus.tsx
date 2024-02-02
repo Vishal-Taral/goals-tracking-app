@@ -7,7 +7,6 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SportsScoreIcon from '@mui/icons-material/SportsScore';
-
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import AppContext from '../../contexts/AppContext';
 
@@ -15,7 +14,6 @@ import AppContext from '../../contexts/AppContext';
 export interface MenusProps { }
 
 export function Menus(props: MenusProps) {
-  const [selectedMenu, setSelectedMenu] = useState<string | null>(null);
   const context = useContext<any>(AppContext)
 
   const menusData = [
@@ -28,12 +26,15 @@ export function Menus(props: MenusProps) {
       icon: <ManageSearchIcon />,
       titleArray: [
         {
+          id:1,
           title: 'Manage Categories',
         },
         {
+          id:2,
           title: 'Manage Roles',
         },
         {
+          id:3,
           title: 'Manage Users',
         }
       ],
@@ -43,28 +44,35 @@ export function Menus(props: MenusProps) {
       icon: <SettingsIcon />,
       titleArray: [
         {
+          id:4,
           title: 'Account',
         },
         {
+          id:5,
           title: 'Notification',
         },
         {
+          id:6,
           title: 'App language',
         }
       ],
     }
   ];
 
+  console.log(context.manage);
+  
   const manageClickHandler = (titleObj: any, e: any) => {
     e.stopPropagation();
-    context.setManage(titleObj?.title);
+    context.setManage(titleObj);
+    console.log(titleObj);
+    
   }
 
   return (
     <div className={styles.container}>
       <div className={styles.menus_container}>
         {menusData.map((data, index) => (
-          <Accordion key={index}>
+          <Accordion key={index} >
             <AccordionSummary
               expandIcon={data?.titleArray && data?.titleArray?.length > 0 && (<ExpandMoreIcon />)}
               aria-controls="panel1a-content"
@@ -77,8 +85,8 @@ export function Menus(props: MenusProps) {
             </AccordionSummary>
 
             {data?.titleArray?.map((titles, index) => (
-            <AccordionDetails className={context.manage === titles.title ? styles.selected_menu : ''} key={index}>
-                <Typography key={index} onClick={(e) => manageClickHandler(titles, e)} style={{ cursor: 'pointer' }}>{titles.title}</Typography>
+            <AccordionDetails className={context.manage === titles.id ? styles.selected_menu : ''} key={index}>
+                <Typography key={index} onClick={(e) => manageClickHandler(titles.id, e)} style={{ cursor: 'pointer' }}>{titles.title}</Typography>
             </AccordionDetails>
             ))}
 
