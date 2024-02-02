@@ -119,6 +119,13 @@ export function ManageGoals({tableData}:ManageGoalsProps) {
     context?.setSortOrder(sortOrder ? 'asc' : 'desc');
     refetch();
   };
+
+  const dateConvert = (dateString : any) => {
+    const date = new Date(dateString);
+    const convertedDate = date.toLocaleDateString();
+    return convertedDate;
+  }
+  
   return (
     <div className={styles.container}>
       <div className={styles.categories}>
@@ -197,6 +204,9 @@ export function ManageGoals({tableData}:ManageGoalsProps) {
                 <td className={styles.table_data}>{data.roleId}</td>
                 <td className={styles.table_data}>{data.name}</td>
                 <td className={styles.table_data}>{data.description}</td>
+                <td className={styles.table_data}>In Progress</td>
+                <td className={styles.table_data}>{dateConvert('02 02 2024')}</td>
+                <td className={styles.table_data}>{dateConvert('05 03 2024')}</td>
                 <td className={styles.table_data_icon}>
                   <span
                     className={styles.icons}

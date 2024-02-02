@@ -101,15 +101,11 @@ export function ManageCategories({ tableData }: ManageCategoriesProps) {
     setEntriesPerPage(e.target.value);
   };
 
-  // const toggleSortOrder = () => {
-  //   const newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
-  //   context?.setSortOrder(newSortOrder);
-  //   setSortOrder(newSortOrder);
-  //   refetch({
-  //     ...queryParamObj,
-  //     sortOrder: newSortOrder,
-  //   });
-  // };
+  const toggleSortOrder = () => {
+    const newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+    context?.setSortOrder(newSortOrder);
+    setSortOrder(newSortOrder);
+  };
 
 
   return (
@@ -180,7 +176,7 @@ export function ManageCategories({ tableData }: ManageCategoriesProps) {
                           : styles.toggle_down
                         : ''
                     }`}
-                    // onClick={toggleSortOrder}
+                    onClick={toggleSortOrder}
                   />
                 )}
               </div>
