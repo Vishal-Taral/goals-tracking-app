@@ -16,7 +16,7 @@ export interface ManageGoalsProps {
   tableData: any
 }
 
-export function ManageGoals({tableData}) {
+export function ManageGoals({tableData}:ManageGoalsProps) {
   const [entriesPerPage, setEntriesPerPage] = useState(5);
   const context = useContext(AppContext);
 
@@ -123,7 +123,7 @@ export function ManageGoals({tableData}) {
     <div className={styles.container}>
       <div className={styles.categories}>
         <Button variant="outlined" onClick={handleOpenCreatePopup}>
-          Add Role
+          Add Goal
         </Button>
       </div>
       <div className={styles.searchBlock}>

@@ -19,22 +19,25 @@ export function Menus(props: MenusProps) {
   const context = useContext<any>(AppContext)
 
   const menusData = [
-    {
-      type: 'Your goals',
-      icon: <SportsScoreIcon />
-    },
+    // {
+    //   type: 'Your goals',
+    //   icon: <SportsScoreIcon />
+    // },
     {
       type: 'Manage',
       icon: <ManageSearchIcon />,
       titleArray: [
         {
-          title: 'Manage Categories',
+          title: 'Categories',
         },
         {
-          title: 'Manage Roles',
+          title: 'Roles',
         },
         {
-          title: 'Manage Users',
+          title: 'Users',
+        },
+        {
+          title: 'Goals'
         }
       ],
     },
