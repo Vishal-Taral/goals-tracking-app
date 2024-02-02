@@ -38,7 +38,7 @@ export function Login(props: LoginProps) {
   const [successMassage, setSuccessMassage] = useState<string | null>(null);
 
   const [loginCredentials, setLoginCredentials] = useState({});
-  const responseData = usePostLogin(loginCredentials);
+  const responseData: any = usePostLogin(loginCredentials);
   const {data: userAuthorization, refetch: refetchUserAuthorization} = useGetUserAuthorization()
 
   const onSubmit: SubmitHandler<FormData> = async (data: any) => {

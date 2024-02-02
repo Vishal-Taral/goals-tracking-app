@@ -17,7 +17,7 @@ export interface UpdateRoleProps {
 }
 
 export function UpdateRole({ open, handleClose, updateRoleId, prefilledInputData, rolesList, cancelUpdateOperation }: UpdateRoleProps) {
-  const { register, handleSubmit, setValue, getValues, formState: { errors } } = useForm();
+  const { register, handleSubmit, setValue, getValues, formState: { errors } }:any = useForm();
 
   const [updatePopupData, setUpdatePopupData] = useState({
     name: prefilledInputData?.name,
@@ -69,7 +69,7 @@ export function UpdateRole({ open, handleClose, updateRoleId, prefilledInputData
                     className={styles.input_fields}
                     {...register("roleName", {
                       required: 'Role name is required',
-                      validate: value => {
+                      validate: (value:any) => {
                         const lowerCaseValue = value.toLowerCase();
                         return (
                           !rolesList?.data?.some((category: any) => category.name.toLowerCase() === lowerCaseValue) ||
@@ -79,7 +79,7 @@ export function UpdateRole({ open, handleClose, updateRoleId, prefilledInputData
                     })}
                   />
                 </div>
-                {errors.roleName && <p className={styles.error}>{errors.roleName.message}</p>}
+                {errors.roleName && <p className={styles.error}>{errors?.roleName?.message}</p>}
               </div>
 
               <div className={styles.label_and_inputs}>
@@ -94,7 +94,7 @@ export function UpdateRole({ open, handleClose, updateRoleId, prefilledInputData
                     className={styles.input_fields}
                     {...register("description", {
                       required: 'Description is required',
-                      validate: value => {
+                      validate: (value:any) => {
                         const lowerCaseValue = value.toLowerCase();
                         return (
                           !rolesList?.data?.some((category: any) => category.description.toLowerCase() === lowerCaseValue) ||

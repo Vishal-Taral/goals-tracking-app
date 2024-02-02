@@ -10,11 +10,11 @@ import NorthIcon from '@mui/icons-material/North';
 
 /* eslint-disable-next-line */
 
-export interface ManageCategories {
+export interface ManageCategoriesProps {
   tableData: any;
 }
 
-export function ManageCategories({ tableData }: ManageCategories) {
+export function ManageCategories({ tableData }: ManageCategoriesProps) {
   const [openUpdate, setOpenUpdate] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [selectedRowIndex, setSelectedRowIndex] = useState<string | null>(null);
@@ -35,7 +35,7 @@ export function ManageCategories({ tableData }: ManageCategories) {
   };
 
   const { data: categoriesList, refetch } = useGetCategories(queryParamObj);
-  const { data: searchResponse, refetch: refetchSearch } =
+  const { data: searchResponse, refetch: refetchSearch }:any =
     useGetCategoryByID(searchID);
 
   useEffect(() => {
@@ -97,19 +97,19 @@ export function ManageCategories({ tableData }: ManageCategories) {
     refetch();
   };
 
-  const entriesPerPageChangeHandler = (e) => {
+  const entriesPerPageChangeHandler = (e:any) => {
     setEntriesPerPage(e.target.value);
   };
 
-  const toggleSortOrder = () => {
-    const newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
-    context?.setSortOrder(newSortOrder);
-    setSortOrder(newSortOrder);
-    refetch({
-      ...queryParamObj,
-      sortOrder: newSortOrder,
-    });
-  };
+  // const toggleSortOrder = () => {
+  //   const newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+  //   context?.setSortOrder(newSortOrder);
+  //   setSortOrder(newSortOrder);
+  //   refetch({
+  //     ...queryParamObj,
+  //     sortOrder: newSortOrder,
+  //   });
+  // };
 
 
   return (
@@ -180,7 +180,7 @@ export function ManageCategories({ tableData }: ManageCategories) {
                           : styles.toggle_down
                         : ''
                     }`}
-                    onClick={toggleSortOrder}
+                    // onClick={toggleSortOrder}
                   />
                 )}
               </div>

@@ -1,18 +1,22 @@
-import { ErrorHandler, FilterContainer, ManageRoles } from '@goal-tracker/ui';
+import {
+  ErrorHandler,
+  FilterContainer,
+  ManageGoals,
+  ManageRoles,
+} from '@goal-tracker/ui';
 import PrivateLayout from 'apps/goals-on-track/component/common/privateLayout/private-layout';
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styles from './index.module.scss';
 import AppContext from 'libs/shared/ui/src/lib/contexts/AppContext';
 
-const Roles = () => {
+const Goals = () => {
   const context = useContext(AppContext);
   const [searchRoleName, setSearchRoletName] = useState('');
   const [searchDescription, setSearchDescription] = useState('');
 
-  const roles: any = {
+  const goals: any = {
     headings: ['ID', 'Name', 'Description', 'Update', 'Delete'],
   };
-
   const inputDataForSearchField = [
     {
       value: 'role',
@@ -25,12 +29,10 @@ const Roles = () => {
       setSearch: setSearchDescription,
     },
   ];
-
   const handleSearch = () => {
     context?.setRoleNameSearch(searchRoleName);
     context?.setDescriptionSearch(searchDescription);
   };
-
   return (
     <div className={styles.container}>
       <PrivateLayout>
@@ -41,7 +43,7 @@ const Roles = () => {
               onSearch={handleSearch}
             />
             <ErrorHandler>
-              <ManageRoles tableData={roles} />
+              <ManageGoals tableData={goals} />
             </ErrorHandler>
           </div>
         </div>
@@ -50,4 +52,4 @@ const Roles = () => {
   );
 };
 
-export default Roles;
+export default Goals;
