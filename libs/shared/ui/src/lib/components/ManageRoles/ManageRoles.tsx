@@ -119,7 +119,6 @@ export function ManageRoles({ tableData }: ManageRoles) {
 
     context?.setSortByRole(sortByColumn);
     context?.setSortOrder(sortOrder ? 'asc' : 'desc');
-    refetch();
   };
 
   return (

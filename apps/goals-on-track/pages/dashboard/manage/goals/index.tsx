@@ -15,17 +15,17 @@ const Goals = () => {
   const [searchDescription, setSearchDescription] = useState('');
 
   const goals: any = {
-    headings: ['ID', 'Name', 'Description', 'Update', 'Delete'],
+    headings: ['ID', 'Name', 'Description', 'Status', 'Start Date','end Date' ,'Update', 'Delete'],
   };
   const inputDataForSearchField = [
     {
       value: 'role',
-      label: 'Role Name',
+      label: 'Goals Name',
       setSearch: setSearchRoletName,
     },
     {
       value: 'desc',
-      label: 'Description',
+      label: 'Goals Description',
       setSearch: setSearchDescription,
     },
   ];

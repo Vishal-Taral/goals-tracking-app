@@ -45,7 +45,6 @@ export function ManageUsers({ tableData }: ManageCategories) {
 
     context?.setSortBy(sortByColumn);
     context?.setSortOrder(sortOrder ? 'asc' : 'desc');
-    refetch();
   };
 
   const context = useContext(AppContext);
