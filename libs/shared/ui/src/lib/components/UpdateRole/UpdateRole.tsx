@@ -17,7 +17,7 @@ export interface UpdateRoleProps {
 }
 
 export function UpdateRole({ open, handleClose, updateRoleId, prefilledInputData, rolesList, cancelUpdateOperation }: UpdateRoleProps) {
-  const { register, handleSubmit, setValue, getValues, formState: { errors } }:any = useForm();
+  const { register, handleSubmit, getValues, formState: { errors } }:any = useForm();
 
   const [updatePopupData, setUpdatePopupData] = useState({
     name: prefilledInputData?.name,
@@ -30,11 +30,6 @@ export function UpdateRole({ open, handleClose, updateRoleId, prefilledInputData
     description: getValues("description"),
     success: handleClose,
   });
-
-  const changeHandler = (e: any, heading: string) => {
-    const updatedData = { ...updatePopupData, [heading]: e.target.value };
-    setUpdatePopupData(updatedData);
-  };
 
   const handleUpdate = () => {
     setUpdatePopupData({

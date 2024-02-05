@@ -1,5 +1,6 @@
-import { useMutation , useQueryClient } from '@tanstack/react-query';
-import { apiClient, apiUrlObject } from '@goal-tracker/data-access';
+import { useMutation } from '@tanstack/react-query';
+import { apiClient } from '../api-client';
+import { apiUrlObject } from '../api-end-points';
 
 const deleteCategory: any = async (id: string): Promise<any> => {
   const url = `${apiUrlObject.deleteCategory}/${id}`;
@@ -10,6 +11,5 @@ const deleteCategory: any = async (id: string): Promise<any> => {
 const QUERY_KEY = ['deleteCategory'];
 
 export const useDeleteCategory = (payload : any) => {
-  const queryClient = useQueryClient();
   return useMutation({ mutationKey: QUERY_KEY, mutationFn: (id: string) => deleteCategory(id) ,  onSuccess: () => payload.success() });
 };

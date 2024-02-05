@@ -4,9 +4,11 @@ import {
   FilterContainer,
   ManageCategories,
 } from '@goal-tracker/ui';
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import PrivateLayout from 'apps/goals-on-track/component/common/privateLayout/private-layout';
 import { useContext, useState } from 'react';
 import styles from './index.module.scss';
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import AppContext from 'libs/shared/ui/src/lib/contexts/AppContext';
 
 const Categories = () => {
