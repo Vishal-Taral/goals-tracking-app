@@ -15,7 +15,11 @@ const Goals = () => {
   const [searchDescription, setSearchDescription] = useState('');
 
   const goals: any = {
+<<<<<<< Updated upstream
     headings: ['ID', 'Name', 'Description', 'Status', 'Start Date','end Date' ,'Update', 'Delete'],
+=======
+    headings: ['ID', 'Name', 'Description', 'Start date', 'End date', 'Update', 'Delete'],
+>>>>>>> Stashed changes
   };
   const inputDataForSearchField = [
     {

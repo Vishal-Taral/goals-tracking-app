@@ -202,11 +202,19 @@ export function ManageGoals({tableData}:ManageGoalsProps) {
             {rolesList?.data?.map((data: any, index: number) => (
               <tr className={styles.table_row} key={index}>
                 <td className={styles.table_data}>{data.roleId}</td>
+<<<<<<< Updated upstream
                 <td className={styles.table_data}>{data.name}</td>
                 <td className={styles.table_data}>{data.description}</td>
                 <td className={styles.table_data}>In Progress</td>
                 <td className={styles.table_data}>{dateConvert('02 02 2024')}</td>
                 <td className={styles.table_data}>{dateConvert('05 03 2024')}</td>
+=======
+                <td className={styles.table_data}>Goal Name</td>
+                <td className={styles.table_data}>Goal Description</td>
+                <td className={styles.table_data}>5/5/23</td>
+                <td className={styles.table_data}>8/5/23</td>
+
+>>>>>>> Stashed changes
                 <td className={styles.table_data_icon}>
                   <span
                     className={styles.icons}
