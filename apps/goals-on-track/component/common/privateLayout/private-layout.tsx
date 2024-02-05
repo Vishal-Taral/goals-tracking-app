@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
 import styles from './private-layout.module.scss';
-import { Header, Footer, Menus } from '@goal-tracker/ui';
+import { Header, Footer, Menus , BreadCrumb } from '@goal-tracker/ui';
 import { useRouter } from 'next/router';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import AppContext from 'libs/shared/ui/src/lib/contexts/AppContext';
@@ -27,6 +27,7 @@ export function PrivateLayout(props: PrivateLayoutProps) {
       router.push('http://localhost:4200/dashboard/manage/goals');
     }
   }, [context?.manage]);
+
   return (
     <div className={styles.privateLayout}>
       <div className={styles.privateLayout_left}>
@@ -36,6 +37,7 @@ export function PrivateLayout(props: PrivateLayoutProps) {
 
         <div className={styles.privateLayout_right}>
           <Header />
+          <BreadCrumb />
           {props.children}
         </div>
       </div>

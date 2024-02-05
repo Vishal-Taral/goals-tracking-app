@@ -23,3 +23,4 @@ export * from './lib/components/Account/Account';
 export * from './lib/components/PageNumberContainer/PageNumberContainer';
 export * from './lib/components/FilterContainer/FilterContainer';
 export * from './lib/components/ManageGoals/ManageGoals';
+export * from './lib/components/BreadCrumb/BreadCrumb';
