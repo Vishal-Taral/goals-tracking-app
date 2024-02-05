@@ -28,9 +28,6 @@ export function Header(props: HeaderProps) {
     setAnchorEl(anchorEl ? null : event.currentTarget);
   };
   const popoverOpen = Boolean(anchorEl);
-  const popoverCloseHandler = () => {
-    setAnchorEl(null);
-  };
   const accountClickHandler = () => {
     router.push('/Account')
   }

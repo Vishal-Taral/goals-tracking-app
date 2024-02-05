@@ -1,11 +1,9 @@
-import React, { useContext, useState } from 'react';
 import styles from './AddRole.module.scss';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { usePostAddRole, AddRoleInput } from '@goal-tracker/data-access';
-import AppContext from '../../contexts/AppContext';
+import { usePostAddRole } from '@goal-tracker/data-access';
 import { useForm } from 'react-hook-form';
 
 export interface AddRoleProps {
@@ -22,9 +20,7 @@ export function AddRole({ open, handleClose, rolesList, cancelCreateOperation }:
       descName: ''
     }
   });
-  console.log("rolesList", rolesList);
-  console.log("errors", errors);
-
+  
   const addRole = usePostAddRole({ success: handleClose });
 
   const obj: any = {

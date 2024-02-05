@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '../api-client';
 import { apiUrlObject } from '../api-end-points';
-import { useEffect } from 'react';
 
 const getAllCategories = async (queryparams:any): Promise<any> => {
   const response = await apiClient.get(apiUrlObject.getAllCategories , {params:queryparams});

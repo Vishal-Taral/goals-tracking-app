@@ -11,9 +11,7 @@ import DeleteRole from '../DeleteRole/DeleteRole';
 import PageNumberContainer from '../PageNumberContainer/PageNumberContainer';
 import AppContext from '../../contexts/AppContext';
 import NorthIcon from '@mui/icons-material/North';
-
 /* eslint-disable-next-line */
-
 export interface ManageRoles {
   tableData: any;
 }

@@ -19,7 +19,7 @@ export interface CreateCategoryProps {
 }
 
 export function CreateCategory({ open, handleClose, categoriesList, cancelCrateOperation }: CreateCategoryProps) {
-  const { register, handleSubmit, setValue, formState: { errors, isSubmitting } } = useForm<FormData>();
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormData>();
   const createCategory = usePostAddCategory({ success: handleClose });
 
   const handleCreateCategory: SubmitHandler<FormData> = async (data) => {

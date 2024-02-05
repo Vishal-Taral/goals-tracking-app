@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { usePostAddUser } from '../../../../../data-access/src/lib/queries/usePostAddUser';
+import { usePostAddUser } from '@goal-tracker/data-access';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
@@ -21,7 +21,7 @@ export function CreateUsers({ open, handleClose, roles, cancelCreateOperation, u
   console.log("usersList", usersList)
   const createUser = usePostAddUser({ success: handleClose });
 
-  const { register, handleSubmit, watch, control, setError, formState: { errors } } = useForm({
+  const { register, handleSubmit, control, setError, formState: { errors } } = useForm({
     defaultValues: {
       firstName: "",
       lastName: "",

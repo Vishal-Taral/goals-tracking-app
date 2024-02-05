@@ -1,13 +1,11 @@
 import styles from './menus.module.scss';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SettingsIcon from '@mui/icons-material/Settings';
-import SportsScoreIcon from '@mui/icons-material/SportsScore';
-
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import AppContext from '../../contexts/AppContext';
 
@@ -15,14 +13,9 @@ import AppContext from '../../contexts/AppContext';
 export interface MenusProps { }
 
 export function Menus(props: MenusProps) {
-  const [selectedMenu, setSelectedMenu] = useState<string | null>(null);
   const context = useContext<any>(AppContext)
 
   const menusData = [
-    // {
-    //   type: 'Your goals',
-    //   icon: <SportsScoreIcon />
-    // },
     {
       type: 'Manage',
       icon: <ManageSearchIcon />,

@@ -2,7 +2,9 @@ import React, { useContext, useState } from 'react';
 import { ErrorHandler, FilterContainer, ManageUsers } from '@goal-tracker/ui';
 import styles from './index.module.scss';
 import { useGetUsers } from '@goal-tracker/data-access';
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import PrivateLayout from 'apps/goals-on-track/component/common/privateLayout/private-layout';
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import AppContext from 'libs/shared/ui/src/lib/contexts/AppContext';
 
 /* eslint-disable-next-line */

@@ -33,7 +33,6 @@ export function PrivateLayout(props: PrivateLayoutProps) {
         <div>
           <Menus />
         </div>
-
         <div className={styles.privateLayout_right}>
           <Header />
           {props.children}
