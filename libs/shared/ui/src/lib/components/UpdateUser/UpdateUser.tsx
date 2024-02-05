@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import styles from './UpdateUser.module.scss';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';

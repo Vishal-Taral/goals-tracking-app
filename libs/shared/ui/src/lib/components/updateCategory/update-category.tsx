@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import styles from './update-category.module.scss';
 import Typography from '@mui/material/Typography';
@@ -26,7 +26,6 @@ export function UpdateCategory({
   categoriesList,
   cancelUpdateOperation,
 }: UpdateCategoryProps) {
-  const [categoryName, setCategoryName] = useState('');
 
   const { register, handleSubmit, setValue, watch, getValues, formState: { errors } } = useForm<FormInput>({
     defaultValues: {
@@ -48,7 +47,6 @@ export function UpdateCategory({
     );
 
     if (selectedCategory) {
-      setCategoryName(selectedCategory.name);
       setValue('categoryName', selectedCategory.name);
     }
   }, [categoriesList, selctedId, setValue]);

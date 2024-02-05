@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { apiClient } from '../api-client';
 import { apiUrlObject } from '../api-end-points';
 
@@ -8,7 +8,6 @@ const updateRoles = (payload: any) => {
       roleName: payload?.name,
       roleDescription: payload?.description,
     });
-    // return response.data
   } catch (error) {
     console.log(error);
     throw error;
@@ -17,7 +16,6 @@ const updateRoles = (payload: any) => {
 
 const MUTATION_KEY = ['updateRoles'];
 export const usePutUpdateRole = (payload: any) => {
-  const queryClient = useQueryClient();
   return useMutation({
     mutationKey: MUTATION_KEY,
     mutationFn: () => updateRoles(payload),

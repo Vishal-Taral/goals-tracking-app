@@ -1,6 +1,4 @@
-import React from 'react';
 import styles from './delete-category.module.scss';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
