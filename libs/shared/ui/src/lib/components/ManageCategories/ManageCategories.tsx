@@ -2,34 +2,79 @@ import styles from './ManageCategories.module.scss';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-import { useState } from 'react';
-import {
-  UpdateCategory,
-  DeleteCategory,
-  CreateCategory,
-  PageNumberContainer,
-} from '@goal-tracker/ui';
-import {
-  useGetCategories,
-  useGetCategoryByID,
-} from '@goal-tracker/data-access';
+import { useState, useContext, useEffect, useRef } from 'react';
+import { UpdateCategory } from '../updateCategory/update-category';
+import { DeleteCategory } from '../deleteCategory/delete-category';
+import { CreateCategory } from '../createCategory/create-category';
+import { PageNumberContainer } from '../PageNumberContainer/PageNumberContainer';
+import { useGetCategories, useGetCategoryByID } from '@goal-tracker/data-access';
+import AppContext from '../../contexts/AppContext';
+import NorthIcon from '@mui/icons-material/North';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import { FilterContainer } from '@goal-tracker/ui';
 
 /* eslint-disable-next-line */
 
-export interface ManageCategories {
+export interface ManageCategoriesProps {
   tableData: any;
 }
 
-export function ManageCategories({ tableData }: ManageCategories) {
+export function ManageCategories({ tableData }: ManageCategoriesProps) {
   const [openUpdate, setOpenUpdate] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [selectedRowIndex, setSelectedRowIndex] = useState<string | null>(null);
   const [openCreatePopup, setOpenCreatePopup] = useState(false);
   const [searchID, setSearchID] = useState('');
-  const [searchResultDisplay, setSearchResultDisplay] = useState(false)
+  const [searchResultDisplay, setSearchResultDisplay] = useState(false);
+  const [entriesPerPage, setEntriesPerPage] = useState(5);
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [searchCategoryName, setCategoryName] = useState('');
+  const [open, setOpen] = useState(false);
+  const anchorRef = useRef<HTMLDivElement>(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
-  const { data: categoriesList, refetch } = useGetCategories();
-  const { data: searchResponse, refetch: refetchSearch } = useGetCategoryByID(searchID);
+  const handleToggle = ( event : any) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (event : any) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+    setAnchorEl(null);
+    setOpen(false);
+  };
+
+  const inputDataForSearchField = [
+    {
+      value: 'name',
+      label: 'Category Name',
+      setSearch: setCategoryName,
+    },
+  ];
+
+  const handleSearch = () => {
+    context?.setCategorySearch(searchCategoryName);
+  };
+
+  const context = useContext(AppContext);
+
+  const queryParamObj = {
+    pageSize: entriesPerPage,
+    page: context?.pageNumber,
+    categoryName: context?.categorySearch || null,
+    sortOrder: context?.sortOrder,
+    sortBy: 'name',
+  };
+
+  const { data: categoriesList, refetch } = useGetCategories(queryParamObj);
+  const { data: searchResponse, refetch: refetchSearch }:any =
+    useGetCategoryByID(searchID);
+
+  useEffect(() => {
+    refetch();
+  }, [context?.sortOrder, context?.pageNumber, context?.categorySearch]);
 
   const handleCloseUpdate = () => {
     setOpenUpdate(false);
@@ -42,16 +87,16 @@ export function ManageCategories({ tableData }: ManageCategories) {
 
   const cancelCrateOperation = () => {
     setOpenCreatePopup(false);
-  }
+  };
 
   const cancelUpdateOperation = () => {
     setOpenUpdate(false);
-  }
+  };
 
   const cancelDeleteOperation = () => {
     setOpenDelete(false);
-  }
-  
+  };
+
   const handleCloseCreatePopup = () => {
     setOpenCreatePopup(false);
     refetch();
@@ -79,9 +124,23 @@ export function ManageCategories({ tableData }: ManageCategories) {
     console.log('searchID', searchID);
     refetchSearch();
     console.log('searchResponse', searchResponse);
-    setSearchResultDisplay(true)
-
+    setSearchResultDisplay(true);
   };
+
+  const entriesPerPageClickHandler = () => {
+    refetch();
+  };
+
+  const entriesPerPageChangeHandler = (e:any) => {
+    setEntriesPerPage(e.target.value);
+  };
+
+  const toggleSortOrder = () => {
+    const newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+    context?.setSortOrder(newSortOrder);
+    setSortOrder(newSortOrder);
+  };
+
 
   return (
     <div className={styles.container}>
@@ -96,31 +155,84 @@ export function ManageCategories({ tableData }: ManageCategories) {
           className={styles.searchInput}
           placeholder="Search By ID"
         />
+        <div className={styles.filter_icon} onClick={handleToggle}>
+          <FilterListIcon className={styles.filterIcon} />
+        </div>
         <button className={styles.searchButton} onClick={searchHandler}>
           Search
         </button>
       </div>
+
+      {open && (
+        <div>
+          <FilterContainer
+            inputDataForSearchField={inputDataForSearchField}
+            onSearch={handleSearch}
+            open={open}
+            handleClose={handleClose}
+            anchorEl={anchorEl}
+          />
+        </div>
+      )}
+
+      <div className={styles.entriesPerPageBlock}>
+        <div className={styles.entriesPerPage}>Entries per page-</div>
+        <input
+          className={styles.entriesPerPageInput}
+          onChange={entriesPerPageChangeHandler}
+          value={entriesPerPage}
+          type="number"
+          min={1}
+          max={10}
+        />
+        <button
+          onClick={entriesPerPageClickHandler}
+          className={styles.entriesButton}
+        >
+          Click
+        </button>
+      </div>
+
       {searchResultDisplay ? (
         <div className={styles.searchResultBlock}>
           <b>Search Result</b>
           <div>ID- {searchResponse?.data?.categoryId}</div>
           <div>Name- {searchResponse?.data?.name}</div>
-          <button className={styles.searchResultCloseButton} onClick={() => setSearchResultDisplay(false)}>Close</button>
+          <button
+            className={styles.searchResultCloseButton}
+            onClick={() => setSearchResultDisplay(false)}
+          >
+            Close
+          </button>
         </div>
       ) : (
         ''
       )}
       <div className={styles.user_detail_container}>
         <table className={styles.table}>
-          <thead className={styles.table_headings_section}>
-            <tr>
-              {tableData?.headings?.map((data: any, index: number) => (
-                <th className={styles.headings} key={index}>
-                  {data}
-                </th>
-              ))}
-            </tr>
-          </thead>
+        <thead className={styles.table_headings_section}>
+        <tr>
+          {tableData?.headings?.map((data: any, index: number) => (
+            <th className={styles.headings} key={index}>
+              <div className={styles.heading_contains}>
+                <label>{data}</label>
+                {(index === 1 ) && (
+                  <NorthIcon
+                    className={`${styles.northIcon} ${
+                      index === 1
+                        ? sortOrder === 'asc'
+                          ? styles.toggle_up
+                          : styles.toggle_down
+                        : ''
+                    }`}
+                    onClick={toggleSortOrder}
+                  />
+                )}
+              </div>
+            </th>
+          ))}
+        </tr>
+      </thead>
           <tbody>
             {categoriesList?.data?.map((data: any, index: number) => (
               <tr key={index} className={styles.table_row}>
@@ -148,7 +260,7 @@ export function ManageCategories({ tableData }: ManageCategories) {
             ))}
           </tbody>
         </table>
-        <PageNumberContainer />
+        <PageNumberContainer totalPages={categoriesList?.totalPages} />
       </div>
       {openUpdate && selectedRowIndex !== null && (
         <UpdateCategory
@@ -171,7 +283,12 @@ export function ManageCategories({ tableData }: ManageCategories) {
       )}
 
       {openCreatePopup && (
-        <CreateCategory open={true} handleClose={handleCloseCreatePopup} categoriesList={categoriesList} cancelCrateOperation={cancelCrateOperation}/>
+        <CreateCategory
+          open={true}
+          handleClose={handleCloseCreatePopup}
+          categoriesList={categoriesList}
+          cancelCrateOperation={cancelCrateOperation}
+        />
       )}
     </div>
   );

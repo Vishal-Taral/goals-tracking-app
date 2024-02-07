@@ -1,17 +1,12 @@
 import styles from './layout.module.scss';
-import { Header , Footer } from '@goal-tracker/ui';
-// import { Header } from '@goal-tracker/ui'
-import { useRouter } from 'next/router';
-
+import React from 'react';
+import { Header, Footer } from '@goal-tracker/ui';
 /* eslint-disable-next-line */
 export interface LayoutProps {
-  children : any;
+  children: React.ReactNode;
 }
 
 export function Layout(props: LayoutProps) {
-  const router = useRouter()
-  console.log('x', router.pathname.includes('/'))
-
   return (
     <div className={styles.container}>
       <Header />

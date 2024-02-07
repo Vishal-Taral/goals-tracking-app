@@ -1,17 +1,13 @@
-import { useGetCategories } from '@goal-tracker/data-access';
 import {
   ErrorHandler,
-  ManageCategories,
+  ManageGoals,
 } from '@goal-tracker/ui';
 import PrivateLayout from 'apps/goals-on-track/component/common/privateLayout/private-layout';
 import styles from './index.module.scss';
 
-const Categories = () => {
-  const { data: categoriesList } = useGetCategories();
-
-  const categories: any = {
-    headings: ['Category Id', 'Name', 'Update', 'Delete'],
-    rows: categoriesList,
+const Goals = () => {
+  const goals: any = {
+    headings: ['ID', 'Name', 'Description', 'Status', 'Start Date','end Date' ,'Update', 'Delete'],
   };
   return (
     <div className={styles.container}>
@@ -19,7 +15,7 @@ const Categories = () => {
         <div className={styles.dashboard_page_container}>
           <div className={styles.header_and_user_detail_section}>
             <ErrorHandler>
-              <ManageCategories tableData={categories} />
+              <ManageGoals tableData={goals} />
             </ErrorHandler>
           </div>
         </div>
@@ -28,4 +24,4 @@ const Categories = () => {
   );
 };
 
-export default Categories;
+export default Goals;

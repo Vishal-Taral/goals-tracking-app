@@ -16,10 +16,7 @@ export function Header(props: HeaderProps) {
   const openLoginPage = () => {
     router.push('./login');
   };
-  const goToHome = () => {
-    router.push('/tracker');
-  };
-  const { data: userAuthorization, refetch: refetchUserAuthorization } =
+  const { data: userAuthorization, refetch: refetchUserAuthorization }: any =
     useGetUserAuthorization();
 
   useEffect(() => {
@@ -27,13 +24,10 @@ export function Header(props: HeaderProps) {
   }, []);
 
   const [anchorEl, setAnchorEl] = useState(null);
-  const accountHandler = (event) => {
+  const accountHandler = (event:any) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
   };
   const popoverOpen = Boolean(anchorEl);
-  const popoverCloseHandler = () => {
-    setAnchorEl(null);
-  };
   const accountClickHandler = () => {
     router.push('/Account')
   }
@@ -84,7 +78,7 @@ export function Header(props: HeaderProps) {
           <Popper
             anchorEl={anchorEl}
             open={popoverOpen}
-            handleClose={popoverCloseHandler}
+            // handleClose={popoverCloseHandler}
             style={{backgroundColor: 'white',padding: '0.5rem 0.5rem'}}
           >
             <div onClick={accountClickHandler} style={{borderBottom: '1px solid lightgray', padding: '0.4rem'}}>Account</div>

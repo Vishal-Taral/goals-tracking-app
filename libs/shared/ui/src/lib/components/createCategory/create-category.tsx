@@ -19,7 +19,7 @@ export interface CreateCategoryProps {
 }
 
 export function CreateCategory({ open, handleClose, categoriesList, cancelCrateOperation }: CreateCategoryProps) {
-  const { register, handleSubmit, setValue, formState: { errors, isSubmitting } } = useForm<FormData>();
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormData>();
   const createCategory = usePostAddCategory({ success: handleClose });
 
   const handleCreateCategory: SubmitHandler<FormData> = async (data) => {
@@ -35,50 +35,46 @@ export function CreateCategory({ open, handleClose, categoriesList, cancelCrateO
         aria-describedby="modal-modal-description"
       >
         <Box className={styles.create_category_modal}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            <div className={styles.heading}>Create Category</div>
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <form onSubmit={handleSubmit(handleCreateCategory)}>
-              <div className={styles.label_and_inputs}>
-                <div className={styles.field_name}>
-                  <label htmlFor="categoryName">Category Name*</label>
-                </div>
-                <div>
-                  <input
-                    type="text"
-                    placeholder="Enter The Name"
-                    className={styles.input_fields}
-                    {...register('categoryName', {
-                      required: 'Category Name is required',
-                      validate: value => {
-                        const lowerCaseValue = value.toLowerCase();
-                        return (
-                          !categoriesList?.data?.some((category: any) => category.name.toLowerCase() === lowerCaseValue) ||
-                          'Category already exists'
-                        );
-                      },
-                    })}
-                  />
-                  {errors.categoryName && <p className={styles.error}>{errors.categoryName.message}</p>}
-                </div>
+          <Typography id="modal-modal-title" variant="h6" component="h2">Create Category</Typography>
+          <form onSubmit={handleSubmit(handleCreateCategory)}>
+            <div className={styles.label_and_inputs}>
+              <div className={styles.field_name}>
+                <label htmlFor="categoryName">Category Name*</label>
               </div>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Enter The Name"
+                  className={styles.input_fields}
+                  {...register('categoryName', {
+                    required: 'Category Name is required',
+                    validate: value => {
+                      const lowerCaseValue = value.toLowerCase();
+                      return (
+                        !categoriesList?.data?.some((category: any) => category.name.toLowerCase() === lowerCaseValue) ||
+                        'Category already exists'
+                      );
+                    },
+                  })}
+                />
+                {errors.categoryName && <p className={styles.error}>{errors.categoryName.message}</p>}
+              </div>
+            </div>
 
-              <div className={styles.update_btn}>
-                <Button
-                  variant="contained"
-                  onClick={cancelCrateOperation}
-                  className={styles.cancel_button}
-                  disabled={isSubmitting}
-                >
-                  Cancel
-                </Button>
-                <Button variant="contained" className={styles.create_button} type="submit" disabled={isSubmitting}>
-                  Create
-                </Button>
-              </div>
-            </form>
-          </Typography>
+            <div className={styles.update_btn}>
+              <Button
+                variant="contained"
+                onClick={cancelCrateOperation}
+                className={styles.cancel_button}
+                disabled={isSubmitting}
+              >
+                Cancel
+              </Button>
+              <Button variant="contained" className={styles.create_button} type="submit" disabled={isSubmitting}>
+                Create
+              </Button>
+            </div>
+          </form>
         </Box>
       </Modal>
     </div>

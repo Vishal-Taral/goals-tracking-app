@@ -1,23 +1,24 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import styles from './ManageUsers.module.scss';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-import { useState } from 'react';
+import { useContext, useEffect, useState , useRef } from 'react';
 import CreateUsers from '../CreateUsers/CreateUsers';
 import DeleteUser from '../DeleteUser/DeleteUser';
-import { useGetUserByID, useGetUsers , useGetRoles } from '@goal-tracker/data-access';
+import { useGetRoles, useGetUserByID, useGetUsers } from '@goal-tracker/data-access';
 import UpdateUser from '../UpdateUser/UpdateUser';
 import PageNumberContainer from '../PageNumberContainer/PageNumberContainer';
+import AppContext from '../../contexts/AppContext';
+import NorthIcon from '@mui/icons-material/North';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import { FilterContainer } from '@goal-tracker/ui';
 
 /* eslint-disable-next-line */
 export interface ManageCategories {
-  tableData : any;
+  tableData: any;
 }
 
-export function ManageUsers({ tableData } : ManageCategories) {
+export function ManageUsers({ tableData }: ManageCategories) {
   const [updateUserId, setUpdateUserId] = useState(null);
   const [prefilledInputData, setPrefilledInputData] = useState();
   const [openUpdatePopup, setOpenUpdatePopup] = useState(false);
@@ -26,43 +27,131 @@ export function ManageUsers({ tableData } : ManageCategories) {
   const [searchID, setSearchID] = useState('');
   const [searchResultDisplay, setSearchResultDisplay] = useState(false);
   const [openCreatePopup, setOpenCreatePopup] = useState(false);
+  const [firstNameSortOrderArrow, setFirstNameSortOrderArrow] = useState(false);
+  const [lastNameSortOrderArrow, setLastNameSortOrderArrow] = useState(false);
+  const [searchFirstName, setSearchFirstName] = useState('');
+  const [searchLastName, setSearchLastName] = useState('');
+  const [searchEmail, setSearchEmail] = useState('');
+  const [open, setOpen] = useState(false);
+  const anchorRef = useRef<HTMLDivElement>(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
-  const { data: roles } = useGetRoles();
-  const { data: usersList , refetch } = useGetUsers();
-  const { data: searchResponse, refetch: refetchSearch } = useGetUserByID(searchID);
+  const handleToggle = ( event : any) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+    setOpen((prevOpen) => !prevOpen);
+  };
 
-  // console.log("usersList" , usersList);
-  
-  
+  const handleClose = (event : any) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+    setAnchorEl(null);
+    setOpen(false);
+  };
+
+  const inputDataForSearchField = [
+    {
+      value: 'firstName',
+      label: 'First Name',
+      setSearch: setSearchFirstName,
+    },
+    {
+      value: 'lastName',
+      label: 'Last Name',
+      setSearch: setSearchLastName,
+    },
+    {
+      value: 'email',
+      label: 'Email',
+      setSearch: setSearchEmail,
+    },
+  ];
+
+  const toggleSortOrder = (sortByColumn: string) => {
+    let sortOrder;
+    switch (sortByColumn) {
+      case 'firstName':
+        sortOrder = !firstNameSortOrderArrow;
+        setFirstNameSortOrderArrow(sortOrder);
+        break;
+      case 'lastName':
+        sortOrder = !lastNameSortOrderArrow;
+        setLastNameSortOrderArrow(sortOrder);
+        break;
+      default:
+        sortOrder = false;
+    }
+
+    context?.setSortBy(sortByColumn);
+    context?.setSortOrder(sortOrder ? 'asc' : 'desc');
+  };
+
+  const context = useContext(AppContext);
+  const [entriesPerPage, setEntriesPerPage] = useState(5);
+
+  const queryParamObject = {
+    page: context?.pageNumber,
+    pageSize: entriesPerPage,
+    lastName: context?.lastNameSearch || null,
+    firstName: context?.firstNameSearch || null,
+    email: context?.emailSearch || null,
+    sortBy: context?.sortBy,
+    sortOrder: context?.sortOrder
+  }
+
+  const handleSearch = () => {
+    context?.setFirstNameSearch(searchFirstName);
+    context?.setLastNameSearch(searchLastName);
+    context?.setEmailSearch(searchEmail);
+    handleClose('');
+  };
+
+  const { data: usersList, refetch } = useGetUsers(queryParamObject);
+
+  const payLoadObj = {
+    page: context?.pageNumber,
+    pageSize: entriesPerPage,
+    roleName: context?.roleNameSearch || null,
+    roleDescription: context?.descriptionSearch || null,
+    sortBy: context?.sortByRole,
+    sortOrder: context?.sortOrder,
+  }
+
+  const { data: roles } = useGetRoles(payLoadObj);
+  const { data: searchResponse, refetch: refetchSearch } =
+    useGetUserByID(searchID);
+
+  useEffect(() => {
+    refetch()
+    console.log('manage user component', 'context?.sortBy', context?.sortBy)
+
+  }, [context?.pageNumber, context?.sortBy, context?.sortOrder, context?.lastNameSearch, context?.firstNameSearch, context?.emailSearch])
+
   const handleCloseCreatePopup = () => {
     setOpenCreatePopup(false);
     refetch();
-  }
+  };
 
   const handleCreateUser = () => {
-    // setSelectedRowIndex(index);
     setOpenCreatePopup(true);
   };
   const handleCloseDeletePopup = () => {
     setOpenDeletePopup(false);
     refetch();
   };
- 
+
   const deletePopupOpenHandler = (index: number, data: any) => {
-    console.log('data delete', data)
     setOpenDeletePopup(true);
     setDeleteUserId(data?.userId);
-    console.log('data.id',data)
   };
 
   const handleCloseUpdatePopup = () => {
     setOpenUpdatePopup(false);
     refetch();
-  }
+  };
   const updatePopupOpenHandler = (index: number, data: any) => {
     setOpenUpdatePopup(true);
     setUpdateUserId(data?.userId);
-    console.log("data?.userId",data?.userId)
     setPrefilledInputData(data);
   };
 
@@ -71,11 +160,15 @@ export function ManageUsers({ tableData } : ManageCategories) {
   };
 
   const searchHandler = () => {
-    console.log('searchID', searchID);
     refetchSearch();
-    console.log('searchResponse', searchResponse);
-    setSearchResultDisplay(true)
+    setSearchResultDisplay(true);
+  };
 
+  const entriesPerPageChangeHandler = (e: any) => {
+    setEntriesPerPage(e.target.value);
+  };
+  const entriesPerPageClickHandler = () => {
+    refetch();
   };
 
   const cancelUpdateOperation = () => {
@@ -89,10 +182,13 @@ export function ManageUsers({ tableData } : ManageCategories) {
   const cancelDeleteOperation = () => {
     setOpenDeletePopup(false);
   }
+
   return (
     <div className={styles.container}>
       <div className={styles.users}>
-        <Button variant="outlined" onClick={() => handleCreateUser()}>Add User</Button>
+        <Button variant="outlined" onClick={() => handleCreateUser()}>
+          Add User
+        </Button>
       </div>
 
       <div className={styles.searchBlock}>
@@ -101,8 +197,41 @@ export function ManageUsers({ tableData } : ManageCategories) {
           className={styles.searchInput}
           placeholder="Search By ID"
         />
+        <div className={styles.filter_icon} onClick={handleToggle}>
+          <FilterListIcon className={styles.filterIcon} />
+        </div>
         <button className={styles.searchButton} onClick={searchHandler}>
           Search
+        </button>
+      </div>
+
+      {open && (
+        <div>
+          <FilterContainer
+            inputDataForSearchField={inputDataForSearchField}
+            onSearch={handleSearch}
+            open={open}
+            handleClose={handleClose}
+            anchorEl={anchorEl}
+          />
+        </div>
+      )}
+
+      <div className={styles.entriesPerPageBlock}>
+        <div className={styles.entriesPerPage}>Entries per page-</div>
+        <input
+          className={styles.entriesPerPageInput}
+          onChange={entriesPerPageChangeHandler}
+          value={entriesPerPage}
+          type="number"
+          min={1}
+          max={10}
+        />
+        <button
+          onClick={entriesPerPageClickHandler}
+          className={styles.entriesButton}
+        >
+          Click
         </button>
       </div>
       {searchResultDisplay ? (
@@ -117,7 +246,12 @@ export function ManageUsers({ tableData } : ManageCategories) {
           <div>Role Name- {searchResponse?.data?.role.name}</div>
           <div>Role Description- {searchResponse?.data?.role.description}</div>
 
-          <button className={styles.searchResultCloseButton} onClick={()=>setSearchResultDisplay(false)}>Close</button>
+          <button
+            className={styles.searchResultCloseButton}
+            onClick={() => setSearchResultDisplay(false)}
+          >
+            Close
+          </button>
         </div>
       ) : (
         ''
@@ -128,7 +262,17 @@ export function ManageUsers({ tableData } : ManageCategories) {
             <tr>
               {tableData?.headings?.map((data: any, index: number) => (
                 <th className={styles.headings} key={index}>
-                  {data}
+                  <div className={styles.heading_contains}>
+                    <label>{data}</label>
+                    {(index === 1 || index === 2) && (
+                      <NorthIcon
+                        className={`${styles.northIcon} ${index === 1 ? (firstNameSortOrderArrow ? styles.toggle_down : styles.toggle_up)
+                          : (lastNameSortOrderArrow ? styles.toggle_down : styles.toggle_up)
+                          }`}
+                        onClick={() => toggleSortOrder(index === 1 ? 'firstName' : 'lastName')}
+                      />
+                    )}
+                  </div>
                 </th>
               ))}
             </tr>
@@ -163,7 +307,7 @@ export function ManageUsers({ tableData } : ManageCategories) {
             ))}
           </tbody>
         </table>
-        <PageNumberContainer />
+        <PageNumberContainer totalPages={usersList?.totalPages} />
       </div>
       {openUpdatePopup && (
         <UpdateUser
@@ -173,23 +317,25 @@ export function ManageUsers({ tableData } : ManageCategories) {
           userId={updateUserId}
           roles={roles}
           cancelUpdateOperation={cancelUpdateOperation}
+          usersList={usersList}
         />
       )}
       {openDeletePopup && (
         <DeleteUser
-        open={true}
-        handleClose={handleCloseDeletePopup}
-        deleteUserId={deleteUserId}
-        cancelDeleteOperation={cancelDeleteOperation}
-      />
+          open={true}
+          handleClose={handleCloseDeletePopup}
+          deleteUserId={deleteUserId}
+          cancelDeleteOperation={cancelDeleteOperation}
+        />
       )}
 
       {openCreatePopup && (
-        <CreateUsers 
+        <CreateUsers
           open={true}
           handleClose={handleCloseCreatePopup}
           roles={roles}
           cancelCreateOperation={cancelCreateOperation}
+          usersList={usersList}
         />
       )}
     </div>

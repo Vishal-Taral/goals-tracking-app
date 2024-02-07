@@ -2,7 +2,7 @@
   padding: 2rem 4rem 2rem 2rem;
   height: 100%;
   background-color: rgb(229 229 229);
-  width: 80%;
+  width: 100%;
 
 
   .users {
@@ -15,6 +15,14 @@
     margin: 1rem 0rem;
     display: flex;
     flex-direction: row;
+    .filter_icon{
+      background-color: white;
+
+      .filterIcon {
+        color: #888;
+        cursor: pointer;
+      }
+    }
     .searchInput {
       padding: 0.5rem;
       width: 90%;
@@ -31,6 +39,29 @@
         cursor: pointer;
     }
 
+  }
+  .entriesPerPageBlock{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .entriesPerPage{
+      margin: 0.5rem;
+      display: flex;
+      align-items: center;
+    }
+    .entriesPerPageInput{
+      margin: 0.5rem;
+      padding: 0.4rem 0.2rem;
+    }
+    .entriesButton{
+      padding: 0.4rem 0.8rem;
+      background-color: skyblue;
+      color: white;
+      border-radius: 0.4rem;
+    }
+    .entriesButton:hover{
+      cursor: pointer;
+    }
   }
   .searchResultBlock {
     background-color: white;
@@ -79,6 +110,30 @@
       padding: 0.5rem;
       border: 1px solid black;
 
+    }
+
+    .headings{
+
+      .heading_contains{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .northIcon{
+          color: rgb(157, 81, 228);
+          cursor: pointer;
+        }
+
+        .toggle_down {
+          transform: rotate(180deg);
+          transition: transform 0.50s linear;
+        }
+
+        .toggle_up {
+          transform: rotate(0deg);
+          transition: transform 0.50s linear;
+        }
+      }
     }
   }
 }

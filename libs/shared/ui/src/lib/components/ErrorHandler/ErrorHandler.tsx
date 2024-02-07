@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode } from 'react';
 import styles from './ErrorHandler.module.scss';
 
 /* eslint-disable-next-line */
@@ -23,11 +23,9 @@ export class ErrorHandler extends React.Component<ErrorHandlerProps, ErrorHandle
     };
   }
   static getDerivedStateFromError(error: any): ErrorHandlerState {
-    console.log('error', error)
     return { hasError: true, error: error, errorInfo: null };
   }
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
-    console.log('errorInfo', errorInfo)
     this.setState({
       error: error,
       errorInfo: errorInfo,

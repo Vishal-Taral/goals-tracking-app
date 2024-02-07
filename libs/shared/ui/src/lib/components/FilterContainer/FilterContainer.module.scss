@@ -1,6 +1,28 @@
-.filterContainer{
-    background-color: rgb(229, 229, 229);
+.filterContainer {
     padding: 1rem;
-    border: 1px solid lightgray;
     width: 20%;
+
+    .headings {
+        color: rgb(131, 131, 235);
+        font-weight: 600;
+    }
+
+    .label_and_inputs {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .searching {
+        .input_field_section{
+            margin-top: 1rem;
+            
+            .search_inputs {
+                padding: 0.5rem;
+                width: 58rem;
+                border: 1px solid gray;
+                border-radius: 0.2rem;
+            }
+        }
+    }
 }

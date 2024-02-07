@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import styles from './ManageRoles.module.scss';
+import styles from './ManageGoals.module.scss';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-import { useContext, useEffect, useState , useRef } from 'react';
+import { useContext, useEffect, useState, useRef } from 'react';
 import AddRole from '../AddRole/AddRole';
 import { useGetRoleByID, useGetRoles } from '@goal-tracker/data-access';
 import UpdateRole from '../UpdateRole/UpdateRole';
@@ -13,12 +12,13 @@ import AppContext from '../../contexts/AppContext';
 import NorthIcon from '@mui/icons-material/North';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { FilterContainer } from '@goal-tracker/ui';
+
 /* eslint-disable-next-line */
-export interface ManageRoles {
-  tableData: any;
+export interface ManageGoalsProps {
+  tableData: any
 }
 
-export function ManageRoles({ tableData }: ManageRoles) {
+export function ManageGoals({tableData}:ManageGoalsProps) {
   const [entriesPerPage, setEntriesPerPage] = useState(5);
   const context = useContext(AppContext);
 
@@ -156,13 +156,20 @@ export function ManageRoles({ tableData }: ManageRoles) {
 
     context?.setSortByRole(sortByColumn);
     context?.setSortOrder(sortOrder ? 'asc' : 'desc');
+    refetch();
   };
 
+  const dateConvert = (dateString : any) => {
+    const date = new Date(dateString);
+    const convertedDate = date.toLocaleDateString();
+    return convertedDate;
+  }
+  
   return (
     <div className={styles.container}>
       <div className={styles.categories}>
         <Button variant="outlined" onClick={handleOpenCreatePopup}>
-          Add Role
+          Add Goal
         </Button>
       </div>
       <div className={styles.searchBlock}>
@@ -178,7 +185,6 @@ export function ManageRoles({ tableData }: ManageRoles) {
           Search
         </button>
       </div>
-
       {open && (
         <div>
           <FilterContainer
@@ -190,7 +196,6 @@ export function ManageRoles({ tableData }: ManageRoles) {
           />
         </div>
       )}
-
       <div className={styles.entriesPerPageBlock}>
         <div className={styles.entriesPerPage}>Entries per page-</div>
         <input
@@ -252,6 +257,9 @@ export function ManageRoles({ tableData }: ManageRoles) {
                 <td className={styles.table_data}>{data.roleId}</td>
                 <td className={styles.table_data}>{data.name}</td>
                 <td className={styles.table_data}>{data.description}</td>
+                <td className={styles.table_data}>In Progress</td>
+                <td className={styles.table_data}>{dateConvert('02 02 2024')}</td>
+                <td className={styles.table_data}>{dateConvert('05 03 2024')}</td>
                 <td className={styles.table_data_icon}>
                   <span
                     className={styles.icons}
@@ -308,4 +316,4 @@ export function ManageRoles({ tableData }: ManageRoles) {
   );
 }
 
-export default ManageRoles;
+export default ManageGoals;

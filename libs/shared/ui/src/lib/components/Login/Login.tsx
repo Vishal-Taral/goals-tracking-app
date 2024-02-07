@@ -1,7 +1,6 @@
 import styles from './Login.module.scss';
 import { useState } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import axios from 'axios';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -9,7 +8,6 @@ import { useRouter } from 'next/router';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { useGetUserAuthorization, usePostLogin } from '@goal-tracker/data-access';
-import { dataTagSymbol } from '@tanstack/react-query';
 
 export interface LoginProps {}
 
@@ -38,8 +36,8 @@ export function Login(props: LoginProps) {
   const [successMassage, setSuccessMassage] = useState<string | null>(null);
 
   const [loginCredentials, setLoginCredentials] = useState({});
-  const responseData = usePostLogin(loginCredentials);
-  const {data: userAuthorization, refetch: refetchUserAuthorization} = useGetUserAuthorization()
+  const responseData: any = usePostLogin(loginCredentials);
+  const { refetch: refetchUserAuthorization} = useGetUserAuthorization()
 
   const onSubmit: SubmitHandler<FormData> = async (data: any) => {
     setLoginCredentials({ email: data.email, password: data.password });

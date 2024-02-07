@@ -6,8 +6,6 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SettingsIcon from '@mui/icons-material/Settings';
-import SportsScoreIcon from '@mui/icons-material/SportsScore';
-
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import AppContext from '../../contexts/AppContext';
 
@@ -15,26 +13,24 @@ import AppContext from '../../contexts/AppContext';
 export interface MenusProps { }
 
 export function Menus(props: MenusProps) {
-
-  const context = useContext(AppContext)
+  const context = useContext<any>(AppContext)
 
   const menusData = [
-    {
-      type: 'Your goals',
-      icon: <SportsScoreIcon />
-    },
     {
       type: 'Manage',
       icon: <ManageSearchIcon />,
       titleArray: [
         {
-          title: 'Manage Categories',
+          title: 'Categories',
         },
         {
-          title: 'Manage Roles',
+          title: 'Roles',
         },
         {
-          title: 'Manage Users',
+          title: 'Users',
+        },
+        {
+          title: 'Goals'
         }
       ],
     },
@@ -55,9 +51,9 @@ export function Menus(props: MenusProps) {
     }
   ];
 
-  const manageClickHandler = (titleObj : any , event : any) => {
-    event.stopPropagation();
-    context.setManage(titleObj?.title)
+  const manageClickHandler = (titleObj: any, e: any) => {
+    e.stopPropagation();
+    context.setManage(titleObj?.title);
   }
 
   return (
@@ -77,10 +73,11 @@ export function Menus(props: MenusProps) {
             </AccordionSummary>
 
             {data?.titleArray?.map((titles, index) => (
-              <AccordionDetails key={index}>
-                <Typography onClick={(event) => manageClickHandler(titles , event)} style={{cursor:'pointer'}}>{titles.title}</Typography>
-              </AccordionDetails>
+            <AccordionDetails className={context.manage === titles.title ? styles.selected_menu : ''} key={index}>
+                <Typography key={index} onClick={(e) => manageClickHandler(titles, e)} style={{ cursor: 'pointer' }}>{titles.title}</Typography>
+            </AccordionDetails>
             ))}
+
           </Accordion>
         ))}
       </div>

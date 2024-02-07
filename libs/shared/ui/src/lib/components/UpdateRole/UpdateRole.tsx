@@ -13,11 +13,11 @@ export interface UpdateRoleProps {
   updateRoleId: string | null;
   prefilledInputData: any;
   rolesList: any;
-  cancelUpdateOperation: (event : string) => void; 
+  cancelUpdateOperation: (event: string) => void;
 }
 
-export function UpdateRole({open,handleClose,updateRoleId,prefilledInputData,rolesList, cancelUpdateOperation}: UpdateRoleProps) {
-  const { register, handleSubmit, setValue, getValues, formState: { errors } } = useForm();
+export function UpdateRole({ open, handleClose, updateRoleId, prefilledInputData, rolesList, cancelUpdateOperation }: UpdateRoleProps) {
+  const { register, handleSubmit, getValues, formState: { errors } }:any = useForm();
 
   const [updatePopupData, setUpdatePopupData] = useState({
     name: prefilledInputData?.name,
@@ -30,11 +30,6 @@ export function UpdateRole({open,handleClose,updateRoleId,prefilledInputData,rol
     description: getValues("description"),
     success: handleClose,
   });
-
-  const changeHandler = (e: any, heading: string) => {
-    const updatedData = { ...updatePopupData, [heading]: e.target.value };
-    setUpdatePopupData(updatedData);
-  };
 
   const handleUpdate = () => {
     setUpdatePopupData({
@@ -55,66 +50,62 @@ export function UpdateRole({open,handleClose,updateRoleId,prefilledInputData,rol
           aria-describedby="modal-modal-description"
         >
           <Box className={styles.update_role_modal}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              <h1 className={styles.heading}>Update Role</h1>
-            </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              <form onSubmit={handleSubmit(handleUpdate)}>
-                <div className={styles.label_and_inputs}>
-                  <div className={styles.field_name}>
-                    <label htmlFor="name">Role Name*</label>
-                  </div>
-                  <div>
-                    <input
-                      defaultValue={updatePopupData.name}
-                      type="text"
-                      placeholder='Enter The Name'
-                      className={styles.input_fields}
-                      {...register("roleName", {
-                        required: 'Role name is required',
-                        validate: value => {
-                          const lowerCaseValue = value.toLowerCase();
-                          return (
-                            !rolesList?.data?.some((category: any) => category.name.toLowerCase() === lowerCaseValue) ||
-                            'Role name is already exists'
-                          );
-                        },
-                      })}
-                    />
-                  </div>
-                  {errors.roleName && <p className={styles.error}>{errors.roleName.message}</p>}
+            <Typography id="modal-modal-title" variant="h6" component="h2">Update Role</Typography>
+            <form onSubmit={handleSubmit(handleUpdate)}>
+              <div className={styles.label_and_inputs}>
+                <div className={styles.field_name}>
+                  <label htmlFor="name">Role Name*</label>
                 </div>
+                <div>
+                  <input
+                    defaultValue={updatePopupData.name}
+                    type="text"
+                    placeholder='Enter The Name'
+                    className={styles.input_fields}
+                    {...register("roleName", {
+                      required: 'Role name is required',
+                      validate: (value:any) => {
+                        const lowerCaseValue = value.toLowerCase();
+                        return (
+                          !rolesList?.data?.some((category: any) => category.name.toLowerCase() === lowerCaseValue) ||
+                          'Role name is already exists'
+                        );
+                      },
+                    })}
+                  />
+                </div>
+                {errors.roleName && <p className={styles.error}>{errors?.roleName?.message}</p>}
+              </div>
 
-                <div className={styles.label_and_inputs}>
-                  <div className={styles.field_name}>
-                    <label htmlFor="name">Role description*</label>
-                  </div>
-                  <div>
-                    <input
-                      defaultValue={updatePopupData.description}
-                      type="text"
-                      placeholder='Enter the goal'
-                      className={styles.input_fields}
-                      {...register("description", {
-                        required: 'Description is required',
-                        validate: value => {
-                          const lowerCaseValue = value.toLowerCase();
-                          return (
-                            !rolesList?.data?.some((category: any) => category.description.toLowerCase() === lowerCaseValue) ||
-                            'Role description already exists'
-                          );
-                        },
-                      })}
-                    />
-                  </div>
-                  {errors.description && <p className={styles.error}>{errors.description.message}</p>}
+              <div className={styles.label_and_inputs}>
+                <div className={styles.field_name}>
+                  <label htmlFor="name">Role description*</label>
                 </div>
-                <div className={styles.update_btn}>
-                  <Button variant="contained" onClick={() => cancelUpdateOperation('cancel')} className={styles.cancel_button}>Cancel</Button>
-                  <Button variant="contained" type='submit'>Update</Button>
+                <div>
+                  <input
+                    defaultValue={updatePopupData.description}
+                    type="text"
+                    placeholder='Enter the goal'
+                    className={styles.input_fields}
+                    {...register("description", {
+                      required: 'Description is required',
+                      validate: (value:any) => {
+                        const lowerCaseValue = value.toLowerCase();
+                        return (
+                          !rolesList?.data?.some((category: any) => category.description.toLowerCase() === lowerCaseValue) ||
+                          'Role description already exists'
+                        );
+                      },
+                    })}
+                  />
                 </div>
-              </form>
-            </Typography>
+                {errors.description && <p className={styles.error}>{errors.description.message}</p>}
+              </div>
+              <div className={styles.update_btn}>
+                <Button variant="contained" onClick={() => cancelUpdateOperation('cancel')} className={styles.cancel_button}>Cancel</Button>
+                <Button variant="contained" type='submit'>Update</Button>
+              </div>
+            </form>
           </Box>
         </Modal>
       </div>

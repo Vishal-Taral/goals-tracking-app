@@ -1,5 +1,3 @@
-import styles from './Loader.module.scss';
-
 /* eslint-disable-next-line */
 export interface LoaderProps {}
 

@@ -1,12 +1,11 @@
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import './styles.css';
-import {
-  QueryClient,
-  QueryClientProvider,
-} from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import ContextProvider from 'libs/shared/ui/src/lib/contexts/ContextProvider';
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import HOCAuth from 'libs/shared/ui/src/lib/components/HOCAuth/HOCAuth';
 import axios from 'axios';
 import { useRouter } from 'next/router';
