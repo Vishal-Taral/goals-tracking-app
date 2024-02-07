@@ -13,6 +13,7 @@ import { RoleRouter } from './routes/role';
 import cors from 'cors';
 import { LoginRouter } from './routes/login';
 import { AuthorizeRouter } from './routes/authorization';
+import { GoalRouter } from './routes/goal';
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -22,6 +23,7 @@ app.use('/api', CategoryRouter);
 app.use('/api', RoleRouter);
 app.use('/api', LoginRouter);
 app.use('/api', AuthorizeRouter);
+app.use('/api', GoalRouter);
 
 const appDataSource = new DataSource({
   type: 'postgres',
