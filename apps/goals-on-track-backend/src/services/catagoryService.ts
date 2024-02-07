@@ -16,8 +16,6 @@ const addCategoryService = async (body) => {
 
     const newCategory = Category.create({
       name: categoryName,
-      createdAt: new Date(),
-      updatedAt: new Date(),
       createdBy: 'Admin',
       updatedBy: 'Admin',
     });
@@ -59,11 +57,7 @@ const updateCategoryService = async (categoryId, body) => {
   try {
     const { categoryName } = body;
     const findCategory = await Category.findOne({ where: { categoryId } });
-    (findCategory.name = categoryName),
-      (findCategory.createdAt = new Date()),
-      (findCategory.updatedAt = new Date()),
-      (findCategory.createdBy = 'Admin'),
-      (findCategory.updatedBy = 'Admin');
+    (findCategory.name = categoryName), (findCategory.updatedBy = 'Admin');
 
     const updateCategory = await Category.save(findCategory);
 

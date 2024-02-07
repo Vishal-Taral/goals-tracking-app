@@ -1,11 +1,13 @@
 import {
   BaseEntity,
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { User } from './user';
 import { Category } from './category';
@@ -21,13 +23,13 @@ export class Goal extends BaseEntity {
   @Column()
   description: string;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { lazy: true })
   @JoinColumn({ name: 'user_id' })
-  user: User;
+  user: Promise<User>;
 
-  @OneToOne(() => Category)
+  @ManyToOne(() => Category, { lazy: true })
   @JoinColumn({ name: 'category_id' })
-  category: User;
+  category: Promise<Category>;
 
   @Column()
   status: string;
@@ -38,17 +40,13 @@ export class Goal extends BaseEntity {
   @Column({ name: 'end_date' })
   endDate: Date;
 
-  @Column('timestamp', {
-    name: 'created_at',
-  })
+  @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;
 
   @Column({ name: 'created_by' })
   createdBy: string;
 
-  @Column('timestamp', {
-    name: 'updated_at',
-  })
+  @UpdateDateColumn({ type: 'timestamp', name: 'updated_at' })
   updatedAt: Date;
 
   @Column({ name: 'updated_by' })

@@ -18,7 +18,7 @@ class UserDetailsDto {
       (this.email = user.email),
       (this.gender = user.gender),
       (this.mobile_number = user.mobile_number),
-      (this.role = new RoleDto(user.role));
+      (this.role = user.__role__ ? new RoleDto(user.__role__) : {});
     // (this.reportee = user.reportee)
   }
   public static toDto(user: User[]) {

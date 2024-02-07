@@ -1,10 +1,12 @@
 import {
   BaseEntity,
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { User } from './user';
 
@@ -21,19 +23,13 @@ export class OrgTree extends BaseEntity {
   @JoinColumn({ name: 'manager_id' })
   manager: User;
 
-  @Column('timestamp', {
-    name: 'created_at',
-    nullable: true,
-  })
+  @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;
 
   @Column({ name: 'created_by' })
   createdBy: string;
 
-  @Column('timestamp', {
-    name: 'updated_at',
-    nullable: true,
-  })
+  @UpdateDateColumn({ type: 'timestamp', name: 'updated_at' })
   updatedAt: Date;
 
   @Column({ name: 'updated_by' })

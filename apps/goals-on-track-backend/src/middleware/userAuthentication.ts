@@ -2,7 +2,8 @@ import jwt from 'jsonwebtoken';
 
 const userAuthentication = (req, res, next) => {
   const token = req.header('AUTHORIZATION');
-  if (!token) {
+  const cookie = req.headers.cookie;
+  if (!token || !cookie) {
     return res.status(401).json({
       success: false,
       message: 'Please Authenticate with Valid Token',
