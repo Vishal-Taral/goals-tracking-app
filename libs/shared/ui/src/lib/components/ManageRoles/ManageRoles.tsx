@@ -3,7 +3,7 @@ import styles from './ManageRoles.module.scss';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState , useRef } from 'react';
 import AddRole from '../AddRole/AddRole';
 import { useGetRoleByID, useGetRoles } from '@goal-tracker/data-access';
 import UpdateRole from '../UpdateRole/UpdateRole';
@@ -11,6 +11,8 @@ import DeleteRole from '../DeleteRole/DeleteRole';
 import PageNumberContainer from '../PageNumberContainer/PageNumberContainer';
 import AppContext from '../../contexts/AppContext';
 import NorthIcon from '@mui/icons-material/North';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import { FilterContainer } from '@goal-tracker/ui';
 /* eslint-disable-next-line */
 export interface ManageRoles {
   tableData: any;
@@ -50,6 +52,43 @@ export function ManageRoles({ tableData }: ManageRoles) {
   const [searchResultDisplay, setSearchResultDisplay] = useState(false);
   const [RoleNameSortOrderArrow, setRoleNameSortOrderArrow] = useState(false);
   const [descriptionSortOrderArrow, setDescriptionSortOrderArrow] = useState(false);
+  const [searchRoleName, setSearchRoletName] = useState('');
+  const [searchDescription, setSearchDescription] = useState('');
+  const [open, setOpen] = useState(false);
+  const anchorRef = useRef<HTMLDivElement>(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleToggle = ( event : any) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (event : any) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+    setAnchorEl(null);
+    setOpen(false);
+  };
+
+  const inputDataForSearchField = [
+    {
+      value: 'role',
+      label: 'Role Name',
+      setSearch: setSearchRoletName,
+    },
+    {
+      value: 'desc',
+      label: 'Description',
+      setSearch: setSearchDescription,
+    },
+  ];
+
+  const handleSearch = () => {
+    context?.setRoleNameSearch(searchRoleName);
+    context?.setDescriptionSearch(searchDescription);
+    handleClose('');
+  };
 
   const updatePopupOpenHandler = (index: number, data: any) => {
     setOpenUpdatePopup(true);
@@ -132,10 +171,26 @@ export function ManageRoles({ tableData }: ManageRoles) {
           className={styles.searchInput}
           placeholder="Search By ID"
         />
+        <div className={styles.filter_icon} onClick={handleToggle}>
+          <FilterListIcon className={styles.filterIcon} />
+        </div>
         <button className={styles.searchButton} onClick={searchHandler}>
           Search
         </button>
       </div>
+
+      {open && (
+        <div>
+          <FilterContainer
+            inputDataForSearchField={inputDataForSearchField}
+            onSearch={handleSearch}
+            open={open}
+            handleClose={handleClose}
+            anchorEl={anchorEl}
+          />
+        </div>
+      )}
+
       <div className={styles.entriesPerPageBlock}>
         <div className={styles.entriesPerPage}>Entries per page-</div>
         <input
