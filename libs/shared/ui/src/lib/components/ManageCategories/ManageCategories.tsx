@@ -12,6 +12,7 @@ import AppContext from '../../contexts/AppContext';
 import NorthIcon from '@mui/icons-material/North';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { FilterContainer } from '@goal-tracker/ui';
+import Tooltip from '@mui/material/Tooltip';
 
 /* eslint-disable-next-line */
 
@@ -156,7 +157,9 @@ export function ManageCategories({ tableData }: ManageCategoriesProps) {
           placeholder="Search By ID"
         />
         <div className={styles.filter_icon} onClick={handleToggle}>
-          <FilterListIcon className={styles.filterIcon} />
+          <Tooltip title="Advance Search">
+            <FilterListIcon className={styles.filterIcon} />
+          </Tooltip>
         </div>
         <button className={styles.searchButton} onClick={searchHandler}>
           Search
