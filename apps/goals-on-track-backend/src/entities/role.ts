@@ -1,4 +1,11 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class Role extends BaseEntity {
@@ -11,19 +18,13 @@ export class Role extends BaseEntity {
   @Column()
   description: string;
 
-  @Column('timestamp', {
-    name: 'created_at',
-    nullable: true,
-  })
+  @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;
 
   @Column({ name: 'created_by', nullable: true })
   createdBy: string;
 
-  @Column('timestamp', {
-    name: 'updated_at',
-    nullable: true,
-  })
+  @UpdateDateColumn({ type: 'timestamp', name: 'updated_at' })
   updatedAt: Date;
 
   @Column({ name: 'updated_by', nullable: true })

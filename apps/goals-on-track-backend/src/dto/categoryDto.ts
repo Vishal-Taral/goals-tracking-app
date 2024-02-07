@@ -4,7 +4,7 @@ class CategoryDto {
   categoryId: string;
   name: string;
 
-  constructor(category: Category) {
+  constructor(category) {
     (this.categoryId = category.categoryId), (this.name = category.name);
   }
   public static toDto(categories: Category[]) {

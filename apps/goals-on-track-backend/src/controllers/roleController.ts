@@ -9,8 +9,9 @@ import {
   updateRoleService,
 } from '../services/rollService';
 import invalidParameters from '../utils/invalidParams';
+import { Request, Response } from 'express';
 
-const getAllRoles = async (req, res) => {
+const getAllRoles = async (req: Request, res: Response) => {
   try {
     const expectedParams = [
       'page',
@@ -20,7 +21,7 @@ const getAllRoles = async (req, res) => {
       'sortBy',
       'sortOrder',
     ];
-    const invalidQuery = invalidParameters(req.query, expectedParams);
+    const invalidQuery = invalidParameters(req, expectedParams);
     if (!invalidQuery?.isValid) {
       return res.status(400).json({ error: 'Bad request' });
     }
@@ -54,7 +55,7 @@ const getAllRoles = async (req, res) => {
   }
 };
 
-const getRoleById = async (req, res) => {
+const getRoleById = async (req: Request, res: Response) => {
   try {
     const roleId = req.params.id;
     const existingRole = await getRoleByIdService(roleId);
@@ -73,7 +74,7 @@ const getRoleById = async (req, res) => {
   }
 };
 
-const addRole = async (req, res) => {
+const addRole = async (req: Request, res: Response) => {
   try {
     const addedRole = await addRoleService(req.body);
     return res.json({
@@ -88,7 +89,7 @@ const addRole = async (req, res) => {
   }
 };
 
-const updateRole = async (req, res) => {
+const updateRole = async (req: Request, res: Response) => {
   try {
     const roleId = req.params.id;
     const existingRole = await updateRoleService(roleId, req.body);
@@ -108,7 +109,7 @@ const updateRole = async (req, res) => {
   }
 };
 
-const deleteRole = async (req, res) => {
+const deleteRole = async (req: Request, res: Response) => {
   try {
     const roleId = req.params.id;
     const role = await removeRoleService(roleId);

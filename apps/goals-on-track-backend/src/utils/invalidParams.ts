@@ -1,7 +1,7 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 
-const invalidParameters = (reqQuery: Response, expectedParams: any) => {
-  const unexpectedParams = Object.keys(reqQuery).filter(
+const invalidParameters = ({ query }: Request, expectedParams: any) => {
+  const unexpectedParams = Object.keys(query).filter(
     (param) => !expectedParams.includes(param)
   );
 

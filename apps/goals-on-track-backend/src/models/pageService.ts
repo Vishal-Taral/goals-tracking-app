@@ -1,29 +1,28 @@
-import { Repository, FindOptionsWhere, ILike } from 'typeorm';
+import { Repository, FindOptionsWhere, ILike, Like } from 'typeorm';
 import { GenericFilter, SortOrder } from './genricClass';
-
 export class PageService {
   static createOrderQuery(filter: GenericFilter) {
     const order: any = {};
-
     if (filter.orderBy) {
       order[filter.orderBy] = filter.sortOrder;
       return order;
     }
-
     order.createdAt = SortOrder.DESC;
     return order;
   }
 
-  static paginate<T>(
+  static async paginate<T>(
     repository: Repository<T>,
     filter: GenericFilter,
-    where: FindOptionsWhere<T>
+    where: FindOptionsWhere<T>,
+    relations?: any
   ) {
-    return repository.findAndCount({
+    return await repository.findAndCount({
       order: this.createOrderQuery(filter),
       skip: (filter.page - 1) * filter.pageSize,
       take: filter.pageSize,
       where: where,
+      relations: relations,
     });
   }
 }
@@ -41,6 +40,14 @@ export interface SearchRoleQueryInterface {
 
 export interface CategoryQueryInterface {
   name: string;
+}
+
+export interface GoalQueryInterface {
+  name: string;
+  description: string;
+  status: 'Active' | 'Complete';
+  user: any;
+  category: string;
 }
 
 export class SearchUser extends PageService {
@@ -88,6 +95,34 @@ export class SearchCategory extends PageService {
 
     if (name) {
       where.name = ILike(`%${name}%`);
+    }
+
+    return where;
+  }
+}
+
+export class SearchGoal extends PageService {
+  static createWhereQuery(params: GoalQueryInterface) {
+    const { name, description, status, user, category } = params;
+    const where: any = {};
+
+    if (name) {
+      where.name = ILike(`%${name}%`);
+    }
+    if (description) {
+      where.description = ILike(`%${description}%`);
+    }
+    if (status) {
+      where.status = ILike(`%${status}%`);
+    }
+    if (user) {
+      where.user = [
+        { firstName: ILike(`%${user}%`) },
+        { lastName: ILike(`%${user}%`) },
+      ];
+    }
+    if (category) {
+      where.category = { name: ILike(`%${category}%`) };
     }
 
     return where;

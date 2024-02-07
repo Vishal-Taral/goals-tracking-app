@@ -9,8 +9,9 @@ import {
   updateUserService,
 } from '../services/userService';
 import invalidParameters from '../utils/invalidParams';
+import { Request, Response } from 'express';
 
-const getAllUsers = async (req, res) => {
+const getAllUsers = async (req: Request, res: Response) => {
   try {
     const expectedParams = [
       'page',
@@ -21,7 +22,7 @@ const getAllUsers = async (req, res) => {
       'sortBy',
       'sortOrder',
     ];
-    const invalidQuery = invalidParameters(req.query, expectedParams);
+    const invalidQuery = invalidParameters(req, expectedParams);
     if (!invalidQuery?.isValid) {
       return res.status(400).json({ error: 'Bad request' });
     }
@@ -54,7 +55,7 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-const addUser = async (req, res) => {
+const addUser = async (req: Request, res: Response) => {
   try {
     const { isUserExist, addedUser } = await addUserService(req.body);
     if (isUserExist) {
@@ -76,7 +77,7 @@ const addUser = async (req, res) => {
   }
 };
 
-const getUserById = async (req, res) => {
+const getUserById = async (req: Request, res: Response) => {
   try {
     const userId = req.params.id;
     const existingUser = await getUserByIdService(userId);
@@ -96,7 +97,7 @@ const getUserById = async (req, res) => {
   }
 };
 
-const updateUser = async (req, res) => {
+const updateUser = async (req: Request, res: Response) => {
   try {
     const userId = req.params.id;
     const existingUser = await updateUserService(userId, req?.body);
@@ -117,7 +118,7 @@ const updateUser = async (req, res) => {
   }
 };
 
-const deleteUser = async (req, res) => {
+const deleteUser = async (req: Request, res: Response) => {
   try {
     const userId = req.params.id;
     const user = await removeUserService(userId);

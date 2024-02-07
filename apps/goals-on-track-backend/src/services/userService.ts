@@ -37,10 +37,8 @@ const addUserService = async (body) => {
       email,
       password: hash,
       role,
-      createdAt: new Date(),
       createdBy: 'admin',
       updatedBy: 'admin',
-      updatedAt: new Date(),
     });
     const addedUser = await User.save(newUser);
     return { isUserExist: false, addedUser };
@@ -67,11 +65,12 @@ const listOfUserService = async (userQuery) => {
       lastName,
       email,
     });
-
+    const relations = ['role'];
     const users = await PageService.paginate(
       User.getRepository(),
       userQuery,
-      where
+      where,
+      relations
     );
     return { users: users[0], userCount: users[1] };
   } catch (error) {
@@ -91,8 +90,6 @@ const updateUserService = async (userId, body) => {
     existingUser.email = email;
     existingUser.role = role;
     // existingUser.password = password;
-    existingUser.createdAt = new Date();
-    existingUser.updatedAt = new Date();
 
     const updatedUser = await User.save(existingUser);
     return updatedUser;
