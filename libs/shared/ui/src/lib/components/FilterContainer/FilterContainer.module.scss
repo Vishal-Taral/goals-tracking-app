@@ -1,7 +1,5 @@
 .filterContainer {
-    background-color: rgb(229, 229, 229);
     padding: 1rem;
-    border-right: 1px solid lightgray;
     width: 20%;
 
     .headings {
@@ -21,7 +19,9 @@
             
             .search_inputs {
                 padding: 0.5rem;
-                width: 14rem;
+                width: 58rem;
+                border: 1px solid gray;
+                border-radius: 0.2rem;
             }
         }
     }

@@ -61,10 +61,10 @@ export function Users(props: UsersProps) {
       <PrivateLayout>
         <div className={styles.dashboard_page_container}>
           <div className={styles.header_and_user_detail_section}>
-            <FilterContainer
+            {/* <FilterContainer
               inputDataForSearchField={inputDataForSearchField}
               onSearch={handleSearch}
-            />
+            /> */}
             <ErrorHandler>
               <ManageUsers tableData={users} />
             </ErrorHandler>

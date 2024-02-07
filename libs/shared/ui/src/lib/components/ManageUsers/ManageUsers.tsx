@@ -2,7 +2,7 @@ import styles from './ManageUsers.module.scss';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState , useRef } from 'react';
 import CreateUsers from '../CreateUsers/CreateUsers';
 import DeleteUser from '../DeleteUser/DeleteUser';
 import { useGetRoles, useGetUserByID, useGetUsers } from '@goal-tracker/data-access';
@@ -10,6 +10,8 @@ import UpdateUser from '../UpdateUser/UpdateUser';
 import PageNumberContainer from '../PageNumberContainer/PageNumberContainer';
 import AppContext from '../../contexts/AppContext';
 import NorthIcon from '@mui/icons-material/North';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import { FilterContainer } from '@goal-tracker/ui';
 
 /* eslint-disable-next-line */
 export interface ManageCategories {
@@ -27,6 +29,43 @@ export function ManageUsers({ tableData }: ManageCategories) {
   const [openCreatePopup, setOpenCreatePopup] = useState(false);
   const [firstNameSortOrderArrow, setFirstNameSortOrderArrow] = useState(false);
   const [lastNameSortOrderArrow, setLastNameSortOrderArrow] = useState(false);
+  const [searchFirstName, setSearchFirstName] = useState('');
+  const [searchLastName, setSearchLastName] = useState('');
+  const [searchEmail, setSearchEmail] = useState('');
+  const [open, setOpen] = useState(false);
+  const anchorRef = useRef<HTMLDivElement>(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleToggle = ( event : any) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (event : any) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+    setAnchorEl(null);
+    setOpen(false);
+  };
+
+  const inputDataForSearchField = [
+    {
+      value: 'firstName',
+      label: 'First Name',
+      setSearch: setSearchFirstName,
+    },
+    {
+      value: 'lastName',
+      label: 'Last Name',
+      setSearch: setSearchLastName,
+    },
+    {
+      value: 'email',
+      label: 'Email',
+      setSearch: setSearchEmail,
+    },
+  ];
 
   const toggleSortOrder = (sortByColumn: string) => {
     let sortOrder;
@@ -59,6 +98,13 @@ export function ManageUsers({ tableData }: ManageCategories) {
     sortBy: context?.sortBy,
     sortOrder: context?.sortOrder
   }
+
+  const handleSearch = () => {
+    context?.setFirstNameSearch(searchFirstName);
+    context?.setLastNameSearch(searchLastName);
+    context?.setEmailSearch(searchEmail);
+    handleClose('');
+  };
 
   const { data: usersList, refetch } = useGetUsers(queryParamObject);
 
@@ -151,10 +197,25 @@ export function ManageUsers({ tableData }: ManageCategories) {
           className={styles.searchInput}
           placeholder="Search By ID"
         />
+        <div className={styles.filter_icon} onClick={handleToggle}>
+          <FilterListIcon className={styles.filterIcon} />
+        </div>
         <button className={styles.searchButton} onClick={searchHandler}>
           Search
         </button>
       </div>
+
+      {open && (
+        <div>
+          <FilterContainer
+            inputDataForSearchField={inputDataForSearchField}
+            onSearch={handleSearch}
+            open={open}
+            handleClose={handleClose}
+            anchorEl={anchorEl}
+          />
+        </div>
+      )}
 
       <div className={styles.entriesPerPageBlock}>
         <div className={styles.entriesPerPage}>Entries per page-</div>
@@ -205,8 +266,8 @@ export function ManageUsers({ tableData }: ManageCategories) {
                     <label>{data}</label>
                     {(index === 1 || index === 2) && (
                       <NorthIcon
-                        className={`${styles.northIcon} ${index === 1 ? (firstNameSortOrderArrow ? styles.toggle_down  : styles.toggle_up)
-                            : (lastNameSortOrderArrow ? styles.toggle_down : styles.toggle_up)
+                        className={`${styles.northIcon} ${index === 1 ? (firstNameSortOrderArrow ? styles.toggle_down : styles.toggle_up)
+                          : (lastNameSortOrderArrow ? styles.toggle_down : styles.toggle_up)
                           }`}
                         onClick={() => toggleSortOrder(index === 1 ? 'firstName' : 'lastName')}
                       />

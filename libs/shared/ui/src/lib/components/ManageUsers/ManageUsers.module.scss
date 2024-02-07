@@ -2,7 +2,7 @@
   padding: 2rem 4rem 2rem 2rem;
   height: 100%;
   background-color: rgb(229 229 229);
-  width: 80%;
+  width: 100%;
 
 
   .users {
@@ -15,6 +15,14 @@
     margin: 1rem 0rem;
     display: flex;
     flex-direction: row;
+    .filter_icon{
+      background-color: white;
+
+      .filterIcon {
+        color: #888;
+        cursor: pointer;
+      }
+    }
     .searchInput {
       padding: 0.5rem;
       width: 90%;
