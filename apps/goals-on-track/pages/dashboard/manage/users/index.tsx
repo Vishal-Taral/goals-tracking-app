@@ -1,39 +1,16 @@
-import React, { Suspense, lazy, useContext, useState } from 'react';
-import {
-  ErrorHandler,
-  FilterContainer,
-  HOCLoader,
-  Loader,
-  ManageUsers,
-} from '@goal-tracker/ui';
-const Component = lazy(() =>
-  import('@goal-tracker/ui').then((module) => ({
-    default: module.FilterContainer,
-  }))
-);
+import React from 'react';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { ErrorHandler, ManageUsers } from '@goal-tracker/ui';
 import styles from './index.module.scss';
 import { useGetUsers } from '@goal-tracker/data-access';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import PrivateLayout from 'apps/goals-on-track/component/common/privateLayout/private-layout';
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import AppContext from 'libs/shared/ui/src/lib/contexts/AppContext';
 
 /* eslint-disable-next-line */
 export interface UsersProps {}
 
 export function Users(props: UsersProps) {
   const { data: usersList } = useGetUsers();
-  const context = useContext(AppContext);
-  const [searchFirstName, setSearchFirstName] = useState('');
-  const [searchLastName, setSearchLastName] = useState('');
-  const [searchEmail, setSearchEmail] = useState('');
-
-  const handleSearch = () => {
-    context?.setFirstNameSearch(searchFirstName);
-    context?.setLastNameSearch(searchLastName);
-    context?.setEmailSearch(searchEmail);
-  };
-
   const users: any = {
     headings: [
       'Id',
@@ -48,25 +25,6 @@ export function Users(props: UsersProps) {
     ],
     rows: usersList,
   };
-
-  const inputDataForSearchField = [
-    {
-      value: 'firstName',
-      label: 'First Name',
-      setSearch: setSearchFirstName,
-    },
-    {
-      value: 'lastName',
-      label: 'Last Name',
-      setSearch: setSearchLastName,
-    },
-    {
-      value: 'email',
-      label: 'Email',
-      setSearch: setSearchEmail,
-    },
-  ];
-
   return (
     <div className={styles.container}>
       <PrivateLayout>

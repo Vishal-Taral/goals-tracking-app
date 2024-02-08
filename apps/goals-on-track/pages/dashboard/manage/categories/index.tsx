@@ -1,16 +1,12 @@
 import { useGetCategories } from '@goal-tracker/data-access';
-import {
-  ErrorHandler,
-  ManageCategories,
-} from '@goal-tracker/ui';
+// eslint-disable-next-line @nx/enforce-module-boundaries
 import PrivateLayout from 'apps/goals-on-track/component/common/privateLayout/private-layout';
-import { Suspense, lazy, useContext, useState } from 'react';
 import styles from './index.module.scss';
+// eslint-disable-next-line @nx/enforce-module-boundaries
+import { ErrorHandler, ManageCategories } from '@goal-tracker/ui';
 
 const Categories = () => {
   const { data: categoriesList } = useGetCategories();
-
-  const Component = lazy(()=>import('@goal-tracker/ui').then((module)=>({default: module.FilterContainer})))
 
   const categories: any = {
     headings: ['Category Id', 'Name', 'Update', 'Delete'],
