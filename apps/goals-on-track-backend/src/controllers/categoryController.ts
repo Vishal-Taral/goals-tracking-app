@@ -9,8 +9,9 @@ import {
   updateCategoryService,
 } from '../services/catagoryService';
 import invalidParameters from '../utils/invalidParams';
+import { Request, Response } from 'express';
 
-const getAllCategories = async (req, res) => {
+const getAllCategories = async (req: Request, res: Response) => {
   try {
     const expectedParams = [
       'page',
@@ -19,7 +20,7 @@ const getAllCategories = async (req, res) => {
       'sortBy',
       'sortOrder',
     ];
-    const invalidQuery = invalidParameters(req.query, expectedParams);
+    const invalidQuery = invalidParameters(req, expectedParams);
     if (!invalidQuery?.isValid) {
       return res.status(400).json({ error: 'Bad request' });
     }
@@ -55,7 +56,7 @@ const getAllCategories = async (req, res) => {
   }
 };
 
-const getCategoryById = async (req, res) => {
+const getCategoryById = async (req: Request, res: Response) => {
   try {
     const categoryId = req.params.id;
     const findCategory = await getCategoryByIdService(categoryId);
@@ -65,7 +66,7 @@ const getCategoryById = async (req, res) => {
     return res.json({
       statusCode: 200,
       status: 'success',
-      message: 'Role found successfully.',
+      message: 'Category found successfully.',
       data: new CategoryDto(findCategory),
     });
   } catch (error) {
@@ -74,7 +75,7 @@ const getCategoryById = async (req, res) => {
   }
 };
 
-const addCategory = async (req, res) => {
+const addCategory = async (req: Request, res: Response) => {
   try {
     const addedCategory = await addCategoryService(req.body);
     return res.json({
@@ -89,7 +90,7 @@ const addCategory = async (req, res) => {
   }
 };
 
-const updateCategory = async (req, res) => {
+const updateCategory = async (req: Request, res: Response) => {
   try {
     const categoryId = req.params.id;
     const findCategory = await updateCategoryService(categoryId, req?.body);
@@ -108,7 +109,7 @@ const updateCategory = async (req, res) => {
   }
 };
 
-const deleteCategory = async (req, res) => {
+const deleteCategory = async (req: Request, res: Response) => {
   try {
     const categoryId = req.params.id;
     const category = await removeCategoryService(categoryId);

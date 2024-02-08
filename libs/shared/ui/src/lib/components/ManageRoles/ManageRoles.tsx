@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import styles from './ManageRoles.module.scss';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useRef } from 'react';
 import AddRole from '../AddRole/AddRole';
 import { useGetRoleByID, useGetRoles } from '@goal-tracker/data-access';
 import UpdateRole from '../UpdateRole/UpdateRole';
@@ -11,6 +10,9 @@ import DeleteRole from '../DeleteRole/DeleteRole';
 import PageNumberContainer from '../PageNumberContainer/PageNumberContainer';
 import AppContext from '../../contexts/AppContext';
 import NorthIcon from '@mui/icons-material/North';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import { FilterContainer } from '@goal-tracker/ui';
+import Tooltip from '@mui/material/Tooltip';
 /* eslint-disable-next-line */
 export interface ManageRoles {
   tableData: any;
@@ -21,15 +23,15 @@ export function ManageRoles({ tableData }: ManageRoles) {
   const context = useContext(AppContext);
 
   const payLoadObj = {
-     page : context?.pageNumber,
-     pageSize: entriesPerPage,
-     roleName: context?.roleNameSearch || null,
-     roleDescription: context?.descriptionSearch || null,
-     sortBy: context?.sortByRole,
-     sortOrder: context?.sortOrder,
+    page: context?.pageNumber,
+    pageSize: entriesPerPage,
+    roleName: context?.roleNameSearch || null,
+    roleDescription: context?.descriptionSearch || null,
+    sortBy: context?.sortByRole,
+    sortOrder: context?.sortOrder,
   }
   const { data: rolesList, refetch } = useGetRoles(payLoadObj);
-  const entriesPerPageChangeHandler = (e:any) => {
+  const entriesPerPageChangeHandler = (e: any) => {
     setEntriesPerPage(e.target.value);
   };
   const entriesPerPageClickHandler = () => {
@@ -37,7 +39,7 @@ export function ManageRoles({ tableData }: ManageRoles) {
   };
   useEffect(() => {
     refetch();
-  }, [context?.pageNumber, context?.sortBy, context?.sortOrder, context?.sortByRole , context?.roleNameSearch, context?.descriptionSearch ]);
+  }, [context?.pageNumber, context?.sortBy, context?.sortOrder, context?.sortByRole, context?.roleNameSearch, context?.descriptionSearch]);
 
   const [openUpdatePopup, setOpenUpdatePopup] = useState(false);
   const [updateRoleId, setUpdateRoleId] = useState(null);
@@ -50,6 +52,43 @@ export function ManageRoles({ tableData }: ManageRoles) {
   const [searchResultDisplay, setSearchResultDisplay] = useState(false);
   const [RoleNameSortOrderArrow, setRoleNameSortOrderArrow] = useState(false);
   const [descriptionSortOrderArrow, setDescriptionSortOrderArrow] = useState(false);
+  const [searchRoleName, setSearchRoletName] = useState('');
+  const [searchDescription, setSearchDescription] = useState('');
+  const [open, setOpen] = useState(false);
+  const anchorRef = useRef<HTMLDivElement>(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleToggle = (event: any) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (event: any) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+    setAnchorEl(null);
+    setOpen(false);
+  };
+
+  const inputDataForSearchField = [
+    {
+      value: 'role',
+      label: 'Role Name',
+      setSearch: setSearchRoletName,
+    },
+    {
+      value: 'desc',
+      label: 'Description',
+      setSearch: setSearchDescription,
+    },
+  ];
+
+  const handleSearch = () => {
+    context?.setRoleNameSearch(searchRoleName);
+    context?.setDescriptionSearch(searchDescription);
+    handleClose('');
+  };
 
   const updatePopupOpenHandler = (index: number, data: any) => {
     setOpenUpdatePopup(true);
@@ -132,10 +171,28 @@ export function ManageRoles({ tableData }: ManageRoles) {
           className={styles.searchInput}
           placeholder="Search By ID"
         />
+        <div className={styles.filter_icon} onClick={handleToggle}>
+          <Tooltip title="Advance Search">
+            <FilterListIcon className={styles.filterIcon} />
+          </Tooltip>
+        </div>
         <button className={styles.searchButton} onClick={searchHandler}>
           Search
         </button>
       </div>
+
+      {open && (
+        <div>
+          <FilterContainer
+            inputDataForSearchField={inputDataForSearchField}
+            onSearch={handleSearch}
+            open={open}
+            handleClose={handleClose}
+            anchorEl={anchorEl}
+          />
+        </div>
+      )}
+
       <div className={styles.entriesPerPageBlock}>
         <div className={styles.entriesPerPage}>Entries per page-</div>
         <input
@@ -172,7 +229,7 @@ export function ManageRoles({ tableData }: ManageRoles) {
 
       <div className={styles.user_detail_container}>
         <table className={styles.table}>
-        <thead className={styles.table_headings_section}>
+          <thead className={styles.table_headings_section}>
             <tr>
               {tableData?.headings?.map((data: any, index: number) => (
                 <th className={styles.headings} key={index}>
@@ -181,7 +238,7 @@ export function ManageRoles({ tableData }: ManageRoles) {
                     {(index === 1 || index === 2) && (
                       <NorthIcon
                         className={`${styles.northIcon} ${index === 1 ? (RoleNameSortOrderArrow ? styles.toggle_up : styles.toggle_down)
-                            : (descriptionSortOrderArrow ? styles.toggle_up : styles.toggle_down)
+                          : (descriptionSortOrderArrow ? styles.toggle_up : styles.toggle_down)
                           }`}
                         onClick={() => toggleSortOrder(index === 1 ? 'name' : 'description')}
                       />

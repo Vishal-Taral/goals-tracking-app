@@ -5,6 +5,8 @@ import {
   Column,
   JoinColumn,
   ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Role } from './role';
 
@@ -31,25 +33,21 @@ export class User extends BaseEntity {
   @Column()
   gender: 'Male' | 'Female';
 
-  @ManyToOne(() => Role, { eager: true })
+  @ManyToOne(() => Role, { lazy: true })
   @JoinColumn({ name: 'role_id' })
-  role: Role;
+  role: Promise<Role>;
 
   // @OneToMany(() => OrgTree, (OrgTree) => OrgTree.user, { eager: true })
   // @JoinColumn({ name: 'user_id' })
   // reportee: OrgTree;
 
-  @Column('timestamp', {
-    name: 'created_at',
-  })
+  @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;
 
   @Column({ name: 'created_by' })
   createdBy: string;
 
-  @Column('timestamp', {
-    name: 'updated_at',
-  })
+  @UpdateDateColumn({ type: 'timestamp', name: 'updated_at' })
   updatedAt: Date;
 
   @Column({ name: 'updated_by' })

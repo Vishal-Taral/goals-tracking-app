@@ -1,4 +1,4 @@
-import { Role } from "../entities/role";
+import { Role } from '../entities/role';
 
 class RoleDto {
   roleId: string;

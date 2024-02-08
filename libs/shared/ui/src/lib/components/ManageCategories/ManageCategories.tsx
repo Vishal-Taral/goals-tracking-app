@@ -2,7 +2,7 @@ import styles from './ManageCategories.module.scss';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useRef } from 'react';
 import { UpdateCategory } from '../updateCategory/update-category';
 import { DeleteCategory } from '../deleteCategory/delete-category';
 import { CreateCategory } from '../createCategory/create-category';
@@ -10,6 +10,9 @@ import { PageNumberContainer } from '../PageNumberContainer/PageNumberContainer'
 import { useGetCategories, useGetCategoryByID } from '@goal-tracker/data-access';
 import AppContext from '../../contexts/AppContext';
 import NorthIcon from '@mui/icons-material/North';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import { FilterContainer } from '@goal-tracker/ui';
+import Tooltip from '@mui/material/Tooltip';
 
 /* eslint-disable-next-line */
 
@@ -26,6 +29,35 @@ export function ManageCategories({ tableData }: ManageCategoriesProps) {
   const [searchResultDisplay, setSearchResultDisplay] = useState(false);
   const [entriesPerPage, setEntriesPerPage] = useState(5);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [searchCategoryName, setCategoryName] = useState('');
+  const [open, setOpen] = useState(false);
+  const anchorRef = useRef<HTMLDivElement>(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleToggle = ( event : any) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (event : any) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+    setAnchorEl(null);
+    setOpen(false);
+  };
+
+  const inputDataForSearchField = [
+    {
+      value: 'name',
+      label: 'Category Name',
+      setSearch: setCategoryName,
+    },
+  ];
+
+  const handleSearch = () => {
+    context?.setCategorySearch(searchCategoryName);
+  };
 
   const context = useContext(AppContext);
 
@@ -124,10 +156,27 @@ export function ManageCategories({ tableData }: ManageCategoriesProps) {
           className={styles.searchInput}
           placeholder="Search By ID"
         />
+        <div className={styles.filter_icon} onClick={handleToggle}>
+          <Tooltip title="Advance Search">
+            <FilterListIcon className={styles.filterIcon} />
+          </Tooltip>
+        </div>
         <button className={styles.searchButton} onClick={searchHandler}>
           Search
         </button>
       </div>
+
+      {open && (
+        <div>
+          <FilterContainer
+            inputDataForSearchField={inputDataForSearchField}
+            onSearch={handleSearch}
+            open={open}
+            handleClose={handleClose}
+            anchorEl={anchorEl}
+          />
+        </div>
+      )}
 
       <div className={styles.entriesPerPageBlock}>
         <div className={styles.entriesPerPage}>Entries per page-</div>

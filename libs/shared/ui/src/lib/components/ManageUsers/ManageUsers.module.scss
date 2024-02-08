@@ -2,7 +2,7 @@
   padding: 2rem 4rem 2rem 2rem;
   height: 100%;
   background-color: rgb(229 229 229);
-  width: 80%;
+  width: 100%;
 
 
   .users {
@@ -15,6 +15,14 @@
     margin: 1rem 0rem;
     display: flex;
     flex-direction: row;
+    .filter_icon{
+      background-color: white;
+
+      .filterIcon {
+        color: #888;
+        cursor: pointer;
+      }
+    }
     .searchInput {
       padding: 0.5rem;
       width: 90%;
@@ -93,6 +101,7 @@
     .table {
       box-shadow: 1px 1px 13px 0px rgba(206, 204, 204, 0.75);
       width: 100%;
+      table-layout: fixed;
     }
 
     .table,
@@ -101,10 +110,28 @@
       border-collapse: collapse;
       padding: 0.5rem;
       border: 1px solid black;
-
     }
 
     .headings{
+
+      &:nth-child(1){
+        width: 15rem;
+      }
+      
+      &:nth-child(4){
+        width: 4.5rem;
+      }
+
+      &:nth-child(5){
+        width: 15rem;
+      }
+      &:nth-child(8){
+        width: 4rem;
+      }
+
+      &:nth-child(9){
+        width: 4rem;
+      }
 
       .heading_contains{
         display: flex;

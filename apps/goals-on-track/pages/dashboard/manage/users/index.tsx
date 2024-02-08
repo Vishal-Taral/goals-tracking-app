@@ -72,12 +72,6 @@ export function Users(props: UsersProps) {
       <PrivateLayout>
         <div className={styles.dashboard_page_container}>
           <div className={styles.header_and_user_detail_section}>
-            <Suspense fallback={'Loading'}>
-              <Component
-                inputDataForSearchField={inputDataForSearchField}
-                onSearch={handleSearch}
-              />
-            </Suspense>
             <ErrorHandler>
               <ManageUsers tableData={users} />
             </ErrorHandler>

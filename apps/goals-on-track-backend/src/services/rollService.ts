@@ -16,10 +16,8 @@ const addRoleService = async (body) => {
     const newRole = Role.create({
       name: roleName,
       description: roleDescription,
-      createdAt: new Date(),
       createdBy: 'admin',
       updatedBy: 'admin',
-      updatedAt: new Date(),
     });
     const addedRole = await Role.save(newRole);
     return addedRole;
@@ -63,8 +61,6 @@ const updateRoleService = async (roleId, body) => {
     const existingRole = await Role.findOne({ where: { roleId } });
     existingRole.name = roleName;
     existingRole.description = roleDescription;
-    existingRole.createdAt = new Date();
-    existingRole.updatedAt = new Date();
 
     const updatedRole = await Role.save(existingRole);
 
