@@ -2,7 +2,7 @@ import styles from './ManageUsers.module.scss';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-import { useContext, useEffect, useState , useRef } from 'react';
+import { useContext, useEffect, useState , useRef, lazy, Suspense } from 'react';
 import CreateUsers from '../CreateUsers/CreateUsers';
 import DeleteUser from '../DeleteUser/DeleteUser';
 import { useGetRoles, useGetUserByID, useGetUsers } from '@goal-tracker/data-access';
@@ -184,6 +184,8 @@ export function ManageUsers({ tableData }: ManageCategories) {
     setOpenDeletePopup(false);
   }
 
+  const Component = lazy(()=>import('@goal-tracker/ui').then((module)=>({default: module.FilterContainer})))
+
   return (
     <div className={styles.container}>
       <div className={styles.users}>
@@ -210,13 +212,15 @@ export function ManageUsers({ tableData }: ManageCategories) {
 
       {open && (
         <div>
-          <FilterContainer
+          <Suspense fallback={"Loading"}>
+          <Component
             inputDataForSearchField={inputDataForSearchField}
             onSearch={handleSearch}
             open={open}
             handleClose={handleClose}
             anchorEl={anchorEl}
           />
+          </Suspense>
         </div>
       )}
 

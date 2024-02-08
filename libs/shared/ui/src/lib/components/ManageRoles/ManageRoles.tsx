@@ -2,7 +2,7 @@ import styles from './ManageRoles.module.scss';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-import { useContext, useEffect, useState, useRef } from 'react';
+import { useContext, useEffect, useState, useRef, Suspense, lazy } from 'react';
 import AddRole from '../AddRole/AddRole';
 import { useGetRoleByID, useGetRoles } from '@goal-tracker/data-access';
 import UpdateRole from '../UpdateRole/UpdateRole';
@@ -158,6 +158,8 @@ export function ManageRoles({ tableData }: ManageRoles) {
     context?.setSortOrder(sortOrder ? 'asc' : 'desc');
   };
 
+  const Component = lazy(()=>import('@goal-tracker/ui').then((module)=>({default: module.FilterContainer})))
+
   return (
     <div className={styles.container}>
       <div className={styles.categories}>
@@ -183,13 +185,15 @@ export function ManageRoles({ tableData }: ManageRoles) {
 
       {open && (
         <div>
-          <FilterContainer
+          <Suspense fallback={'Loading'}>
+          <Component
             inputDataForSearchField={inputDataForSearchField}
             onSearch={handleSearch}
             open={open}
             handleClose={handleClose}
             anchorEl={anchorEl}
           />
+          </Suspense>
         </div>
       )}
 

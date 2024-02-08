@@ -4,10 +4,13 @@ import {
   ManageCategories,
 } from '@goal-tracker/ui';
 import PrivateLayout from 'apps/goals-on-track/component/common/privateLayout/private-layout';
+import { Suspense, lazy, useContext, useState } from 'react';
 import styles from './index.module.scss';
 
 const Categories = () => {
   const { data: categoriesList } = useGetCategories();
+
+  const Component = lazy(()=>import('@goal-tracker/ui').then((module)=>({default: module.FilterContainer})))
 
   const categories: any = {
     headings: ['Category Id', 'Name', 'Update', 'Delete'],

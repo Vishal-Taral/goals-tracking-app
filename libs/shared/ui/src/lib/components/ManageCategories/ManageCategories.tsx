@@ -2,7 +2,7 @@ import styles from './ManageCategories.module.scss';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-import { useState, useContext, useEffect, useRef } from 'react';
+import { useState, useContext, useEffect, useRef, lazy, Suspense } from 'react';
 import { UpdateCategory } from '../updateCategory/update-category';
 import { DeleteCategory } from '../deleteCategory/delete-category';
 import { CreateCategory } from '../createCategory/create-category';
@@ -142,6 +142,8 @@ export function ManageCategories({ tableData }: ManageCategoriesProps) {
     setSortOrder(newSortOrder);
   };
 
+  const Component = lazy(()=>import('@goal-tracker/ui').then((module)=>({default: module.FilterContainer})))
+
 
   return (
     <div className={styles.container}>
@@ -168,13 +170,15 @@ export function ManageCategories({ tableData }: ManageCategoriesProps) {
 
       {open && (
         <div>
-          <FilterContainer
+          <Suspense fallback={'Loading'}>
+          <Component
             inputDataForSearchField={inputDataForSearchField}
             onSearch={handleSearch}
             open={open}
             handleClose={handleClose}
             anchorEl={anchorEl}
           />
+          </Suspense>
         </div>
       )}
 
