@@ -2,7 +2,7 @@ import styles from './ManageGoals.module.scss';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-import { useContext, useEffect, useState, useRef } from 'react';
+import { useContext, useEffect, useState, useRef, lazy, Suspense } from 'react';
 import AddRole from '../AddRole/AddRole';
 import { useGetRoleByID, useGetRoles } from '@goal-tracker/data-access';
 import UpdateRole from '../UpdateRole/UpdateRole';
@@ -165,6 +165,8 @@ export function ManageGoals({tableData}:ManageGoalsProps) {
     const convertedDate = date.toLocaleDateString();
     return convertedDate;
   }
+
+  const Component = lazy(()=>import('@goal-tracker/ui').then((module)=> ({default: module.FilterContainer})))
   
   return (
     <div className={styles.container}>
@@ -190,13 +192,15 @@ export function ManageGoals({tableData}:ManageGoalsProps) {
       </div>
       {open && (
         <div>
-          <FilterContainer
+          <Suspense fallback={"Loading"}>
+          <Component
             inputDataForSearchField={inputDataForSearchField}
             onSearch={handleSearch}
             open={open}
             handleClose={handleClose}
             anchorEl={anchorEl}
           />
+          </Suspense>
         </div>
       )}
       <div className={styles.entriesPerPageBlock}>
