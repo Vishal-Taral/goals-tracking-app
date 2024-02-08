@@ -3,10 +3,13 @@ import Button from '@mui/material/Button';
 
 export interface FilterContainerProps {
   inputDataForSearchField?: any;
-  onSearch: () => void; 
+  onSearch: () => void;
 }
 
-export function FilterContainer({ inputDataForSearchField, onSearch }: FilterContainerProps) {
+export function FilterContainer({
+  inputDataForSearchField,
+  onSearch,
+}: FilterContainerProps) {
   return (
     <div className={styles.filterContainer}>
       <div className={styles.searching}>
@@ -18,11 +21,16 @@ export function FilterContainer({ inputDataForSearchField, onSearch }: FilterCon
               type="text"
               placeholder={`Enter the ${data.label}`}
               className={styles.search_inputs}
-              onChange={(e)=>data.setSearch(e.target.value)}
+              onChange={(e) => data.setSearch(e.target.value)}
             />
           </div>
         ))}
-        <Button onClick={onSearch} variant="contained" size="small" sx={{ mt: 1 }}>
+        <Button
+          onClick={onSearch}
+          variant="contained"
+          size="small"
+          sx={{ mt: 1 }}
+        >
           Search
         </Button>
       </div>

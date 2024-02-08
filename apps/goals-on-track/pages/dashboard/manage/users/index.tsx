@@ -1,5 +1,16 @@
-import React, { useContext, useState } from 'react';
-import { ErrorHandler, FilterContainer, ManageUsers } from '@goal-tracker/ui';
+import React, { Suspense, lazy, useContext, useState } from 'react';
+import {
+  ErrorHandler,
+  FilterContainer,
+  HOCLoader,
+  Loader,
+  ManageUsers,
+} from '@goal-tracker/ui';
+const Component = lazy(() =>
+  import('@goal-tracker/ui').then((module) => ({
+    default: module.FilterContainer,
+  }))
+);
 import styles from './index.module.scss';
 import { useGetUsers } from '@goal-tracker/data-access';
 // eslint-disable-next-line @nx/enforce-module-boundaries
@@ -61,10 +72,12 @@ export function Users(props: UsersProps) {
       <PrivateLayout>
         <div className={styles.dashboard_page_container}>
           <div className={styles.header_and_user_detail_section}>
-            <FilterContainer
-              inputDataForSearchField={inputDataForSearchField}
-              onSearch={handleSearch}
-            />
+            <Suspense fallback={'Loading'}>
+              <Component
+                inputDataForSearchField={inputDataForSearchField}
+                onSearch={handleSearch}
+              />
+            </Suspense>
             <ErrorHandler>
               <ManageUsers tableData={users} />
             </ErrorHandler>
