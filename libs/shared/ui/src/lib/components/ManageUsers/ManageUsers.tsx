@@ -11,7 +11,6 @@ import PageNumberContainer from '../PageNumberContainer/PageNumberContainer';
 import AppContext from '../../contexts/AppContext';
 import NorthIcon from '@mui/icons-material/North';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import { FilterContainer } from '@goal-tracker/ui';
 import Tooltip from '@mui/material/Tooltip';
 
 /* eslint-disable-next-line */
