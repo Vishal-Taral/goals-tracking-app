@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import { useGetUserAuthorization, usePostLogout } from '@goal-tracker/data-access';
 import { useEffect, useState } from 'react';
 import { Popper } from '@mui/material';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 
 /* eslint-disable-next-line */
 export interface HeaderProps {}
@@ -39,6 +40,11 @@ export function Header(props: HeaderProps) {
     router.push('/login')
   }
 
+  const closePopper = () => {
+    setAnchorEl(null);
+  }
+
+
   return (
     <div className={styles.container}>
       {isLandingPage ? (
@@ -48,7 +54,7 @@ export function Header(props: HeaderProps) {
             <Button
               variant="outlined"
               onClick={openLoginPage}
-              style={{ color: 'white', borderColor: 'white' }}
+              className={styles.login_btn}
             >
               Login
             </Button>
@@ -56,36 +62,31 @@ export function Header(props: HeaderProps) {
         </div>
       ) : (
         <div className={styles.profile_container}>
-          <div style={{ fontSize: '2rem', color: 'white', fontWeight: '600' }}>
+          <div className={styles.app_heading}>
             GoalsOnTrack
           </div>
           <div
             onClick={accountHandler}
             className={styles.use_name_and_profile_pic}
           >
-            <h1
-              style={{
-                backgroundColor: 'skyblue',
-                borderRadius: '100%',
-                padding: '0.7rem 1rem',
-                fontWeight: '600',
-                color: 'white',
-              }}
-            >
+            <h1 className={styles.user_profile_pic}>
               {userAuthorization?.response?.firstName[0]}
             </h1>
-            <h1 style={{color: 'white'}}>
+            <h1 className={styles.name}>
               {userAuthorization?.response?.firstName}
             </h1>
           </div>
           <Popper
             anchorEl={anchorEl}
             open={popoverOpen}
-            // handleClose={popoverCloseHandler}
-            style={{backgroundColor: 'white',padding: '0.5rem 0.5rem'}}
+            className={styles.popper}
           >
-            <div onClick={accountClickHandler} style={{borderBottom: '1px solid lightgray', padding: '0.4rem'}}>Account</div>
-            <div onClick={logoutClickHandler} style={{ padding: '0.4rem'}}>Logout</div>
+            <ClickAwayListener onClickAway={closePopper}>
+              <div>
+                <div onClick={accountClickHandler} className={styles.account}>Account</div>
+                <div onClick={logoutClickHandler} className={styles.logout}>Logout</div>
+              </div>
+            </ClickAwayListener>
           </Popper>
         </div>
       )}
