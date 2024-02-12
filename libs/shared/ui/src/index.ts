@@ -9,7 +9,7 @@ export * from './lib/contexts/ContextProvider';
 export * from './lib/components/HOCAuth/HOCAuth';
 export * from './lib/components/ManageRoles/ManageRoles';
 export {ManageCategories} from './lib/components/ManageCategories/ManageCategories';
-export * from './lib/components/manageUsers/ManageUsers';
+export * from './lib/components/ManageUsers/ManageUsers';
 export * from './lib/components/updateCategory/update-category';
 export * from './lib/components/deleteCategory/delete-category';
 export * from './lib/components/createCategory/create-category';
