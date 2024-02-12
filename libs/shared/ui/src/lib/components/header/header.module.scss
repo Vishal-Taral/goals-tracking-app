@@ -1,8 +1,9 @@
-.container{
+.container {
     width: 100%;
     background-color: rgb(46, 46, 90);
     box-shadow: 1px 1px 1px gray;
-    .header_container{
+
+    .header_container {
         padding: 1rem 9rem;
         display: flex;
         width: auto;
@@ -12,7 +13,7 @@
         font-weight: 600;
         color: white;
 
-        .login_btn{
+        .login_btn {
             cursor: pointer;
             border: 1px solid rgb(255, 255, 255);
             border-radius: 0.9rem;
@@ -24,24 +25,63 @@
         }
     }
 
-    .profile_container{
+    .profile_container {
         width: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 1rem 4rem;
-        .use_name_and_profile_pic{
+
+        .app_heading {
+            font-size: 2rem;
+            color: white;
+            font-weight: 600;
+        }
+
+        .use_name_and_profile_pic {
             display: flex;
             gap: 1rem;
             align-items: center;
-            cursor: pointer;
 
-            .userNameHeading{
+            .user_profile_pic {
+                background-color: skyblue;
+                border-radius: 100%;
+                padding: 0.7rem 1rem;
+                font-weight: 600;
                 color: white;
             }
-            .name{
+
+            .userNameHeading {
                 color: white;
             }
+
+            .name {
+                color: white;
+            }
+        }
+    }
+}
+
+.popper {
+    background-color: white;
+    padding: 0.5rem 0.5rem;
+
+    .account {
+        border-bottom: 1px solid lightgray;
+        padding: 0.4rem;
+        cursor: pointer;
+
+        &:hover{
+            background-color: lightgray;
+        }
+    }
+
+    .logout {
+        padding: 0.4rem;
+        cursor: pointer;
+
+        &:hover{
+            background-color: lightgray;
         }
     }
 }
