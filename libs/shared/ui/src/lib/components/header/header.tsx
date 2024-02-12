@@ -1,7 +1,7 @@
 import styles from './header.module.scss';
 import { useRouter } from 'next/router';
 import Button from '@mui/material/Button';
-import { useGetUserAuthorization } from '@goal-tracker/data-access';
+import { useGetUserAuthorization, usePostLogout } from '@goal-tracker/data-access';
 import { useEffect, useState } from 'react';
 import { Popper } from '@mui/material';
 
@@ -10,6 +10,8 @@ export interface HeaderProps {}
 
 export function Header(props: HeaderProps) {
   const router = useRouter();
+
+  const responseData: any = usePostLogout()
 
   const isLandingPage = router.pathname === '/';
 
@@ -31,8 +33,9 @@ export function Header(props: HeaderProps) {
   const accountClickHandler = () => {
     router.push('/Account')
   }
-  const logoutClickHandler = () => {
-    localStorage.removeItem('AUTHORIZATION')
+  const logoutClickHandler = async() => {
+    const response = await responseData.mutateAsync()
+    localStorage.removeItem('AUTHORIZATION');
     router.push('/login')
   }
 

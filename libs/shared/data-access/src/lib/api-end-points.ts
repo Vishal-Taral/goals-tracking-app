@@ -17,6 +17,7 @@ export const apiUrlObject = {
     getUserAuthorization: `${serverUrl}/getUserAuthorize`,
     getRoleByID: `${serverUrl}/role`,
     getCategoryByID: `${serverUrl}/category`,
-    getUserByID: `${serverUrl}/user`
+    getUserByID: `${serverUrl}/user`,
+    postLogout: `${serverUrl}/Logout`
 }
  

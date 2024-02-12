@@ -21,3 +21,5 @@ export * from './lib/queries/useGetUserAuthorization';
 export * from './lib/queries/useGetRoleByID';
 export * from './lib/queries/useGetCategoryByID';
 export * from './lib/queries/useGetUserByID';
+export * from './lib/queries/usePostLogout';
+
