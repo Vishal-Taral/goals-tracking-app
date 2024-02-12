@@ -16,15 +16,15 @@ export function PrivateLayout(props: PrivateLayoutProps) {
   const router = useRouter();
   useEffect(() => {
     if (context?.manage == 'Roles') {
-      router.push('/dashboard/manage/roles');
+      router.push('./roles');
     } else if (context?.manage == 'Categories') {
-      router.push('/dashboard/manage/categories');
+      router.push('./categories');
     } else if (context?.manage == 'Users') {
-      router.push('/dashboard/manage/users');
+      router.push('./users');
     } else if (context?.manage == 'Account') {
-      router.push('/Account');
+      router.push('./Account');
     } else if (context?.manage == 'Goals') {
-      router.push('/dashboard/manage/goals');
+      router.push('./goals');
     }
   }, [context?.manage]);
 
