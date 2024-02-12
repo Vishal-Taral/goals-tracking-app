@@ -38,7 +38,6 @@ export function Header(props: HeaderProps) {
     localStorage.removeItem('AUTHORIZATION');
     router.push('/login')
   }
-
   return (
     <div className={styles.container}>
       {isLandingPage ? (
