@@ -10,5 +10,5 @@ const userAuthorization = async () => {
 const QUERY_KEY = ['userAuthorization'];
 
 export const useGetUserAuthorization = () => {
-  return useQuery({ queryKey: QUERY_KEY, queryFn: () => userAuthorization(), enabled: false });
+  return useQuery({ queryKey: QUERY_KEY, queryFn: () => userAuthorization(), enabled: false,retry: false});
 };
