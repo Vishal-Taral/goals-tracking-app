@@ -82,7 +82,6 @@ export function Login(props: LoginProps) {
                     <TextField
                       {...field}
                       required
-                      id="outlined-required"
                       label="Enter email"
                       error={!!errors.email}
                       helperText={errors.email?.message}
@@ -99,7 +98,6 @@ export function Login(props: LoginProps) {
                       {...field}
                       required
                       type="password"
-                      id="outlined-required"
                       label="Enter password"
                       error={!!errors.password}
                       helperText={errors.password?.message}
